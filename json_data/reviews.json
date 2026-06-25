@@ -1,0 +1,26 @@
+[
+    {
+        "college_id": "25356",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Iith provides you teaching from the best teachers who are well qualified. Students in our college gets internship opportunities in their third year.if they performed well in their internship,the company provides preplacement offers before completing their engineering.many best companies like google, microsoft, wipro, tcs, etc come to our college to hire students. Hostels are great here, there are groups of 6 or 8 rooms forming one pod which helps in mingling better with other students."
+    },
+    {
+        "college_id": "25356",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: I disliked the professor very much, the are very bad in teaching Sometimes the faculty of my department (mathematics) were hard to deal with."
+    },
+    {
+        "college_id": "25396",
+        "reviewer_name": "Aditya Sharma",
+        "rating": 4.5,
+        "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."
+    },
+    {
+        "college_id": "25455",
+        "reviewer_name": "Aditya Sharma",
+        "rating": 4.5,
+        "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."
+    }
+]

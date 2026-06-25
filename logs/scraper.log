@@ -1,0 +1,217 @@
+[2026-06-25 23:36:30] INFO [main.py:31] Starting Stage 2: Offline parsing and export...
+[2026-06-25 23:36:30] INFO [main.py:38] Found 1 college(s) to parse.
+[2026-06-25 23:36:30] INFO [main.py:51] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-06-25 23:36:30] WARNING [main.py:67] Info HTML file missing for iit-delhi-indian-institute-of-technology-iitd-new-delhi: /Users/abhishek/code/personal/one-co/html/info/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-06-25 23:36:30] INFO [exporter.py:34] Starting data export process...
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/colleges.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 95 records to JSON: /Users/abhishek/code/personal/one-co/json_data/courses.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/admissions.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/placements.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/rankings.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/faculty.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/scholarships.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/hostel.json
+[2026-06-25 23:36:30] INFO [exporter.py:15] Saved 0 records to JSON: /Users/abhishek/code/personal/one-co/json_data/reviews.json
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Colleges' is empty. Generating empty template.
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Admissions' is empty. Generating empty template.
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Placements' is empty. Generating empty template.
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Rankings' is empty. Generating empty template.
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Hostel' is empty. Generating empty template.
+[2026-06-25 23:36:30] WARNING [exporter.py:69] DataFrame for sheet 'Reviews' is empty. Generating empty template.
+[2026-06-25 23:36:30] INFO [exporter.py:83] Excel workbook compiled and saved successfully to: /Users/abhishek/code/personal/one-co/exports/all_colleges.xlsx
+[2026-06-25 23:36:30] INFO [main.py:161] Offline parsing and export complete.
+[2026-06-25 23:36:35] INFO [discovery.py:34] Starting URL discovery from: https://collegedunia.com/india-colleges
+[2026-06-25 23:36:35] INFO [discovery.py:55] Launching browser for discovery...
+[2026-06-25 23:36:37] INFO [discovery.py:63] Navigating to https://collegedunia.com/india-colleges...
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25703-iit-bombay-indian-institute-of-technology-iitb-mumbai
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25881-iit-madras-indian-institute-of-technology-iitm-chennai
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25948-iit-kanpur-indian-institute-of-technology-iitk-kanpur
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/26007-iit-kharagpur-indian-institute-of-technology-iitkgp-kharagpur
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25992-iit-roorkee-indian-institute-of-technology-iitr-roorkee
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25800-bits-pilani-pilani-campus-pilani
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad
+[2026-06-25 23:36:39] INFO [discovery.py:81] Discovered college URL: https://collegedunia.com/university/25947-iit-bhu-indian-institute-of-technology-varanasi
+[2026-06-25 23:36:39] INFO [discovery.py:88] Scroll #0: found 9 new URLs. Total in set: 10
+[2026-06-25 23:36:41] INFO [discovery.py:108] Saved 10 URLs to /Users/abhishek/code/personal/one-co/urls/college_urls.csv
+[2026-06-25 23:36:57] INFO [downloader.py:201] Preparing to download pages for 3 colleges.
+[2026-06-25 23:36:57] INFO [downloader.py:219] --- Processing College 1/3: iit-hyderabad-indian-institute-of-technology-iith-hyderabad (ID: 25356) ---
+[2026-06-25 23:36:57] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad
+[2026-06-25 23:37:01] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/info/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (1044860 bytes)
+[2026-06-25 23:37:01] INFO [downloader.py:171] Sleeping for 3.59s...
+[2026-06-25 23:37:05] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/courses-fees
+[2026-06-25 23:37:07] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:37:17] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-06-25 23:37:19] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:37:20] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:37:21] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:37:22] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/courses/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (1115545 bytes)
+[2026-06-25 23:37:22] INFO [downloader.py:171] Sleeping for 3.10s...
+[2026-06-25 23:37:25] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/admission
+[2026-06-25 23:37:29] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/admissions/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (854618 bytes)
+[2026-06-25 23:37:29] INFO [downloader.py:171] Sleeping for 2.89s...
+[2026-06-25 23:37:31] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/placement
+[2026-06-25 23:37:34] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:37:44] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:37:45] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:37:46] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/placements/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (874752 bytes)
+[2026-06-25 23:37:46] INFO [downloader.py:171] Sleeping for 2.45s...
+[2026-06-25 23:37:49] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/reviews
+[2026-06-25 23:37:51] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:38:01] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/reviews/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (688635 bytes)
+[2026-06-25 23:38:01] INFO [downloader.py:171] Sleeping for 3.48s...
+[2026-06-25 23:38:04] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/faculty
+[2026-06-25 23:38:07] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:38:17] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:38:18] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:38:19] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:38:20] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:38:21] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:38:22] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:38:23] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:38:24] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/faculty/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (448909 bytes)
+[2026-06-25 23:38:24] INFO [downloader.py:171] Sleeping for 3.23s...
+[2026-06-25 23:38:28] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/scholarship
+[2026-06-25 23:38:30] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:38:40] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:38:41] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:38:42] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/scholarships/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (689528 bytes)
+[2026-06-25 23:38:42] INFO [downloader.py:171] Sleeping for 3.06s...
+[2026-06-25 23:38:46] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/hostel
+[2026-06-25 23:38:49] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/hostel/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (501002 bytes)
+[2026-06-25 23:38:49] INFO [downloader.py:171] Sleeping for 2.59s...
+[2026-06-25 23:38:51] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25356-iit-hyderabad-indian-institute-of-technology-iith-hyderabad/cutoff
+[2026-06-25 23:38:59] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/cutoff/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.html (1654370 bytes)
+[2026-06-25 23:38:59] INFO [downloader.py:171] Sleeping for 2.28s...
+[2026-06-25 23:39:01] INFO [downloader.py:219] --- Processing College 2/3: iit-guwahati-indian-institute-of-technology-iitg-guwahati (ID: 25396) ---
+[2026-06-25 23:39:01] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati
+[2026-06-25 23:39:04] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/info/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (1083231 bytes)
+[2026-06-25 23:39:04] INFO [downloader.py:171] Sleeping for 2.47s...
+[2026-06-25 23:39:07] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/courses-fees
+[2026-06-25 23:39:09] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:39:19] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-06-25 23:39:21] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-06-25 23:39:22] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:39:23] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:39:24] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:39:25] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/courses/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (1110371 bytes)
+[2026-06-25 23:39:25] INFO [downloader.py:171] Sleeping for 3.47s...
+[2026-06-25 23:39:29] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/admission
+[2026-06-25 23:39:32] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/admissions/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (999935 bytes)
+[2026-06-25 23:39:32] INFO [downloader.py:171] Sleeping for 2.13s...
+[2026-06-25 23:39:34] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/placement
+[2026-06-25 23:39:36] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:39:46] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:39:48] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:39:49] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/placements/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (838075 bytes)
+[2026-06-25 23:39:49] INFO [downloader.py:171] Sleeping for 2.18s...
+[2026-06-25 23:39:51] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/reviews
+[2026-06-25 23:39:53] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:40:03] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:40:04] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:05] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/reviews/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (455742 bytes)
+[2026-06-25 23:40:05] INFO [downloader.py:171] Sleeping for 2.79s...
+[2026-06-25 23:40:08] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/faculty
+[2026-06-25 23:40:11] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:40:20] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:40:22] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:40:23] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:24] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:25] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:26] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:27] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:28] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/faculty/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (449915 bytes)
+[2026-06-25 23:40:28] INFO [downloader.py:171] Sleeping for 3.67s...
+[2026-06-25 23:40:32] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/scholarship
+[2026-06-25 23:40:34] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:40:44] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:45] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:40:46] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/scholarships/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (646528 bytes)
+[2026-06-25 23:40:46] INFO [downloader.py:171] Sleeping for 3.32s...
+[2026-06-25 23:40:50] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/hostel
+[2026-06-25 23:40:53] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/hostel/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (504249 bytes)
+[2026-06-25 23:40:53] INFO [downloader.py:171] Sleeping for 2.63s...
+[2026-06-25 23:40:56] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25396-iit-guwahati-indian-institute-of-technology-iitg-guwahati/cutoff
+[2026-06-25 23:40:59] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/cutoff/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.html (1690487 bytes)
+[2026-06-25 23:40:59] INFO [downloader.py:171] Sleeping for 2.73s...
+[2026-06-25 23:41:02] INFO [downloader.py:219] --- Processing College 3/3: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455) ---
+[2026-06-25 23:41:02] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+[2026-06-25 23:41:05] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/info/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1044556 bytes)
+[2026-06-25 23:41:05] INFO [downloader.py:171] Sleeping for 2.91s...
+[2026-06-25 23:41:08] INFO [downloader.py:133] Skipping already downloaded subpage: courses -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-06-25 23:41:08] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/admission
+[2026-06-25 23:41:12] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/admissions/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1029065 bytes)
+[2026-06-25 23:41:12] INFO [downloader.py:171] Sleeping for 3.07s...
+[2026-06-25 23:41:15] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/placement
+[2026-06-25 23:41:17] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:41:27] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:41:28] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:41:29] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/placements/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (872748 bytes)
+[2026-06-25 23:41:29] INFO [downloader.py:171] Sleeping for 2.11s...
+[2026-06-25 23:41:31] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/reviews
+[2026-06-25 23:41:34] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:41:44] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:41:45] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:41:46] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/reviews/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (455043 bytes)
+[2026-06-25 23:41:46] INFO [downloader.py:171] Sleeping for 2.48s...
+[2026-06-25 23:41:48] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/faculty
+[2026-06-25 23:41:51] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:42:01] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:42:02] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:42:03] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:42:04] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/faculty/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (430757 bytes)
+[2026-06-25 23:42:04] INFO [downloader.py:171] Sleeping for 2.34s...
+[2026-06-25 23:42:06] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/scholarship
+[2026-06-25 23:42:09] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-06-25 23:42:19] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:42:20] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:42:21] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-06-25 23:42:22] INFO [downloader.py:113] Clicked expand button: read more
+[2026-06-25 23:42:23] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/scholarships/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (435348 bytes)
+[2026-06-25 23:42:23] INFO [downloader.py:171] Sleeping for 3.58s...
+[2026-06-25 23:42:27] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/hostel
+[2026-06-25 23:42:30] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/hostel/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (564671 bytes)
+[2026-06-25 23:42:30] INFO [downloader.py:171] Sleeping for 3.59s...
+[2026-06-25 23:42:34] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/cutoff
+[2026-06-25 23:42:37] INFO [downloader.py:167] Successfully saved /Users/abhishek/code/personal/one-co/html/cutoff/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (2675582 bytes)
+[2026-06-25 23:42:37] INFO [downloader.py:171] Sleeping for 3.15s...
+[2026-06-25 23:42:40] INFO [downloader.py:227] Downloader task complete.
+[2026-06-25 23:43:05] INFO [main.py:31] Starting Stage 2: Offline parsing and export...
+[2026-06-25 23:43:05] INFO [main.py:38] Found 3 college(s) to parse.
+[2026-06-25 23:43:05] INFO [main.py:51] Parsing college: iit-hyderabad-indian-institute-of-technology-iith-hyderabad (ID: 25356)
+[2026-06-25 23:43:06] INFO [main.py:51] Parsing college: iit-guwahati-indian-institute-of-technology-iitg-guwahati (ID: 25396)
+[2026-06-25 23:43:06] INFO [main.py:51] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-06-25 23:43:07] INFO [exporter.py:34] Starting data export process...
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/colleges.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 196 records to JSON: /Users/abhishek/code/personal/one-co/json_data/courses.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/admissions.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/placements.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/rankings.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/faculty.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 15 records to JSON: /Users/abhishek/code/personal/one-co/json_data/scholarships.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/hostel.json
+[2026-06-25 23:43:07] INFO [exporter.py:15] Saved 4 records to JSON: /Users/abhishek/code/personal/one-co/json_data/reviews.json
+[2026-06-25 23:43:07] INFO [exporter.py:83] Excel workbook compiled and saved successfully to: /Users/abhishek/code/personal/one-co/exports/all_colleges.xlsx
+[2026-06-25 23:43:07] INFO [main.py:161] Offline parsing and export complete.
+[2026-06-25 23:59:58] INFO [main.py:31] Starting Stage 2: Offline parsing and export...
+[2026-06-25 23:59:58] INFO [main.py:38] Found 3 college(s) to parse.
+[2026-06-25 23:59:58] INFO [main.py:51] Parsing college: iit-hyderabad-indian-institute-of-technology-iith-hyderabad (ID: 25356)
+[2026-06-25 23:59:59] INFO [main.py:51] Parsing college: iit-guwahati-indian-institute-of-technology-iitg-guwahati (ID: 25396)
+[2026-06-25 23:59:59] INFO [main.py:51] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-06-25 23:59:59] INFO [exporter.py:35] Starting data export process...
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/colleges.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 196 records to JSON: /Users/abhishek/code/personal/one-co/json_data/courses.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/admissions.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/placements.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/rankings.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/faculty.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 15 records to JSON: /Users/abhishek/code/personal/one-co/json_data/scholarships.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 3 records to JSON: /Users/abhishek/code/personal/one-co/json_data/hostel.json
+[2026-06-25 23:59:59] INFO [exporter.py:16] Saved 4 records to JSON: /Users/abhishek/code/personal/one-co/json_data/reviews.json
+[2026-06-25 23:59:59] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: /Users/abhishek/code/personal/one-co/exports/all_colleges.xlsx
+[2026-06-26 00:00:00] INFO [exporter.py:194] Saved college-wise Excel sheet: /Users/abhishek/code/personal/one-co/exports/colleges/25356_iit-hyderabad-indian-institute-of-technology-iith-hyderabad.xlsx
+[2026-06-26 00:00:00] INFO [exporter.py:194] Saved college-wise Excel sheet: /Users/abhishek/code/personal/one-co/exports/colleges/25396_iit-guwahati-indian-institute-of-technology-iitg-guwahati.xlsx
+[2026-06-26 00:00:00] INFO [exporter.py:194] Saved college-wise Excel sheet: /Users/abhishek/code/personal/one-co/exports/colleges/25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-06-26 00:00:00] INFO [main.py:161] Offline parsing and export complete.

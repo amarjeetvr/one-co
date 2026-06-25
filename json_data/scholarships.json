@@ -1,0 +1,92 @@
+[
+    {
+        "college_id": "25356",
+        "scholarship_name": "Name of Scholarship",
+        "eligibility": "Pdf Link",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "Post Matric Scholarships Scheme for Minorities",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "Merit Cum Means Scholarship For Professional and Technical Courses",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "Post-matric Scholarship for Students with Disabilities",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "Scholarships for Top Class Education for students with disabilities.",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "National Fellowship and Scholarship for Higher Education of ST Students - Scholarship (Formally Top Class Education for Scheduled Tribe Students) - only for scholarships",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "National Means Cum Merit Scholarship",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "Central Sector Scheme of Scholarships for College and University Students",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "Prime Minister's Scholarship Scheme For RPF/RPSF",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25356",
+        "scholarship_name": "ISHAN UDAY - Special Scholarship Scheme For North Eastern Region",
+        "eligibility": "Click Here",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25396",
+        "scholarship_name": "Scholarship Name",
+        "eligibility": "Criteria of Scholarship",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25396",
+        "scholarship_name": "Institute Merit Scholarship (IMS)",
+        "eligibility": "This scholarship is available for B.Tech/ B.Des/ M.Sc/ M.A students of the institute. IMS is awarded to year-wise class toppers of every stream. It involves tuition fee waiver and a fixed monthly stipend for eight months",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25396",
+        "scholarship_name": "Institute Merit-cum-Means Scholarships (McM)",
+        "eligibility": "McM is awarded to B.Des/ B.Tech/ MA/ M.Sc students on the basis of their Merit (Up to 25% of the non SC /ST). It covers tuition fee waiver and a fixed monthly stipend for eight months",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25396",
+        "scholarship_name": "SC/ ST Scholarship",
+        "eligibility": "It is awarded to all B.Tech/ B.Des/ MA/ M.Sc students of SC/ ST categories. It includes fixed monthly stipend for eight months, free messing (only for the basic menu) and hostel seat rent waiver. Tuition fee is waived for all SC/ST students by the statutes",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25455",
+        "scholarship_name": "Merit-cum-Means Scholarship",
+        "eligibility": "Parental income below 4.5 Lakhs",
+        "amount": "Tuition fee waiver + INR 1000/month"
+    }
+]
