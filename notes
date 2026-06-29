@@ -1,0 +1,15 @@
+ //script run commond 
+ 
+ python main.py --stage1-discover
+
+python main.py --stage1-download --limit 3
+
+python main.py --stage2-parse
+
+
+before runing delete this 
+      folder urls/college_urls.csv
+      exports/
+      json_data/
+      html/
+      
