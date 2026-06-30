@@ -122,19 +122,44 @@ def parse_college_info(html_content: str, college_id: str, url: str) -> Dict[str
     if ranking_matches:
         ranking = f"Rank #{ranking_matches[0]}"
         
-    # City and State from address or title
+    # City and State — try multiple sources in priority order
     city = ""
     state = ""
-    if address_str:
-        parts = [p.strip() for p in address_str.split(",")]
+
+    # 1. Rendered header span: "Mumbai,  Maharashtra"
+    header_loc = soup.find("span", class_=re.compile(r"college_header_details|header_info|clg-location", re.I))
+    if not header_loc:
+        # Try the college header detail spans (text like "Mumbai, Maharashtra")
+        for span in soup.find_all("span"):
+            txt = span.get_text(" ", strip=True)
+            if re.match(r"^[A-Za-z\s]+,\s*[A-Za-z\s]+$", txt) and len(txt) < 60:
+                parts = [p.strip() for p in txt.split(",")]
+                if len(parts) == 2 and "India" not in parts[0]:
+                    city, state = parts[0], parts[1]
+                    break
+
+    # 2. Fallback: JSON-LD address
+    if not city and address_str:
+        # Remove trailing "India" noise, split on comma
+        addr_clean = re.sub(r"\s*India\s*$", "", address_str, flags=re.I).strip()
+        parts = [p.strip() for p in addr_clean.split(",") if p.strip()]
         if len(parts) >= 2:
             city = parts[-2]
             state = parts[-1]
         elif len(parts) == 1:
             city = parts[0]
-            
-    # Clean city/state
-    city = clean_text(city).replace("India", "").strip()
+
+    # 3. Fallback: search page text for "City, State" near location keywords
+    if not city:
+        loc_m = re.search(
+            r"(?:located in|campus in|situated in|address[:\s])\s*([A-Z][a-zA-Z\s]+),\s*([A-Z][a-zA-Z\s]+)",
+            text_content, re.I
+        )
+        if loc_m:
+            city = loc_m.group(1).strip()
+            state = loc_m.group(2).strip()
+
+    city  = clean_text(city).replace("India", "").strip()
     state = clean_text(state).replace("India", "").strip()
 
     return {
@@ -439,79 +464,108 @@ def parse_admissions(html_content: str, college_id: str) -> Dict[str, Any]:
     }
 
 # ----------------- 4. PLACEMENTS & RANKINGS PARSER -----------------
+def _extract_pkg(label_pattern: str, text: str) -> str:
+    """Finds a salary/package value that follows a specific label."""
+    # Matches: <label>\s*(Salary|Package|...)\s*(is|was|of|:)?\s*(INR)?\s*<value>
+    pattern = (
+        label_pattern
+        + r"[\s\S]{0,60}?" # allow label + colon/word gap, non-greedy
+        + r"(?:INR|Rs\.?)?\s*"
+        + r"([0-9][0-9\.]*\s*(?:LPA|Lakh|Lakhs|Cr|CPA|K))"
+    )
+    m = re.search(pattern, text, re.I)
+    return m.group(1).strip() if m else "Not Specified"
+
 def parse_placements(html_content: str, college_id: str) -> Dict[str, Any]:
     """Parses details from the /placement subpage."""
     soup = BeautifulSoup(html_content, "html.parser")
     text = soup.get_text()
-    
-    avg_pkg = "Not Specified"
-    med_pkg = "Not Specified"
-    high_pkg = "Not Specified"
+
+    # Use anchored label patterns so each regex only matches its own label
+    high_pkg = _extract_pkg(r"Highest\s*(?:Salary|Package|CTC|Offer)", text)
+    avg_pkg  = _extract_pkg(r"(?:Average|Avg\.?)\s*(?:Salary|Package|CTC|Offer)", text)
+    med_pkg  = _extract_pkg(r"Median\s*(?:Salary|Package|CTC|Offer)", text)
+
     placement_pct = "Not Specified"
-    top_recruiters = "Not Specified"
-    
-    # Regex packages
-    avg_match = re.search(r"(?:Average|Avg)\s*(?:Salary|Package|Offer)?\s*(?:is|was|of)?\s*(?:INR)?\s*([0-9\.]+\s*(?:LPA|Lakh|Cr|CPA))", text, re.I)
-    if avg_match:
-        avg_pkg = avg_match.group(1)
-        
-    highest_match = re.search(r"(?:Highest)\s*(?:Salary|Package|Offer)?\s*(?:is|was|of)?\s*(?:INR)?\s*([0-9\.]+\s*(?:LPA|Lakh|Cr|CPA))", text, re.I)
-    if highest_match:
-        high_pkg = highest_match.group(1)
-        
-    median_match = re.search(r"(?:Median)\s*(?:Salary|Package|Offer)?\s*(?:is|was|of)?\s*(?:INR)?\s*([0-9\.]+\s*(?:LPA|Lakh|Cr|CPA))", text, re.I)
-    if median_match:
-        med_pkg = median_match.group(1)
-        
-    pct_match = re.search(r"(\d+[\.\d]*\s*%\s*(?:placements?|placed))", text, re.I)
+    pct_match = re.search(r"(\d+[\.\d]*\s*%\s*(?:placements?|placed|students?))", text, re.I)
     if pct_match:
         placement_pct = pct_match.group(1)
-        
-    # Extract list of top recruiters
-    rec_matches = []
-    for r in ["Microsoft", "Google", "Amazon", "Accenture", "TCS", "Infosys", "Wipro", "Cognizant", "HCL", "Intel", "Cisco", "Jane Street"]:
-        if r.lower() in text.lower():
-            rec_matches.append(r)
-    if rec_matches:
-        top_recruiters = ", ".join(rec_matches)
-        
+
+    rec_matches = [r for r in ["Microsoft", "Google", "Amazon", "Accenture", "TCS",
+                                "Infosys", "Wipro", "Cognizant", "HCL", "Intel",
+                                "Cisco", "Jane Street", "Goldman Sachs", "Flipkart"]
+                   if r.lower() in text.lower()]
+    top_recruiters = ", ".join(rec_matches) if rec_matches else "Not Specified"
+
     return {
         "college_id": college_id,
+        "highest_package": high_pkg,
         "average_package": avg_pkg,
         "median_package": med_pkg,
-        "highest_package": high_pkg,
         "placement_percentage": placement_pct,
         "top_recruiters": top_recruiters
     }
 
-def parse_rankings(html_content: str, college_id: str) -> List[Dict[str, Any]]:
-    """Parses rankings details from info or placement page."""
-    soup = BeautifulSoup(html_content, "html.parser")
-    text = soup.get_text()
+def parse_rankings(html_content: str, college_id: str, extra_html: str = "") -> List[Dict[str, Any]]:
+    """Parses rankings from placement page + optionally info page HTML."""
     rankings = []
-    
-    # Common bodies
-    bodies = ["NIRF", "QS World", "QS India", "The Week", "Outlook", "India Today"]
-    for body in bodies:
-        # e.g., NIRF 2023: Rank #2 or Ranked #2 by NIRF 2023
-        pattern = r"(?:Ranked|Rank|#)?\s*(\d+)\s*(?:by|in)?\s*" + re.escape(body) + r"\s*(?:Ranking)?\s*(\d{4})?"
-        match = re.search(pattern, text, re.I)
-        if match:
-            rankings.append({
-                "college_id": college_id,
-                "ranking_body": body,
-                "rank": f"#{match.group(1)}",
-                "ranking_year": int(match.group(2)) if match.group(2) else 2024
-            })
-            
-    # If no rankings found, create default entry if page suggests anything
-    if not rankings:
-        rankings.append({
-            "college_id": college_id,
-            "ranking_body": "NIRF",
-            "rank": "Rank #2",
-            "ranking_year": 2024
-        })
+    seen_bodies = set()
+
+    # Map of body name -> aliases to search in text
+    bodies = {
+        "NIRF":        ["NIRF"],
+        "QS World":    ["QS World", "QS World University"],
+        "QS India":    ["QS India"],
+        "The Week":    ["The Week"],
+        "Outlook":     ["Outlook"],
+        "India Today": ["India Today"],
+        "IIRF":        ["IIRF"],
+    }
+
+    def _extract_rankings_from_text(text: str):
+        for body, aliases in bodies.items():
+            if body in seen_bodies:
+                continue
+            for alias in aliases:
+                # Pattern A: "ranked Nth in ... by NIRF 2025" prose style
+                # e.g. "ranked 3rd in the B.Tech. category by NIRF 2025"
+                pa = re.search(
+                    r"ranked\s+(\d+)(?:st|nd|rd|th)?[^.]{0,80}" + re.escape(alias) + r"[^\d]*(\d{4})?",
+                    text, re.I
+                )
+                # Pattern B: "NIRF Ranking 2025: Rank 3" or "NIRF 2025 rank 3"
+                pb = re.search(
+                    re.escape(alias) + r"[^.]{0,40}?(?:rank|#)\s*#?(\d+)[^\d]*(\d{4})?",
+                    text, re.I
+                )
+                # Pattern C: "Rank #3 by NIRF" or "Rank 3 in NIRF"
+                pc = re.search(
+                    r"[Rr]ank\s*#?(\d+)[^.]{0,40}" + re.escape(alias) + r"[^\d]*(\d{4})?",
+                    text, re.I
+                )
+                match = pa or pb or pc
+                if match:
+                    rank_num = match.group(1)
+                    # Reject clearly wrong values: rank > 5000 is likely a year or ID
+                    if int(rank_num) > 5000:
+                        continue
+                    year_grp = match.lastindex
+                    year = None
+                    if year_grp and year_grp >= 2 and match.group(2):
+                        yr = int(match.group(2))
+                        year = yr if 2000 <= yr <= 2030 else None
+                    rankings.append({
+                        "college_id": college_id,
+                        "ranking_body": body,
+                        "rank": f"#{rank_num}",
+                        "ranking_year": year
+                    })
+                    seen_bodies.add(body)
+                    break
+
+    _extract_rankings_from_text(BeautifulSoup(html_content, "html.parser").get_text(" ", strip=True))
+    if extra_html:
+        _extract_rankings_from_text(BeautifulSoup(extra_html, "html.parser").get_text(" ", strip=True))
     return rankings
 
 # ----------------- 5. FACULTY PARSER -----------------
@@ -558,14 +612,6 @@ def parse_faculty(html_content: str, college_id: str) -> List[Dict[str, Any]]:
                     if len(faculty_list) >= 15:  # cap fallback limit
                         break
                         
-    # Ensure at least a default record if empty
-    if not faculty_list:
-        faculty_list.append({
-            "college_id": college_id,
-            "faculty_name": "Dr. Rangan Banerjee",
-            "designation": "Director & Professor",
-            "department": "Energy Science and Engineering"
-        })
     return faculty_list
 
 # ----------------- 6. SCHOLARSHIPS PARSER -----------------
@@ -606,13 +652,6 @@ def parse_scholarships(html_content: str, college_id: str) -> List[Dict[str, Any
                     "amount": "Tution fee waiver / Cash"
                 })
                 
-    if not scholarships:
-        scholarships.append({
-            "college_id": college_id,
-            "scholarship_name": "Merit-cum-Means Scholarship",
-            "eligibility": "Parental income below 4.5 Lakhs",
-            "amount": "Tuition fee waiver + INR 1000/month"
-        })
     return scholarships
 
 # ----------------- 7. HOSTEL PARSER -----------------

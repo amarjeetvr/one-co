@@ -21,25 +21,24 @@ def clean_url(url: str) -> str:
 
 def is_college_url(url: str) -> bool:
     """Check if the URL points to a college or university profile."""
-    # Matches /university/<id>-<slug> or /college/<id>-<slug> or /colleges/<id>-<slug>
-    pattern = r"/colleges?/\d+-[a-zA-Z0-9-]+" or r"/university/\d+-[a-zA-Z0-9-]+"
-    # Also support general matching for collegedunia university/college URLs
-    return bool(re.search(r"/(colleges|college|university)/\d+", url))
+    return bool(re.search(r"/(colleges?|university)/\d+", url))
 
 def discover_college_urls(listing_url: str = "https://collegedunia.com/india-colleges", max_colleges: int = 50):
     """
-    Crawls the listing page, scrolls to load dynamic content, 
-    extracts college profile URLs, and saves them to csv.
+    Crawls the listing page, scrolls to load dynamic content,
+    extracts college profile URLs and any snippet data (avg package, rank)
+    visible on the card, and saves them to CSV.
     """
     logger.info(f"Starting URL discovery from: {listing_url}")
     discovered_urls = set()
-    
-    # Load existing URLs if CSV exists to avoid losing them
+    card_meta: dict = {}  # url -> {avg_package, rank} from listing cards
+
+    # Load existing URLs to avoid losing them
     if os.path.exists(COLLEGE_URLS_CSV):
         try:
             with open(COLLEGE_URLS_CSV, "r", encoding="utf-8") as f:
                 reader = csv.reader(f)
-                next(reader, None)  # skip header
+                next(reader, None)
                 for row in reader:
                     if row:
                         discovered_urls.add(row[0])
@@ -47,10 +46,6 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
         except Exception as e:
             logger.warning(f"Error loading existing URLs: {e}")
 
-    # Add default test URL (IIT Delhi) if not present, to ensure it is always included for verification
-    test_url = "https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi"
-    discovered_urls.add(test_url)
-    
     with sync_playwright() as p:
         logger.info("Launching browser for discovery...")
         browser = p.chromium.launch(headless=HEADLESS)
@@ -58,53 +53,69 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
         )
         page = context.new_page()
-        
+
         try:
             logger.info(f"Navigating to {listing_url}...")
             page.goto(listing_url, timeout=TIMEOUT)
             page.wait_for_load_state("domcontentloaded")
-            
+            page.wait_for_timeout(2000)
+
             scroll_count = 0
-            max_scrolls = 20  # Limit scrolls to prevent infinite loops
-            
+            max_scrolls = 20
+
             while len(discovered_urls) < max_colleges and scroll_count < max_scrolls:
-                # Extract links on current viewport
-                links = page.locator("a").all()
-                new_found = 0
-                for link in links:
-                    try:
-                        href = link.get_attribute("href")
-                        if href:
-                            abs_url = clean_url(href)
-                            if is_college_url(abs_url) and abs_url not in discovered_urls:
-                                discovered_urls.add(abs_url)
-                                logger.info(f"Discovered college URL: {abs_url}")
-                                new_found += 1
-                                if len(discovered_urls) >= max_colleges:
-                                    break
-                    except Exception:
+                from bs4 import BeautifulSoup
+                html = page.content()
+                soup = BeautifulSoup(html, "html.parser")
+
+                # Extract college card links + any visible avg_package / rank snippets
+                for a_tag in soup.find_all("a", href=True):
+                    href = clean_url(a_tag["href"])
+                    if not is_college_url(href) or href in discovered_urls:
                         continue
-                
-                logger.info(f"Scroll #{scroll_count}: found {new_found} new URLs. Total in set: {len(discovered_urls)}")
-                
-                # Scroll down
+
+                    discovered_urls.add(href)
+                    logger.info(f"Discovered: {href}")
+
+                    # Try to read card-level package / rank from surrounding card element
+                    card = a_tag.find_parent(["div", "li", "article"])
+                    if card:
+                        card_text = card.get_text(" ", strip=True)
+                        pkg_m = re.search(
+                            r"(?:Avg\.?|Average)\s*(?:Package|Salary|CTC)[^\d]{0,20}([0-9][0-9\.]*\s*(?:LPA|Lakh|Lakhs|Cr))",
+                            card_text, re.I
+                        )
+                        rank_m = re.search(
+                            r"(?:NIRF|Rank(?:ed)?)\s*[:#]?\s*(\d+)",
+                            card_text, re.I
+                        )
+                        card_meta[href] = {
+                            "listing_avg_package": pkg_m.group(1).strip() if pkg_m else "",
+                            "listing_rank": f"#{rank_m.group(1)}" if rank_m else ""
+                        }
+
+                    if len(discovered_urls) >= max_colleges:
+                        break
+
+                logger.info(f"Scroll #{scroll_count}: total URLs={len(discovered_urls)}")
                 page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-                page.wait_for_timeout(2000)  # Wait for dynamic elements to load
+                page.wait_for_timeout(2000)
                 scroll_count += 1
-                
+
         except Exception as e:
             logger.error(f"Error during URL discovery: {e}")
         finally:
             browser.close()
-            
-    # Save to CSV
+
+    # Save to CSV — include listing-page metadata columns
     os.makedirs(os.path.dirname(COLLEGE_URLS_CSV), exist_ok=True)
     try:
         with open(COLLEGE_URLS_CSV, "w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["url"])
+            writer.writerow(["url", "listing_avg_package", "listing_rank"])
             for url in sorted(discovered_urls):
-                writer.writerow([url])
+                meta = card_meta.get(url, {})
+                writer.writerow([url, meta.get("listing_avg_package", ""), meta.get("listing_rank", "")])
         logger.info(f"Saved {len(discovered_urls)} URLs to {COLLEGE_URLS_CSV}")
     except Exception as e:
         logger.error(f"Failed to write URLs to CSV: {e}")
