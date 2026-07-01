@@ -1,16 +1,8 @@
 [
     {
-        "college_id": "25356",
-        "admission_process": "Here are the important dates of the admission process conducted by IIT Hyderabad.",
-        "exams_accepted": "IIT Hyderabad offers admission to the MSc program in 3 specializations such chemistry, physics, and mathematics. For admission to the IITH MSc program, Candidates need to appear for the IIT-JAM entrance exam followed by an interview round for the final selection conducted by the institute.",
-        "eligibility_criteria": "Not Specified",
-        "important_dates": "Not Specified",
-        "application_deadlines": "Not Specified"
-    },
-    {
-        "college_id": "25396",
-        "admission_process": "IIT Guwahati offers Ph.D programs in Regular, sponsored, part-time, and self-financed modules in 24 different specializations. The admission criteria for Ph.D programs are discussed below.",
-        "exams_accepted": "JEE Advanced, JEE Main, GATE, CAT, IIT JAM, CEED, UCEED",
+        "college_id": "25446",
+        "admission_process": "AIIMS New Delhi PhD admission 2026 runs in two sessions: January and July. The institute accepts both medical and non-medical postgraduates across 30 plus departments. All PhD admissions go through a Computer-Based Test conducted by AIIMS.",
+        "exams_accepted": "The table below compares AIIMS New Delhi with JIPMER Puducherry and MAMC New Delhi for MBBS admission. These are the most frequently compared institutes by NEET toppers.",
         "eligibility_criteria": "Not Specified",
         "important_dates": "Not Specified",
         "application_deadlines": "Not Specified"
@@ -21,6 +13,22 @@
         "exams_accepted": "JEE Advanced, JEE Main, GATE, CAT, IIT JAM, CEED, UCEED, UGC NET",
         "eligibility_criteria": "The IIT Delhi PhD. admissions are based on personal interviews conducted by the concerned department/center. The applications for IIT Delhi PhD. admission 2024-2025 were available in March 2024 at https://owncloud.iitd.ac.in/nextcloud/index.php/s/YQW7tbrr8MwbxG7.",
         "important_dates": "The application form for M.Tech Admissions 2024 at IIT Delhi was released on the official website the institution- home.iitd.ac.in on March 20, 2024. The last date for filling out the application form was April 4, 2024. The IIT Delhi M.Tech admissions are based on the candidates\u2019 GATE scores. The important dates for MTech admissions 2024 at IIT Delhi are given below:",
+        "application_deadlines": "Not Specified"
+    },
+    {
+        "college_id": "25494",
+        "admission_process": "The various exams accepted for IIM Ahmedabad Admission are listed below:",
+        "exams_accepted": "GATE, CAT",
+        "eligibility_criteria": "Not Specified",
+        "important_dates": "Not Specified",
+        "application_deadlines": "Not Specified"
+    },
+    {
+        "college_id": "25621",
+        "admission_process": "National Law School of India University (NLSIU), Bangalore admits students through CLAT, CLAT-PG, or NLSAT, depending on the programme. Admissions are merit-based, subject to eligibility, reservations, and seat availability, and finalized through the prescribed counselling process.",
+        "exams_accepted": "Since NLSIU Bangalore is currently the top NLU in India, with an NIRF rank of #1, you will have to put in a lot of work. There will be 120 questions in the exam overall. The questions will be based on the updated CLAT Exam Pattern. Here's how you can prepare for CLAT to get into NLSIU Bangalore:",
+        "eligibility_criteria": "Not Specified",
+        "important_dates": "Yes, NLSIU accepts a valid score in CLAT PG for admission to its one-year LLM degree program. For admission into the postgraduate LLM programme, the candidate must take the Common Law Admission Test (CLAT-PG), and achieve the required cutoff for the respective academic year.",
         "application_deadlines": "Not Specified"
     }
 ]

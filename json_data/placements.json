@@ -1,26 +1,34 @@
 [
     {
-        "college_id": "25356",
-        "average_package": "20.07 LPA",
-        "median_package": "21 LPA",
-        "highest_package": "51.06 LPA",
-        "placement_percentage": "100% Placement",
-        "top_recruiters": "Microsoft, Google, Amazon, Accenture, TCS, Infosys, Cognizant, Intel, Cisco"
-    },
-    {
-        "college_id": "25396",
-        "average_package": "36.17 LPA",
-        "median_package": "30.75 LPA",
-        "highest_package": "2.05 CPA",
-        "placement_percentage": "100% Placement",
-        "top_recruiters": "Microsoft, Google, Amazon, Accenture, HCL, Intel"
+        "college_id": "25446",
+        "highest_package": "67.80 LPA",
+        "average_package": "16 LPA",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
     },
     {
         "college_id": "25455",
-        "average_package": "2 Cr",
-        "median_package": "22.51 Lakh",
-        "highest_package": "48 Lakh",
+        "highest_package": "2 Cr",
+        "average_package": "25.82 Lakh",
+        "median_package": "20 LPA",
         "placement_percentage": "100% Placement",
-        "top_recruiters": "Microsoft, Google, Amazon, Accenture, TCS, Infosys, Cognizant, HCL, Cisco"
+        "top_recruiters": "Microsoft, Google, Amazon, Accenture, TCS, Infosys, Cognizant, HCL, Cisco, Goldman Sachs, Flipkart"
+    },
+    {
+        "college_id": "25494",
+        "highest_package": "1.32 Cr",
+        "average_package": "27.60 LPA",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "25621",
+        "highest_package": "18 LPA",
+        "average_package": "16 LPA",
+        "median_package": "16.50 LPA",
+        "placement_percentage": "100% placement",
+        "top_recruiters": "Not Specified"
     }
 ]
