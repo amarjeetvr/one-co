@@ -17,18 +17,10 @@
     },
     {
         "college_id": "25494",
-        "highest_package": "1.32 Cr",
-        "average_package": "27.60 LPA",
-        "median_package": "Not Specified",
+        "highest_package": "1.15 CPA",
+        "average_package": "35.07 LPA",
+        "median_package": "36.2 LPA",
         "placement_percentage": "Not Specified",
-        "top_recruiters": "Not Specified"
-    },
-    {
-        "college_id": "25621",
-        "highest_package": "18 LPA",
-        "average_package": "16 LPA",
-        "median_package": "16.50 LPA",
-        "placement_percentage": "100% placement",
-        "top_recruiters": "Not Specified"
+        "top_recruiters": "Microsoft, Google, Accenture, TCS, Wipro, HCL, Goldman Sachs, Flipkart"
     }
 ]

@@ -8,7 +8,6 @@ from logger import logger
 from discovery import discover_college_urls
 from downloader import run_downloader
 import parser
-import exporter
 
 
 def discover_downloaded_colleges() -> List[Tuple[str, str]]:
@@ -46,6 +45,8 @@ def load_listing_metadata() -> Dict[str, Dict]:
 
 def run_parsing_and_export():
     """Reads all downloaded HTML files, parses them offline, and exports to JSON and Excel."""
+    import exporter
+
     logger.info("Starting Stage 2: Offline parsing and export...")
 
     downloaded = discover_downloaded_colleges()
@@ -84,7 +85,7 @@ def run_parsing_and_export():
                 # Always prefer the listing page's Collegedunia rank for the college summary
                 card = listing_meta.get(college_url, {})
                 if card.get("listing_rank"):
-                    info_data["ranking"] = card["listing_rank"]
+                    info_data["ranking"] = f"CD Rank {card['listing_rank']}"
 
                 all_colleges.append(info_data)
             except Exception as e:
@@ -132,19 +133,23 @@ def run_parsing_and_export():
                 all_rankings.extend(
                     parser.parse_rankings(placement_html, college_id, extra_html=info_html)
                 )
-                # If discovery provided a listing_rank (Collegedunia listing position),
-                # add it as a Collegedunia ranking when parser didn't already find one.
+                # Always use discovery's listing_rank as the authoritative CD Rank.
+                # Parsed Collegedunia ranks can capture other rank snippets (e.g. #1/500)
+                # that are not the listing CD Rank we want to store.
                 card = listing_meta.get(college_url, {})
                 listing_rank = card.get("listing_rank")
                 if listing_rank:
-                    found_cd = any(r.get("college_id") == college_id and r.get("ranking_body") == "Collegedunia" for r in all_rankings)
-                    if not found_cd:
-                        all_rankings.append({
-                            "college_id": college_id,
-                            "ranking_body": "Collegedunia",
-                            "rank": listing_rank,
-                            "ranking_year": None
-                        })
+                    # Drop existing Collegedunia entries for this college, then append CD Rank.
+                    all_rankings = [
+                        r for r in all_rankings
+                        if not (r.get("college_id") == college_id and r.get("ranking_body") == "Collegedunia")
+                    ]
+                    all_rankings.append({
+                        "college_id": college_id,
+                        "ranking_body": "Collegedunia",
+                        "rank": f"CD Rank {listing_rank}",
+                        "ranking_year": None
+                    })
             except Exception as e:
                 logger.error(f"Error parsing placements for {slug}: {e}")
 

@@ -23,6 +23,24 @@ def is_college_url(url: str) -> bool:
     """Check if the URL points to a college or university profile."""
     return bool(re.search(r"/(colleges?|university)/\d+", url))
 
+
+def extract_cd_rank(card) -> str:
+    """Extract the visible CD Rank shown on a listing card."""
+    card_text = card.get_text(" ", strip=True)
+
+    # The listing card usually begins with the CD Rank token, e.g. "#1 IIT Delhi ...".
+    start_match = re.search(r"^#\s*(\d{1,3})\b", card_text)
+    if start_match:
+        return f"#{start_match.group(1)}"
+
+    # Fallback: inspect individual text nodes and keep the first leading #N token.
+    for text_node in card.stripped_strings:
+        node_match = re.match(r"^#\s*(\d{1,3})\b", text_node)
+        if node_match:
+            return f"#{node_match.group(1)}"
+
+    return ""
+
 def discover_college_urls(listing_url: str = "https://collegedunia.com/india-colleges", max_colleges: int = 50):
     """
     Crawls the listing page, scrolls to load dynamic content,
@@ -98,22 +116,16 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                         card_text, re.I
                     )
 
-                    # Fallback: scan visible text nodes for a standalone leading #N token (CD Rank)
-                    cd_rank = None
-                    if not rank_m:
-                        for s in card.stripped_strings:
-                            m = re.match(r"^#\s*(\d{1,3})\b", s)
-                            if m:
-                                cd_rank = m.group(1)
-                                break
+                    # Fallback: scan visible text nodes for the leading CD Rank token.
+                    cd_rank = extract_cd_rank(card) if not rank_m else ""
 
                     listing_rank_val = ""
                     if rank_m:
                         listing_rank_val = f"#{rank_m.group(1)}"
                     elif cd_rank:
-                        listing_rank_val = f"#{cd_rank}"
+                        listing_rank_val = cd_rank
 
-                    # If we didn't find a rank token, use the card position as CD Rank
+                    # If we didn't find a rank token, use the card position as CD Rank.
                     if not listing_rank_val:
                         listing_rank_val = f"#{len(discovered_list)}"
 
@@ -166,17 +178,14 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
         except Exception as e:
             logger.error(f"Error during URL discovery: {e}")
         finally:
-            browser.close()
+            try:
+                browser.close()
+            except Exception as close_error:
+                logger.warning(f"Browser close failed during discovery cleanup: {close_error}")
 
     # Save to CSV — include listing-page metadata columns
     os.makedirs(os.path.dirname(COLLEGE_URLS_CSV), exist_ok=True)
     try:
-        # Overwrite listing_rank with the card position (CD Rank) to reflect visible listing order
-        for idx, url in enumerate(discovered_list, start=1):
-            meta = card_meta.get(url, {})
-            meta["listing_rank"] = f"#{idx}"
-            card_meta[url] = meta
-
         with open(COLLEGE_URLS_CSV, "w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["url", "listing_avg_package", "listing_rank"])

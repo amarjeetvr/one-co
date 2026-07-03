@@ -199,6 +199,122 @@ def is_header_row(tr) -> bool:
         return True
     return False
 
+
+def _normalize_degree_tag(course_tag: str) -> str:
+    tag = clean_text(course_tag).lower()
+    if not tag:
+        return ""
+    if "b.tech" in tag or "be/b.tech" in tag or tag in {"be", "b.e", "be/b.e"}:
+        return "B.Tech"
+    if "m.tech" in tag or "me/m.tech" in tag or tag in {"me", "m.e", "me/m.e"}:
+        return "M.Tech"
+    if "mba" in tag or "pgdm" in tag:
+        return "MBA"
+    if "b.sc" in tag:
+        return "B.Sc"
+    if "m.sc" in tag:
+        return "M.Sc"
+    if "mbbs" in tag:
+        return "MBBS"
+    if "mca" in tag:
+        return "MCA"
+    if "bca" in tag:
+        return "BCA"
+    if "bba" in tag or "bbm" in tag:
+        return "BBA"
+    if "b.com" in tag:
+        return "B.Com"
+    if tag.startswith("ba"):
+        return "BA"
+    if tag.startswith("ma"):
+        return "MA"
+    if "ph.d" in tag or tag.startswith("phd"):
+        return "Ph.D"
+    if "b.des" in tag:
+        return "B.Des"
+    if "m.des" in tag:
+        return "M.Des"
+    if "mpp" in tag:
+        return "MPP"
+    if "executive" in tag:
+        return "Executive Programme"
+    return course_tag.strip()
+
+
+def _format_fee_amount(fees_data: Dict[str, Any]) -> str:
+    amount_formatted = fees_data.get("amount_formatted")
+    if amount_formatted:
+        return clean_text(str(amount_formatted))
+
+    amount = fees_data.get("amount")
+    if amount in (None, ""):
+        return "Not Specified"
+
+    try:
+        numeric_amount = float(amount)
+    except Exception:
+        return clean_text(str(amount))
+
+    if numeric_amount >= 100000:
+        lakhs = numeric_amount / 100000.0
+        return f"{lakhs:g} Lakhs"
+    return f"{numeric_amount:g}"
+
+
+def _extract_embedded_course_rows(html_content: str, college_id: str) -> List[Dict[str, Any]]:
+    """Extracts course rows from embedded Collegedunia course JSON when no tables are rendered."""
+    rows: List[Dict[str, Any]] = []
+    seen = set()
+
+    for match in re.finditer(r'"course_name":"([^"]+)","display_course_name":"([^"]+)"', html_content):
+        window_start = max(0, match.start() - 900)
+        window_end = min(len(html_content), match.end() + 1400)
+        window = html_content[window_start:window_end]
+
+        course_tag_matches = list(re.finditer(r'"course_tag":"([^"]+)"', window))
+        course_tag = course_tag_matches[-1].group(1) if course_tag_matches else ""
+        degree_name = _normalize_degree_tag(course_tag)
+        if not degree_name:
+            continue
+
+        specialization = clean_text(match.group(1))
+        course_name = clean_text(match.group(2))
+        if not specialization or specialization.lower() in {"general", degree_name.lower()}:
+            specialization = "General"
+
+        fees_match = re.search(r'"fees_data":\{"amount":(?:"([^"]+)"|([0-9]+(?:\.[0-9]+)?))', window)
+        fees_data: Dict[str, Any] = {}
+        if fees_match:
+            fees_data["amount"] = fees_match.group(1) or fees_match.group(2) or ""
+
+        amount_formatted_match = re.search(r'"amount_formatted":"([^"]+)"', window)
+        if amount_formatted_match:
+            fees_data["amount_formatted"] = amount_formatted_match.group(1)
+
+        fees = _format_fee_amount(fees_data)
+
+        row_key = (degree_name, course_name, specialization, fees)
+        if row_key in seen:
+            continue
+        seen.add(row_key)
+
+        rows.append({
+            "college_id": college_id,
+            "degree_name": degree_name,
+            "course_name": course_name,
+            "specialization": specialization,
+            "total_fees": fees,
+            "duration": "Not Specified",
+            "course_type": "Full Time",
+            "eligibility": "Not Specified",
+            "entrance_exam": "Not Specified",
+            "application_date": "Not Specified",
+            "intake_seats": "Not Specified",
+            "course_level": "PG" if degree_name in {"MBA", "M.Tech", "M.Sc", "MCA", "MA", "M.Des", "MPP", "Executive Programme", "Ph.D"} else "UG"
+        })
+
+    return rows
+
 def parse_courses(html_content: str, college_id: str, college_url: str) -> List[Dict[str, Any]]:
     """Parses list of courses from the /courses-fees subpage html."""
     soup = BeautifulSoup(html_content, "html.parser")
@@ -410,6 +526,9 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
                             "course_level": "Doctorate"
                         })
                         
+    if not rows:
+        rows = _extract_embedded_course_rows(html_content, college_id)
+
     return rows
 
 # ----------------- 3. ADMISSIONS PARSER -----------------

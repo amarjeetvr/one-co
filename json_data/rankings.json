@@ -2,25 +2,19 @@
     {
         "college_id": "25446",
         "ranking_body": "Collegedunia",
-        "rank": "#1",
+        "rank": "CD Rank #3",
         "ranking_year": null
     },
     {
         "college_id": "25455",
         "ranking_body": "Collegedunia",
-        "rank": "#1",
-        "ranking_year": 2025
+        "rank": "CD Rank #1",
+        "ranking_year": null
     },
     {
         "college_id": "25494",
         "ranking_body": "Collegedunia",
-        "rank": "#1",
-        "ranking_year": 2025
-    },
-    {
-        "college_id": "25621",
-        "ranking_body": "Collegedunia",
-        "rank": "#4",
+        "rank": "CD Rank #2",
         "ranking_year": null
     }
 ]
