@@ -27,18 +27,32 @@ def discover_downloaded_colleges() -> List[Tuple[str, str]]:
 
 
 def load_listing_metadata() -> Dict[str, Dict]:
-    """Reads listing_avg_package and listing_rank columns written by discovery."""
+    """Reads listing placement/rank columns written by discovery."""
     meta = {}
     if not os.path.exists(COLLEGE_URLS_CSV):
         return meta
+
+    def _row_get(row: Dict[str, str], key: str) -> str:
+        if key in row:
+            return row.get(key, "")
+        if key == "url" and "\ufeffurl" in row:
+            return row.get("\ufeffurl", "")
+        for existing_key in row.keys():
+            normalized = existing_key.replace('"', "").replace("\ufeff", "").strip().lower()
+            if normalized == key:
+                return row.get(existing_key, "")
+        return ""
+
     with open(COLLEGE_URLS_CSV, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            url = row.get("url", "").strip()
+            url = _row_get(row, "url").strip()
             if url:
                 meta[url] = {
-                    "listing_avg_package": row.get("listing_avg_package", ""),
-                    "listing_rank": row.get("listing_rank", "")
+                    "listing_avg_package": _row_get(row, "listing_avg_package").strip(),
+                    "listing_highest_package": _row_get(row, "listing_highest_package").strip(),
+                    "listing_placement_percentage": _row_get(row, "listing_placement_percentage").strip(),
+                    "listing_rank": _row_get(row, "listing_rank").strip(),
                 }
     return meta
 
@@ -122,10 +136,15 @@ def run_parsing_and_export():
 
                 placement_data = parser.parse_placements(placement_html, college_id)
 
-                # Fill avg_package gap from listing card if parser found nothing
+                # Prefer listing-card placement metrics when metadata exists for this URL.
                 card = listing_meta.get(college_url, {})
-                if card.get("listing_avg_package") and placement_data.get("average_package") == "Not Specified":
-                    placement_data["average_package"] = card["listing_avg_package"]
+                if card:
+                    placement_data["average_package"] = card.get("listing_avg_package") or "Not Specified"
+                    placement_data["highest_package"] = card.get("listing_highest_package") or "Not Specified"
+                    if card.get("listing_placement_percentage"):
+                        placement_data["placement_percentage"] = card["listing_placement_percentage"]
+                    elif placement_data.get("placement_percentage") in (None, ""):
+                        placement_data["placement_percentage"] = "Not Specified"
 
                 all_placements.append(placement_data)
 

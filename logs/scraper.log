@@ -4036,3 +4036,678 @@ Call log:
 [2026-07-03 16:29:06] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
 [2026-07-03 16:29:06] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
 [2026-07-03 16:29:06] INFO [main.py:210] Offline parsing and export complete.
+[2026-07-04 08:34:49] INFO [discovery.py:50] Starting URL discovery from: https://collegedunia.com/india-colleges
+[2026-07-04 08:34:51] INFO [discovery.py:70] Launching browser for discovery...
+[2026-07-04 08:34:54] INFO [discovery.py:78] Navigating to https://collegedunia.com/india-colleges...
+[2026-07-04 08:35:09] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+[2026-07-04 08:35:09] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad
+[2026-07-04 08:35:09] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi
+[2026-07-04 08:35:09] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25621-national-law-school-of-india-university-nlsiu-bangalore
+[2026-07-04 08:35:09] INFO [discovery.py:105] Discovered: https://collegedunia.com/college/14886-sagar-institute-of-research-and-technology-sirt-bhopal
+[2026-07-04 08:35:09] INFO [discovery.py:173] Scroll #0: total URLs=32
+[2026-07-04 08:35:12] INFO [discovery.py:195] Saved 32 URLs to D:\Development\Biglyp\one-co\urls\college_urls.csv
+[2026-07-04 08:35:30] INFO [downloader.py:201] Preparing to download pages for 3 colleges.
+[2026-07-04 08:35:31] INFO [downloader.py:219] --- Processing College 1/3: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455) ---
+[2026-07-04 08:35:31] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+[2026-07-04 08:35:38] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1059614 bytes)
+[2026-07-04 08:35:38] INFO [downloader.py:171] Sleeping for 2.32s...
+[2026-07-04 08:35:41] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/courses-fees
+[2026-07-04 08:35:45] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:36:02] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:36:04] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:36:05] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:36:07] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:36:08] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:36:10] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:36:12] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1263603 bytes)
+[2026-07-04 08:36:12] INFO [downloader.py:171] Sleeping for 3.84s...
+[2026-07-04 08:36:16] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/admission
+[2026-07-04 08:36:29] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1043292 bytes)
+[2026-07-04 08:36:29] INFO [downloader.py:171] Sleeping for 2.20s...
+[2026-07-04 08:36:31] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/placement
+[2026-07-04 08:36:41] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:36:53] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:36:55] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:36:57] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:36:59] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (881503 bytes)
+[2026-07-04 08:36:59] INFO [downloader.py:171] Sleeping for 3.33s...
+[2026-07-04 08:37:02] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/reviews
+[2026-07-04 08:37:11] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:37:23] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:37:24] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:37:26] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:37:28] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (131094 bytes)
+[2026-07-04 08:37:28] INFO [downloader.py:171] Sleeping for 3.89s...
+[2026-07-04 08:37:32] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/faculty
+[2026-07-04 08:37:36] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:37:48] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:37:50] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:37:51] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (368398 bytes)
+[2026-07-04 08:37:51] INFO [downloader.py:171] Sleeping for 3.47s...
+[2026-07-04 08:37:55] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/scholarship
+[2026-07-04 08:38:30] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:38:46] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:38:49] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:38:51] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:38:52] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (374554 bytes)
+[2026-07-04 08:38:52] INFO [downloader.py:171] Sleeping for 3.23s...
+[2026-07-04 08:38:56] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/hostel
+[2026-07-04 08:39:08] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (557228 bytes)
+[2026-07-04 08:39:08] INFO [downloader.py:171] Sleeping for 2.57s...
+[2026-07-04 08:39:10] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/cutoff
+[2026-07-04 08:39:21] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (2708564 bytes)
+[2026-07-04 08:39:21] INFO [downloader.py:171] Sleeping for 2.41s...
+[2026-07-04 08:39:23] INFO [downloader.py:219] --- Processing College 2/3: iima-indian-institute-of-management-ahmedabad (ID: 25494) ---
+[2026-07-04 08:39:23] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad
+[2026-07-04 08:39:45] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25494_iima-indian-institute-of-management-ahmedabad.html (992104 bytes)
+[2026-07-04 08:39:45] INFO [downloader.py:171] Sleeping for 3.74s...
+[2026-07-04 08:39:49] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/courses-fees
+[2026-07-04 08:39:52] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:40:05] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:40:06] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:40:07] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:40:09] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:40:10] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:40:12] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:40:13] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25494_iima-indian-institute-of-management-ahmedabad.html (540174 bytes)
+[2026-07-04 08:40:13] INFO [downloader.py:171] Sleeping for 3.90s...
+[2026-07-04 08:40:17] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/admission
+[2026-07-04 08:40:26] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25494_iima-indian-institute-of-management-ahmedabad.html (969081 bytes)
+[2026-07-04 08:40:27] INFO [downloader.py:171] Sleeping for 2.64s...
+[2026-07-04 08:40:30] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/placement
+[2026-07-04 08:40:38] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:41:01] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:41:06] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:41:11] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25494_iima-indian-institute-of-management-ahmedabad.html (587134 bytes)
+[2026-07-04 08:41:12] INFO [downloader.py:171] Sleeping for 3.23s...
+[2026-07-04 08:41:15] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/reviews
+[2026-07-04 08:41:20] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:41:37] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:41:39] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:41:41] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:41:43] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25494_iima-indian-institute-of-management-ahmedabad.html (479778 bytes)
+[2026-07-04 08:41:43] INFO [downloader.py:171] Sleeping for 2.41s...
+[2026-07-04 08:41:45] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/faculty
+[2026-07-04 08:41:52] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:42:10] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:42:12] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:42:13] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:42:14] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25494_iima-indian-institute-of-management-ahmedabad.html (441783 bytes)
+[2026-07-04 08:42:14] INFO [downloader.py:171] Sleeping for 2.07s...
+[2026-07-04 08:42:17] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/scholarship
+[2026-07-04 08:42:22] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:42:40] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:42:41] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:42:46] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25494_iima-indian-institute-of-management-ahmedabad.html (460674 bytes)
+[2026-07-04 08:42:46] INFO [downloader.py:171] Sleeping for 3.94s...
+[2026-07-04 08:42:50] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/hostel
+[2026-07-04 08:43:06] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25494_iima-indian-institute-of-management-ahmedabad.html (548562 bytes)
+[2026-07-04 08:43:06] INFO [downloader.py:171] Sleeping for 2.23s...
+[2026-07-04 08:43:08] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/cutoff
+[2026-07-04 08:43:17] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25494_iima-indian-institute-of-management-ahmedabad.html (711400 bytes)
+[2026-07-04 08:43:17] INFO [downloader.py:171] Sleeping for 3.30s...
+[2026-07-04 08:43:20] INFO [downloader.py:219] --- Processing College 3/3: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446) ---
+[2026-07-04 08:43:20] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi
+[2026-07-04 08:43:27] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (960261 bytes)
+[2026-07-04 08:43:27] INFO [downloader.py:171] Sleeping for 3.97s...
+[2026-07-04 08:43:33] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/courses-fees
+[2026-07-04 08:43:40] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:43:57] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:43:59] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:44:01] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 08:44:03] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:05] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:10] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (528862 bytes)
+[2026-07-04 08:44:10] INFO [downloader.py:171] Sleeping for 2.54s...
+[2026-07-04 08:44:13] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/admission
+[2026-07-04 08:44:18] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (851413 bytes)
+[2026-07-04 08:44:18] INFO [downloader.py:171] Sleeping for 3.57s...
+[2026-07-04 08:44:22] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/placement
+[2026-07-04 08:44:27] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:44:45] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:46] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:50] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:44:51] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:53] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:54] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:55] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:56] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:44:58] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (506523 bytes)
+[2026-07-04 08:44:58] INFO [downloader.py:171] Sleeping for 3.41s...
+[2026-07-04 08:45:01] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/reviews
+[2026-07-04 08:45:05] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:45:18] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:45:19] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:45:20] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (443452 bytes)
+[2026-07-04 08:45:20] INFO [downloader.py:171] Sleeping for 3.79s...
+[2026-07-04 08:45:24] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/faculty
+[2026-07-04 08:45:27] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:45:41] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:45:42] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:45:43] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:45:45] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:45:46] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:45:47] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:45:48] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 08:45:49] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (448039 bytes)
+[2026-07-04 08:45:49] INFO [downloader.py:171] Sleeping for 3.73s...
+[2026-07-04 08:45:53] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/scholarship
+[2026-07-04 08:45:56] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 08:46:09] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 08:46:10] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (631654 bytes)
+[2026-07-04 08:46:10] INFO [downloader.py:171] Sleeping for 3.98s...
+[2026-07-04 08:46:14] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/hostel
+[2026-07-04 08:46:18] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (566388 bytes)
+[2026-07-04 08:46:18] INFO [downloader.py:171] Sleeping for 2.40s...
+[2026-07-04 08:46:21] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/cutoff
+[2026-07-04 08:46:26] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (2188371 bytes)
+[2026-07-04 08:46:26] INFO [downloader.py:171] Sleeping for 2.50s...
+[2026-07-04 08:46:29] INFO [downloader.py:227] Downloader task complete.
+[2026-07-04 08:47:36] INFO [main.py:50] Starting Stage 2: Offline parsing and export...
+[2026-07-04 08:47:36] INFO [main.py:57] Found 3 college(s) to parse.
+[2026-07-04 08:47:36] INFO [main.py:71] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-04 08:47:45] INFO [main.py:71] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-04 08:47:54] INFO [main.py:71] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-04 08:48:03] INFO [exporter.py:35] Starting data export process...
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\colleges.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 102 records to JSON: D:\Development\Biglyp\one-co\json_data\courses.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\admissions.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\placements.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\rankings.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\faculty.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\scholarships.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\hostel.json
+[2026-07-04 08:48:03] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\reviews.json
+[2026-07-04 08:48:04] WARNING [exporter.py:70] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-07-04 08:48:04] WARNING [exporter.py:70] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-07-04 08:48:04] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: D:\Development\Biglyp\one-co\exports\all_colleges.xlsx
+[2026-07-04 08:48:04] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-04 08:48:05] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-04 08:48:05] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-04 08:48:05] INFO [main.py:210] Offline parsing and export complete.
+[2026-07-04 09:06:50] INFO [main.py:50] Starting Stage 2: Offline parsing and export...
+[2026-07-04 09:06:50] INFO [main.py:57] Found 3 college(s) to parse.
+[2026-07-04 09:06:50] INFO [main.py:71] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-04 09:06:59] INFO [main.py:71] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-04 09:07:10] INFO [main.py:71] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-04 09:07:18] INFO [exporter.py:35] Starting data export process...
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\colleges.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 110 records to JSON: D:\Development\Biglyp\one-co\json_data\courses.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\admissions.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\placements.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\rankings.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\faculty.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\scholarships.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\hostel.json
+[2026-07-04 09:07:18] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\reviews.json
+[2026-07-04 09:07:20] WARNING [exporter.py:70] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-07-04 09:07:20] WARNING [exporter.py:70] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-07-04 09:07:20] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: D:\Development\Biglyp\one-co\exports\all_colleges.xlsx
+[2026-07-04 09:07:20] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-04 09:07:21] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-04 09:07:22] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-04 09:07:22] INFO [main.py:210] Offline parsing and export complete.
+[2026-07-04 09:08:18] INFO [main.py:50] Starting Stage 2: Offline parsing and export...
+[2026-07-04 09:08:18] INFO [main.py:57] Found 3 college(s) to parse.
+[2026-07-04 09:08:18] INFO [main.py:71] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-04 09:08:27] INFO [main.py:71] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-04 09:08:39] INFO [main.py:71] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-04 09:08:48] INFO [exporter.py:35] Starting data export process...
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\colleges.json
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 110 records to JSON: D:\Development\Biglyp\one-co\json_data\courses.json
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\admissions.json
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\placements.json
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\rankings.json
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\faculty.json
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\scholarships.json
+[2026-07-04 09:08:48] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\hostel.json
+[2026-07-04 09:08:49] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\reviews.json
+[2026-07-04 09:08:51] WARNING [exporter.py:70] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-07-04 09:08:51] WARNING [exporter.py:70] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-07-04 09:08:52] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: D:\Development\Biglyp\one-co\exports\all_colleges.xlsx
+[2026-07-04 09:08:53] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-04 09:08:53] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-04 09:08:54] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-04 09:08:54] INFO [main.py:210] Offline parsing and export complete.
+[2026-07-04 09:10:38] INFO [discovery.py:50] Starting URL discovery from: https://collegedunia.com/india-colleges
+[2026-07-04 09:10:39] INFO [discovery.py:70] Launching browser for discovery...
+[2026-07-04 09:10:43] INFO [discovery.py:78] Navigating to https://collegedunia.com/india-colleges...
+[2026-07-04 09:10:57] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+[2026-07-04 09:10:57] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad
+[2026-07-04 09:10:57] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi
+[2026-07-04 09:10:57] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25621-national-law-school-of-india-university-nlsiu-bangalore
+[2026-07-04 09:10:57] INFO [discovery.py:105] Discovered: https://collegedunia.com/college/14886-sagar-institute-of-research-and-technology-sirt-bhopal
+[2026-07-04 09:10:57] INFO [discovery.py:173] Scroll #0: total URLs=31
+[2026-07-04 09:11:00] INFO [discovery.py:195] Saved 31 URLs to D:\Development\Biglyp\one-co\urls\college_urls.csv
+[2026-07-04 09:11:13] INFO [downloader.py:201] Preparing to download pages for 3 colleges.
+[2026-07-04 09:11:14] INFO [downloader.py:219] --- Processing College 1/3: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455) ---
+[2026-07-04 09:11:14] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+[2026-07-04 09:11:21] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1060312 bytes)
+[2026-07-04 09:11:21] INFO [downloader.py:171] Sleeping for 3.60s...
+[2026-07-04 09:11:24] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/courses-fees
+[2026-07-04 09:11:28] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:11:44] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:11:46] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:11:48] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:11:49] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:11:51] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:11:53] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:11:54] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1218074 bytes)
+[2026-07-04 09:11:55] INFO [downloader.py:171] Sleeping for 2.11s...
+[2026-07-04 09:11:57] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/admission
+[2026-07-04 09:12:09] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1041072 bytes)
+[2026-07-04 09:12:09] INFO [downloader.py:171] Sleeping for 3.56s...
+[2026-07-04 09:12:13] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/placement
+[2026-07-04 09:12:18] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:12:39] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (873760 bytes)
+[2026-07-04 09:12:39] INFO [downloader.py:171] Sleeping for 2.29s...
+[2026-07-04 09:12:42] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/reviews
+[2026-07-04 09:12:47] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:13:06] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:13:08] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:13:09] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (455193 bytes)
+[2026-07-04 09:13:09] INFO [downloader.py:171] Sleeping for 2.03s...
+[2026-07-04 09:13:11] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/faculty
+[2026-07-04 09:13:17] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:13:32] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:13:33] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:13:35] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (367716 bytes)
+[2026-07-04 09:13:35] INFO [downloader.py:171] Sleeping for 2.40s...
+[2026-07-04 09:13:37] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/scholarship
+[2026-07-04 09:13:41] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:13:55] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:13:56] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:13:58] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:13:59] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:14:00] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (435480 bytes)
+[2026-07-04 09:14:00] INFO [downloader.py:171] Sleeping for 3.57s...
+[2026-07-04 09:14:04] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/hostel
+[2026-07-04 09:14:08] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (564955 bytes)
+[2026-07-04 09:14:08] INFO [downloader.py:171] Sleeping for 3.03s...
+[2026-07-04 09:14:11] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/cutoff
+[2026-07-04 09:14:17] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (2691828 bytes)
+[2026-07-04 09:14:17] INFO [downloader.py:171] Sleeping for 3.84s...
+[2026-07-04 09:14:21] INFO [downloader.py:219] --- Processing College 2/3: iima-indian-institute-of-management-ahmedabad (ID: 25494) ---
+[2026-07-04 09:14:21] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad
+[2026-07-04 09:14:26] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25494_iima-indian-institute-of-management-ahmedabad.html (985745 bytes)
+[2026-07-04 09:14:26] INFO [downloader.py:171] Sleeping for 2.53s...
+[2026-07-04 09:14:28] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/courses-fees
+[2026-07-04 09:14:32] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:14:45] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:14:47] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:14:48] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:14:50] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:14:51] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:14:53] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:14:54] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25494_iima-indian-institute-of-management-ahmedabad.html (539948 bytes)
+[2026-07-04 09:14:54] INFO [downloader.py:171] Sleeping for 3.78s...
+[2026-07-04 09:14:58] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/admission
+[2026-07-04 09:15:02] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25494_iima-indian-institute-of-management-ahmedabad.html (973205 bytes)
+[2026-07-04 09:15:02] INFO [downloader.py:171] Sleeping for 3.52s...
+[2026-07-04 09:15:06] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/placement
+[2026-07-04 09:15:10] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:15:25] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:15:26] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:15:28] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:15:30] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:15:31] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:15:32] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:15:33] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25494_iima-indian-institute-of-management-ahmedabad.html (595184 bytes)
+[2026-07-04 09:15:33] INFO [downloader.py:171] Sleeping for 3.86s...
+[2026-07-04 09:15:37] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/reviews
+[2026-07-04 09:15:41] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:15:54] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:15:55] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:15:57] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:15:58] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25494_iima-indian-institute-of-management-ahmedabad.html (479155 bytes)
+[2026-07-04 09:15:58] INFO [downloader.py:171] Sleeping for 2.98s...
+[2026-07-04 09:16:01] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/faculty
+[2026-07-04 09:16:05] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:16:17] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:16:19] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:16:23] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:16:25] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25494_iima-indian-institute-of-management-ahmedabad.html (441464 bytes)
+[2026-07-04 09:16:25] INFO [downloader.py:171] Sleeping for 2.38s...
+[2026-07-04 09:16:28] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/scholarship
+[2026-07-04 09:16:41] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:17:01] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:17:02] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:17:04] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:17:05] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:17:07] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25494_iima-indian-institute-of-management-ahmedabad.html (460361 bytes)
+[2026-07-04 09:17:07] INFO [downloader.py:171] Sleeping for 2.16s...
+[2026-07-04 09:17:09] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/hostel
+[2026-07-04 09:17:14] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25494_iima-indian-institute-of-management-ahmedabad.html (548463 bytes)
+[2026-07-04 09:17:14] INFO [downloader.py:171] Sleeping for 3.70s...
+[2026-07-04 09:17:17] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/cutoff
+[2026-07-04 09:17:24] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25494_iima-indian-institute-of-management-ahmedabad.html (711490 bytes)
+[2026-07-04 09:17:24] INFO [downloader.py:171] Sleeping for 2.25s...
+[2026-07-04 09:17:27] INFO [downloader.py:219] --- Processing College 3/3: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446) ---
+[2026-07-04 09:17:27] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi
+[2026-07-04 09:17:36] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (936698 bytes)
+[2026-07-04 09:17:36] INFO [downloader.py:171] Sleeping for 3.45s...
+[2026-07-04 09:17:40] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/courses-fees
+[2026-07-04 09:17:45] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:18:00] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:18:02] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:18:03] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:18:06] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:09] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:12] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:18:15] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:16] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (585555 bytes)
+[2026-07-04 09:18:16] INFO [downloader.py:171] Sleeping for 2.15s...
+[2026-07-04 09:18:18] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/admission
+[2026-07-04 09:18:24] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (853179 bytes)
+[2026-07-04 09:18:24] INFO [downloader.py:171] Sleeping for 2.71s...
+[2026-07-04 09:18:26] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/placement
+[2026-07-04 09:18:34] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:18:48] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:49] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:51] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:18:52] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:53] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:55] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:56] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:57] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:18:58] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (511658 bytes)
+[2026-07-04 09:18:58] INFO [downloader.py:171] Sleeping for 3.74s...
+[2026-07-04 09:19:02] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/reviews
+[2026-07-04 09:19:07] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:19:25] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:19:28] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:19:30] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:19:32] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:19:34] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:19:36] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (409766 bytes)
+[2026-07-04 09:19:36] INFO [downloader.py:171] Sleeping for 2.81s...
+[2026-07-04 09:19:39] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/faculty
+[2026-07-04 09:19:44] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:19:56] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:20:01] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (641795 bytes)
+[2026-07-04 09:20:01] INFO [downloader.py:171] Sleeping for 2.41s...
+[2026-07-04 09:20:04] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/scholarship
+[2026-07-04 09:20:09] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:20:27] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:20:28] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (631178 bytes)
+[2026-07-04 09:20:28] INFO [downloader.py:171] Sleeping for 3.12s...
+[2026-07-04 09:20:32] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/hostel
+[2026-07-04 09:20:40] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (565616 bytes)
+[2026-07-04 09:20:40] INFO [downloader.py:171] Sleeping for 3.10s...
+[2026-07-04 09:20:43] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/cutoff
+[2026-07-04 09:21:00] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (2117239 bytes)
+[2026-07-04 09:21:00] INFO [downloader.py:171] Sleeping for 3.11s...
+[2026-07-04 09:21:03] INFO [downloader.py:227] Downloader task complete.
+[2026-07-04 09:21:23] INFO [main.py:50] Starting Stage 2: Offline parsing and export...
+[2026-07-04 09:21:23] INFO [main.py:57] Found 3 college(s) to parse.
+[2026-07-04 09:21:23] INFO [main.py:71] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-04 09:21:34] INFO [main.py:71] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-04 09:21:45] INFO [main.py:71] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-04 09:21:54] INFO [exporter.py:35] Starting data export process...
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\colleges.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 110 records to JSON: D:\Development\Biglyp\one-co\json_data\courses.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\admissions.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\placements.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\rankings.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\faculty.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\scholarships.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\hostel.json
+[2026-07-04 09:21:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\reviews.json
+[2026-07-04 09:21:55] WARNING [exporter.py:70] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-07-04 09:21:56] WARNING [exporter.py:70] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-07-04 09:21:56] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: D:\Development\Biglyp\one-co\exports\all_colleges.xlsx
+[2026-07-04 09:21:56] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-04 09:21:56] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-04 09:21:56] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-04 09:21:56] INFO [main.py:210] Offline parsing and export complete.
+[2026-07-04 09:54:03] INFO [discovery.py:50] Starting URL discovery from: https://collegedunia.com/india-colleges
+[2026-07-04 09:54:04] INFO [discovery.py:70] Launching browser for discovery...
+[2026-07-04 09:54:09] INFO [discovery.py:78] Navigating to https://collegedunia.com/india-colleges...
+[2026-07-04 09:54:22] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+[2026-07-04 09:54:22] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad
+[2026-07-04 09:54:22] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi
+[2026-07-04 09:54:22] INFO [discovery.py:105] Discovered: https://collegedunia.com/university/25621-national-law-school-of-india-university-nlsiu-bangalore
+[2026-07-04 09:54:22] INFO [discovery.py:105] Discovered: https://collegedunia.com/college/14886-sagar-institute-of-research-and-technology-sirt-bhopal
+[2026-07-04 09:54:24] INFO [discovery.py:173] Scroll #0: total URLs=31
+[2026-07-04 09:54:28] INFO [discovery.py:195] Saved 31 URLs to D:\Development\Biglyp\one-co\urls\college_urls.csv
+[2026-07-04 09:54:36] INFO [downloader.py:201] Preparing to download pages for 3 colleges.
+[2026-07-04 09:54:37] INFO [downloader.py:219] --- Processing College 1/3: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455) ---
+[2026-07-04 09:54:37] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+[2026-07-04 09:54:44] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1027239 bytes)
+[2026-07-04 09:54:44] INFO [downloader.py:171] Sleeping for 3.79s...
+[2026-07-04 09:54:47] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/courses-fees
+[2026-07-04 09:54:52] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:55:06] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:55:07] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:55:09] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:55:10] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:55:11] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:55:13] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:55:17] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1193653 bytes)
+[2026-07-04 09:55:18] INFO [downloader.py:171] Sleeping for 3.35s...
+[2026-07-04 09:55:21] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/admission
+[2026-07-04 09:55:26] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (1012352 bytes)
+[2026-07-04 09:55:26] INFO [downloader.py:171] Sleeping for 3.01s...
+[2026-07-04 09:55:29] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/placement
+[2026-07-04 09:55:33] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:55:47] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:55:48] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:55:49] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (768337 bytes)
+[2026-07-04 09:55:49] INFO [downloader.py:171] Sleeping for 3.63s...
+[2026-07-04 09:55:53] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/reviews
+[2026-07-04 09:56:10] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:56:22] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:56:23] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (240598 bytes)
+[2026-07-04 09:56:23] INFO [downloader.py:171] Sleeping for 3.92s...
+[2026-07-04 09:56:27] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/faculty
+[2026-07-04 09:56:32] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:56:44] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:56:45] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:56:46] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:56:48] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:56:51] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:56:52] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:56:53] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (415517 bytes)
+[2026-07-04 09:56:53] INFO [downloader.py:171] Sleeping for 2.26s...
+[2026-07-04 09:56:56] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/scholarship
+[2026-07-04 09:56:59] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:57:15] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:57:16] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:57:18] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:57:19] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:57:20] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (435373 bytes)
+[2026-07-04 09:57:20] INFO [downloader.py:171] Sleeping for 3.95s...
+[2026-07-04 09:57:24] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/hostel
+[2026-07-04 09:57:29] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (564986 bytes)
+[2026-07-04 09:57:29] INFO [downloader.py:171] Sleeping for 3.93s...
+[2026-07-04 09:57:33] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi/cutoff
+[2026-07-04 09:57:38] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html (2691758 bytes)
+[2026-07-04 09:57:38] INFO [downloader.py:171] Sleeping for 2.15s...
+[2026-07-04 09:57:40] INFO [downloader.py:219] --- Processing College 2/3: iima-indian-institute-of-management-ahmedabad (ID: 25494) ---
+[2026-07-04 09:57:40] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad
+[2026-07-04 09:57:45] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25494_iima-indian-institute-of-management-ahmedabad.html (985662 bytes)
+[2026-07-04 09:57:45] INFO [downloader.py:171] Sleeping for 2.74s...
+[2026-07-04 09:57:47] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/courses-fees
+[2026-07-04 09:57:51] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:58:04] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:58:05] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 09:58:07] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:58:08] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:58:10] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:58:11] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:58:13] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25494_iima-indian-institute-of-management-ahmedabad.html (539935 bytes)
+[2026-07-04 09:58:13] INFO [downloader.py:171] Sleeping for 2.80s...
+[2026-07-04 09:58:16] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/admission
+[2026-07-04 09:58:20] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25494_iima-indian-institute-of-management-ahmedabad.html (973168 bytes)
+[2026-07-04 09:58:21] INFO [downloader.py:171] Sleeping for 3.91s...
+[2026-07-04 09:58:25] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/placement
+[2026-07-04 09:58:28] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:58:43] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:58:44] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:58:46] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:58:47] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:58:48] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:58:49] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:58:51] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25494_iima-indian-institute-of-management-ahmedabad.html (596783 bytes)
+[2026-07-04 09:58:51] INFO [downloader.py:171] Sleeping for 3.22s...
+[2026-07-04 09:58:54] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/reviews
+[2026-07-04 09:58:57] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:59:10] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:59:11] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:59:13] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:59:14] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25494_iima-indian-institute-of-management-ahmedabad.html (472739 bytes)
+[2026-07-04 09:59:14] INFO [downloader.py:171] Sleeping for 2.09s...
+[2026-07-04 09:59:16] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/faculty
+[2026-07-04 09:59:19] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:59:31] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:59:33] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 09:59:34] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:59:35] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25494_iima-indian-institute-of-management-ahmedabad.html (441463 bytes)
+[2026-07-04 09:59:35] INFO [downloader.py:171] Sleeping for 3.75s...
+[2026-07-04 09:59:39] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/scholarship
+[2026-07-04 09:59:43] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 09:59:56] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:59:57] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 09:59:58] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 10:00:00] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:00:01] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25494_iima-indian-institute-of-management-ahmedabad.html (460243 bytes)
+[2026-07-04 10:00:01] INFO [downloader.py:171] Sleeping for 3.09s...
+[2026-07-04 10:00:04] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/hostel
+[2026-07-04 10:00:08] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25494_iima-indian-institute-of-management-ahmedabad.html (548426 bytes)
+[2026-07-04 10:00:08] INFO [downloader.py:171] Sleeping for 2.02s...
+[2026-07-04 10:00:10] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25494-iima-indian-institute-of-management-ahmedabad/cutoff
+[2026-07-04 10:00:15] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25494_iima-indian-institute-of-management-ahmedabad.html (711516 bytes)
+[2026-07-04 10:00:15] INFO [downloader.py:171] Sleeping for 2.26s...
+[2026-07-04 10:00:17] INFO [downloader.py:219] --- Processing College 3/3: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446) ---
+[2026-07-04 10:00:17] INFO [downloader.py:136] Downloading info from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi
+[2026-07-04 10:00:22] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\info\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (990545 bytes)
+[2026-07-04 10:00:22] INFO [downloader.py:171] Sleeping for 2.18s...
+[2026-07-04 10:00:24] INFO [downloader.py:136] Downloading courses from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/courses-fees
+[2026-07-04 10:00:27] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 10:00:41] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 10:00:42] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 10:00:44] INFO [downloader.py:113] Clicked expand button: view more courses
+[2026-07-04 10:00:45] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:00:47] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:00:48] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 10:00:50] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:00:51] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\courses\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (585557 bytes)
+[2026-07-04 10:00:51] INFO [downloader.py:171] Sleeping for 2.47s...
+[2026-07-04 10:00:54] INFO [downloader.py:136] Downloading admissions from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/admission
+[2026-07-04 10:00:58] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\admissions\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (854891 bytes)
+[2026-07-04 10:00:58] INFO [downloader.py:171] Sleeping for 2.82s...
+[2026-07-04 10:01:01] INFO [downloader.py:136] Downloading placements from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/placement
+[2026-07-04 10:01:04] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 10:01:19] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:21] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:23] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 10:01:25] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:26] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:27] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:29] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:31] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:32] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\placements\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (507620 bytes)
+[2026-07-04 10:01:32] INFO [downloader.py:171] Sleeping for 3.27s...
+[2026-07-04 10:01:35] INFO [downloader.py:136] Downloading reviews from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/reviews
+[2026-07-04 10:01:43] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 10:01:56] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 10:01:57] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:01:58] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\reviews\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (449558 bytes)
+[2026-07-04 10:01:58] INFO [downloader.py:171] Sleeping for 3.93s...
+[2026-07-04 10:02:02] INFO [downloader.py:136] Downloading faculty from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/faculty
+[2026-07-04 10:02:05] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 10:02:18] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 10:02:20] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 10:02:21] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:02:22] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:02:24] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:02:25] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:02:26] INFO [downloader.py:113] Clicked expand button: read more
+[2026-07-04 10:02:27] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\faculty\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (447960 bytes)
+[2026-07-04 10:02:27] INFO [downloader.py:171] Sleeping for 3.98s...
+[2026-07-04 10:02:31] INFO [downloader.py:136] Downloading scholarships from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/scholarship
+[2026-07-04 10:02:35] INFO [downloader.py:54] Scrolling and expanding page content...
+[2026-07-04 10:02:47] INFO [downloader.py:113] Clicked expand button: ...read more
+[2026-07-04 10:02:49] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\scholarships\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (631579 bytes)
+[2026-07-04 10:02:49] INFO [downloader.py:171] Sleeping for 2.13s...
+[2026-07-04 10:02:51] INFO [downloader.py:136] Downloading hostel from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/hostel
+[2026-07-04 10:02:55] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\hostel\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (566273 bytes)
+[2026-07-04 10:02:55] INFO [downloader.py:171] Sleeping for 3.65s...
+[2026-07-04 10:02:59] INFO [downloader.py:136] Downloading cutoff from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/cutoff
+[2026-07-04 10:03:04] INFO [downloader.py:167] Successfully saved D:\Development\Biglyp\one-co\html\cutoff\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (2188267 bytes)
+[2026-07-04 10:03:04] INFO [downloader.py:171] Sleeping for 3.00s...
+[2026-07-04 10:03:08] INFO [downloader.py:227] Downloader task complete.
+[2026-07-04 10:05:14] INFO [main.py:50] Starting Stage 2: Offline parsing and export...
+[2026-07-04 10:05:14] INFO [main.py:57] Found 3 college(s) to parse.
+[2026-07-04 10:05:14] INFO [main.py:71] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-04 10:05:26] INFO [main.py:71] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-04 10:05:39] INFO [main.py:71] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-04 10:05:54] INFO [exporter.py:35] Starting data export process...
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\colleges.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 110 records to JSON: D:\Development\Biglyp\one-co\json_data\courses.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\admissions.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\placements.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\rankings.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\faculty.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\scholarships.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\hostel.json
+[2026-07-04 10:05:54] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\reviews.json
+[2026-07-04 10:05:56] WARNING [exporter.py:70] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-07-04 10:05:56] WARNING [exporter.py:70] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-07-04 10:05:56] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: D:\Development\Biglyp\one-co\exports\all_colleges.xlsx
+[2026-07-04 10:05:56] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-04 10:05:57] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-04 10:05:57] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-04 10:05:57] INFO [main.py:210] Offline parsing and export complete.
+[2026-07-04 10:21:01] INFO [discovery.py:98] Starting URL discovery from: https://collegedunia.com/india-colleges
+[2026-07-04 10:21:01] INFO [discovery.py:113] Loaded 31 existing URLs from D:\Development\Biglyp\one-co\urls\college_urls.csv
+[2026-07-04 10:21:08] INFO [discovery.py:118] Launching browser for discovery...
+[2026-07-04 10:21:19] INFO [discovery.py:126] Navigating to https://collegedunia.com/india-colleges...
+[2026-07-04 10:21:35] ERROR [discovery.py:226] Error during URL discovery: Page.goto: Page crashed
+Call log:
+  - navigating to "https://collegedunia.com/india-colleges", waiting until "load"
+
+[2026-07-04 10:22:54] INFO [main.py:52] Starting Stage 2: Offline parsing and export...
+[2026-07-04 10:22:54] INFO [main.py:59] Found 3 college(s) to parse.
+[2026-07-04 10:22:54] INFO [main.py:73] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-04 10:23:06] INFO [main.py:73] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-04 10:23:20] INFO [main.py:73] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-04 10:23:29] INFO [exporter.py:35] Starting data export process...
+[2026-07-04 10:23:29] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\colleges.json
+[2026-07-04 10:23:29] INFO [exporter.py:16] Saved 110 records to JSON: D:\Development\Biglyp\one-co\json_data\courses.json
+[2026-07-04 10:23:29] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\admissions.json
+[2026-07-04 10:23:30] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\placements.json
+[2026-07-04 10:23:30] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\rankings.json
+[2026-07-04 10:23:30] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\faculty.json
+[2026-07-04 10:23:30] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\scholarships.json
+[2026-07-04 10:23:30] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\hostel.json
+[2026-07-04 10:23:30] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\reviews.json
+[2026-07-04 10:23:32] WARNING [exporter.py:70] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-07-04 10:23:32] WARNING [exporter.py:70] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-07-04 10:23:33] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: D:\Development\Biglyp\one-co\exports\all_colleges.xlsx
+[2026-07-04 10:23:34] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-04 10:23:35] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-04 10:23:36] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-04 10:23:36] INFO [main.py:216] Offline parsing and export complete.
+[2026-07-04 10:24:39] INFO [main.py:64] Starting Stage 2: Offline parsing and export...
+[2026-07-04 10:24:39] INFO [main.py:71] Found 3 college(s) to parse.
+[2026-07-04 10:24:39] INFO [main.py:85] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-04 10:24:49] INFO [main.py:85] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-04 10:24:59] INFO [main.py:85] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-04 10:25:10] INFO [exporter.py:35] Starting data export process...
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\colleges.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 110 records to JSON: D:\Development\Biglyp\one-co\json_data\courses.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\admissions.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\placements.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\rankings.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\faculty.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 0 records to JSON: D:\Development\Biglyp\one-co\json_data\scholarships.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\hostel.json
+[2026-07-04 10:25:10] INFO [exporter.py:16] Saved 3 records to JSON: D:\Development\Biglyp\one-co\json_data\reviews.json
+[2026-07-04 10:25:12] WARNING [exporter.py:70] DataFrame for sheet 'Faculty' is empty. Generating empty template.
+[2026-07-04 10:25:12] WARNING [exporter.py:70] DataFrame for sheet 'Scholarships' is empty. Generating empty template.
+[2026-07-04 10:25:13] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: D:\Development\Biglyp\one-co\exports\all_colleges.xlsx
+[2026-07-04 10:25:13] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-04 10:25:15] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-04 10:25:15] INFO [exporter.py:194] Saved college-wise Excel sheet: D:\Development\Biglyp\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-04 10:25:15] INFO [main.py:229] Offline parsing and export complete.

@@ -24,6 +24,54 @@ def is_college_url(url: str) -> bool:
     return bool(re.search(r"/(colleges?|university)/\d+", url))
 
 
+def _extract_listing_placement_metrics(card_text: str) -> dict:
+    """Extract average/highest package and placement percentage from listing-card text."""
+    result = {
+        "listing_avg_package": "",
+        "listing_highest_package": "",
+        "listing_placement_percentage": "",
+    }
+
+    text = re.sub(r"\s+", " ", card_text or "").strip()
+    if not text:
+        return result
+
+    amount = r"(?:₹\s*)?([0-9][0-9,]*(?:\.[0-9]+)?(?:\s*(?:LPA|Lakh|Lakhs|Cr|Crore|CPA))?)"
+
+    avg_patterns = [
+        rf"{amount}\s*(?:Average|Avg\.?)(?:\s+Package|\s+Salary|\s+CTC)?",
+        rf"(?:Average|Avg\.?)(?:\s+Package|\s+Salary|\s+CTC)[^0-9]{{0,25}}{amount}",
+    ]
+    high_patterns = [
+        rf"{amount}\s*(?:Highest|Top)(?:\s+Package|\s+Salary|\s+CTC)?",
+        rf"(?:Highest|Top)(?:\s+Package|\s+Salary|\s+CTC)[^0-9]{{0,25}}{amount}",
+    ]
+    pct_patterns = [
+        r"(\d{1,3}(?:\.\d+)?\s*%)\s*(?:placements?|placed)",
+        r"(?:placements?|placed)[^0-9]{0,20}(\d{1,3}(?:\.\d+)?\s*%)",
+    ]
+
+    for pattern in avg_patterns:
+        m = re.search(pattern, text, re.I)
+        if m:
+            result["listing_avg_package"] = m.group(1).strip()
+            break
+
+    for pattern in high_patterns:
+        m = re.search(pattern, text, re.I)
+        if m:
+            result["listing_highest_package"] = m.group(1).strip()
+            break
+
+    for pattern in pct_patterns:
+        m = re.search(pattern, text, re.I)
+        if m:
+            result["listing_placement_percentage"] = m.group(1).strip()
+            break
+
+    return result
+
+
 def extract_cd_rank(card) -> str:
     """Extract the visible CD Rank shown on a listing card."""
     card_text = card.get_text(" ", strip=True)
@@ -31,13 +79,13 @@ def extract_cd_rank(card) -> str:
     # The listing card usually begins with the CD Rank token, e.g. "#1 IIT Delhi ...".
     start_match = re.search(r"^#\s*(\d{1,3})\b", card_text)
     if start_match:
-        return f"#{start_match.group(1)}"
+        return f"#{int(start_match.group(1))}"
 
     # Fallback: inspect individual text nodes and keep the first leading #N token.
     for text_node in card.stripped_strings:
         node_match = re.match(r"^#\s*(\d{1,3})\b", text_node)
         if node_match:
-            return f"#{node_match.group(1)}"
+            return f"#{int(node_match.group(1))}"
 
     return ""
 
@@ -88,7 +136,7 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                 html = page.content()
                 soup = BeautifulSoup(html, "html.parser")
 
-                # Extract college card containers and read the college link + visible avg_package / rank snippets
+                # Extract college card containers and read visible listing metrics.
                 card_containers = soup.find_all(["div", "li", "article"], class_=re.compile(r"listing|card|college|result|row|item", re.I))
                 for card in card_containers:
                     # prefer the first anchor inside the card that looks like a college link
@@ -105,10 +153,7 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                     logger.info(f"Discovered: {href}")
 
                     card_text = card.get_text(" ", strip=True)
-                    pkg_m = re.search(
-                        r"(?:Avg\.?|Average)\s*(?:Package|Salary|CTC)[^\d]{0,20}([0-9][0-9\.]*\s*(?:LPA|Lakh|Lakhs|Cr))",
-                        card_text, re.I
-                    )
+                    placement_metrics = _extract_listing_placement_metrics(card_text)
 
                     # Primary: look for explicit ranking mentions (NIRF / Rank within text)
                     rank_m = re.search(
@@ -130,7 +175,9 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                         listing_rank_val = f"#{len(discovered_list)}"
 
                     card_meta[href] = {
-                        "listing_avg_package": pkg_m.group(1).strip() if pkg_m else "",
+                        "listing_avg_package": placement_metrics.get("listing_avg_package", ""),
+                        "listing_highest_package": placement_metrics.get("listing_highest_package", ""),
+                        "listing_placement_percentage": placement_metrics.get("listing_placement_percentage", ""),
                         "listing_rank": listing_rank_val
                     }
 
@@ -188,10 +235,22 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
     try:
         with open(COLLEGE_URLS_CSV, "w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["url", "listing_avg_package", "listing_rank"])
+            writer.writerow([
+                "url",
+                "listing_avg_package",
+                "listing_highest_package",
+                "listing_placement_percentage",
+                "listing_rank",
+            ])
             for url in discovered_list:
                 meta = card_meta.get(url, {})
-                writer.writerow([url, meta.get("listing_avg_package", ""), meta.get("listing_rank", "")])
+                writer.writerow([
+                    url,
+                    meta.get("listing_avg_package", ""),
+                    meta.get("listing_highest_package", ""),
+                    meta.get("listing_placement_percentage", ""),
+                    meta.get("listing_rank", ""),
+                ])
         logger.info(f"Saved {len(discovered_list)} URLs to {COLLEGE_URLS_CSV}")
     except Exception as e:
         logger.error(f"Failed to write URLs to CSV: {e}")
