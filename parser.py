@@ -208,11 +208,11 @@ def _normalize_degree_tag(course_tag: str) -> str:
         return "B.Tech"
     if "m.tech" in tag or "me/m.tech" in tag or tag in {"me", "m.e", "me/m.e"}:
         return "M.Tech"
-    if "mba" in tag or "pgdm" in tag:
+    if "mba" in tag or "pgdm" in tag or "pgpm" in tag or "pgpx" in tag or "pgp" in tag or "post graduate programme" in tag or "post graduate program" in tag:
         return "MBA"
-    if "b.sc" in tag:
+    if "b.sc" in tag or "bsc" in tag or "nursing" in tag:
         return "B.Sc"
-    if "m.sc" in tag:
+    if "m.sc" in tag or "msc" in tag:
         return "M.Sc"
     if "mbbs" in tag:
         return "MBBS"
@@ -228,7 +228,7 @@ def _normalize_degree_tag(course_tag: str) -> str:
         return "BA"
     if tag.startswith("ma"):
         return "MA"
-    if "ph.d" in tag or tag.startswith("phd"):
+    if "ph.d" in tag or tag.startswith("phd") or "fpm" in tag:
         return "Ph.D"
     if "b.des" in tag:
         return "B.Des"
@@ -236,9 +236,106 @@ def _normalize_degree_tag(course_tag: str) -> str:
         return "M.Des"
     if "mpp" in tag:
         return "MPP"
+    if "mds" in tag:
+        return "MDS"
+    if "md" in tag:
+        return "MD"
+    if "ms" in tag:
+        return "MS"
     if "executive" in tag:
         return "Executive Programme"
     return course_tag.strip()
+
+def deduce_course_details(degree: str, course_name: str) -> Dict[str, str]:
+    duration = "Not Specified"
+    course_level = "UG"
+    entrance_exam = "Not Specified"
+    course_type = "Full Time"
+    
+    deg_lower = degree.lower()
+    name_lower = course_name.lower()
+    
+    if "ph.d" in deg_lower or "doctor" in deg_lower or "fpm" in deg_lower or "fellow" in deg_lower:
+        duration = "3-5 Years"
+        course_level = "Doctorate"
+        entrance_exam = "GATE / UGC NET"
+    elif "m.tech" in deg_lower or "me" == deg_lower or "m.e." in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+        entrance_exam = "GATE"
+    elif "b.tech" in deg_lower or "be" == deg_lower or "b.e." in deg_lower:
+        duration = "4 Years"
+        course_level = "UG"
+        entrance_exam = "JEE Advanced"
+    elif "m.sc" in deg_lower or "msc" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+        entrance_exam = "IIT JAM"
+    elif "b.sc" in deg_lower or "bsc" in deg_lower:
+        duration = "3 Years"
+        course_level = "UG"
+    elif "mba" in deg_lower or "pgdm" in deg_lower or "pgpm" in deg_lower or "pgp" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+        entrance_exam = "CAT"
+        if "executive" in name_lower or "emba" in name_lower or "pgpx" in name_lower:
+            course_type = "Part Time"
+    elif "mca" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+    elif "bca" in deg_lower:
+        duration = "3 Years"
+        course_level = "UG"
+    elif "bba" in deg_lower or "bbm" in deg_lower:
+        duration = "3 Years"
+        course_level = "UG"
+    elif "b.com" in deg_lower:
+        duration = "3 Years"
+        course_level = "UG"
+    elif "b.des" in deg_lower:
+        duration = "4 Years"
+        course_level = "UG"
+        entrance_exam = "UCEED"
+    elif "m.des" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+        entrance_exam = "CEED"
+    elif "mbbs" in deg_lower:
+        duration = "5 Years 6 Months"
+        course_level = "UG"
+        entrance_exam = "NEET"
+    elif "md" in deg_lower or "ms" == deg_lower or "mds" in deg_lower:
+        duration = "3 Years"
+        course_level = "PG"
+        entrance_exam = "NEET PG"
+    elif "ba" == deg_lower or "b.a." in deg_lower:
+        duration = "3 Years"
+        course_level = "UG"
+    elif "ma" == deg_lower or "m.a." in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+    elif "law" in name_lower or "llb" in deg_lower:
+        duration = "3-5 Years"
+        course_level = "UG"
+        entrance_exam = "CLAT"
+    elif "llm" in deg_lower:
+        duration = "1-2 Years"
+        course_level = "PG"
+        entrance_exam = "CLAT PG"
+    elif "diploma" in name_lower or "pgd" in deg_lower:
+        duration = "1 Year"
+        course_level = "PG"
+    elif "executive" in name_lower:
+        duration = "1 Year"
+        course_level = "PG"
+        course_type = "Part Time"
+        
+    return {
+        "duration": duration,
+        "course_level": course_level,
+        "entrance_exam": entrance_exam,
+        "course_type": course_type
+    }
 
 
 def _format_fee_amount(fees_data: Dict[str, Any]) -> str:
@@ -553,6 +650,82 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
             category = "CEP Courses"
             
         if category == "Unknown":
+            # Check if this table is irrelevant
+            irrelevant_keywords = {
+                "comparison", "compared with", "placement", "salary", "package", "recruiters", 
+                "admission dates", "cutoff", "cut off", "reviews", "ranking", "faq", "question", "answer"
+            }
+            if any(kw in sh for kw in irrelevant_keywords):
+                continue
+                
+            # Scan columns for Course/Spec and Fee
+            header_cells = trs[0].find_all(["th", "td"])
+            header_texts = [clean_text(c.text).lower() for c in header_cells]
+            
+            course_col_idx = -1
+            fee_col_idx = -1
+            eligibility_col_idx = -1
+            
+            for idx, text in enumerate(header_texts):
+                if any(k in text for k in ["course", "specialization", "specialisation", "degree", "program", "programme", "branch", "stream", "subject"]):
+                    if course_col_idx == -1:
+                        course_col_idx = idx
+                elif any(k in text for k in ["fee", "fees", "inr", "amount", "price", "cost"]):
+                    if fee_col_idx == -1:
+                        fee_col_idx = idx
+                elif "eligibility" in text:
+                    if eligibility_col_idx == -1:
+                        eligibility_col_idx = idx
+                        
+            # Fallback for 2-column or 3-column table
+            if (course_col_idx == -1 or fee_col_idx == -1) and len(header_texts) >= 2:
+                if "fees" in sh or "fee" in sh or "courses" in sh or "course" in sh:
+                    course_col_idx = 0
+                    fee_col_idx = 1
+                    
+            if course_col_idx == -1 or fee_col_idx == -1:
+                continue
+                
+            for tr in trs[1:]:
+                tds = tr.find_all(["td", "th"])
+                if len(tds) <= max(course_col_idx, fee_col_idx):
+                    continue
+                    
+                course_name_raw = clean_text(tds[course_col_idx].text)
+                fees_raw = clean_text(tds[fee_col_idx].text)
+                
+                if not course_name_raw or course_name_raw.lower() in {"course", "specialization", "specializations", "pgpm specializations", "pg program specializations"}:
+                    continue
+                    
+                degree = _normalize_degree_tag(course_name_raw)
+                if not degree or degree.lower() in {"course", "specialization", "other"}:
+                    # Try to get from heading sh
+                    degree = _normalize_degree_tag(sh)
+                if not degree:
+                    degree = "Other"
+                    
+                details = deduce_course_details(degree, course_name_raw)
+                
+                eligibility = "Not Specified"
+                if eligibility_col_idx != -1 and len(tds) > eligibility_col_idx:
+                    elig = clean_text(tds[eligibility_col_idx].text)
+                    if elig and not re.search(r"INR|\bRs\b|\bLakh\b|\bLakhs\b|^\s*[0-9\.,\-]+\s*$", elig, re.IGNORECASE):
+                        eligibility = elig
+                
+                add_row({
+                    "college_id": college_id,
+                    "degree_name": degree,
+                    "course_name": course_name_raw,
+                    "specialization": course_name_raw,
+                    "total_fees": fees_raw.replace("INR ", "").strip(),
+                    "duration": details["duration"],
+                    "course_type": details["course_type"],
+                    "eligibility": eligibility,
+                    "entrance_exam": details["entrance_exam"],
+                    "application_date": "Not Specified",
+                    "intake_seats": "Not Specified",
+                    "course_level": details["course_level"]
+                })
             continue
             
         for tr in trs:

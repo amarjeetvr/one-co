@@ -137,7 +137,9 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                 soup = BeautifulSoup(html, "html.parser")
 
                 # Extract college card containers and read visible listing metrics.
-                card_containers = soup.find_all(["div", "li", "article"], class_=re.compile(r"listing|card|college|result|row|item", re.I))
+                card_containers = soup.find_all("tr", class_=re.compile(r"table-row", re.I))
+                if not card_containers:
+                    card_containers = soup.find_all(["div", "li", "article"], class_=re.compile(r"listing|card|college|result|row|item", re.I))
                 for card in card_containers:
                     # prefer the first anchor inside the card that looks like a college link
                     a_tag = card.find("a", href=True)
@@ -207,6 +209,8 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                                 break
 
                         if associated and associated not in discovered_set:
+                            if len(discovered_list) >= max_colleges:
+                                break
                             discovered_list.append(associated)
                             discovered_set.add(associated)
                         if associated:
@@ -216,6 +220,8 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                                 card_meta[associated] = meta
                     except Exception:
                         continue
+                if len(discovered_list) >= max_colleges:
+                    break
 
                 logger.info(f"Scroll #{scroll_count}: total URLs={len(discovered_list)}")
                 page.evaluate("window.scrollTo(0, document.body.scrollHeight)")

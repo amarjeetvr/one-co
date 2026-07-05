@@ -235,19 +235,19 @@ def main():
     parser.add_argument("--stage1-download", action="store_true", help="Run only Stage 1 page downloading")
     parser.add_argument("--stage2-parse", action="store_true", help="Run only Stage 2 HTML offline parsing & export")
     parser.add_argument("--all", action="store_true", default=True, help="Run full end-to-end pipeline (default)")
-    parser.add_argument("--limit", type=int, default=1, help="Limit number of colleges to process during download")
+    parser.add_argument("--limit", type=int, default=100, help="Limit number of colleges to process")
 
     args = parser.parse_args()
 
     if args.stage1_discover:
-        discover_college_urls(max_colleges=5)
+        discover_college_urls(max_colleges=args.limit)
     elif args.stage1_download:
         run_downloader(limit=args.limit)
     elif args.stage2_parse:
         run_parsing_and_export()
     else:
         logger.info("Starting Full End-to-End Scraper Pipeline...")
-        discover_college_urls(max_colleges=5)
+        discover_college_urls(max_colleges=args.limit)
         run_downloader(limit=args.limit)
         run_parsing_and_export()
         logger.info("Pipeline Execution Finished.")
