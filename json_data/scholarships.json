@@ -1,5 +1,89 @@
 [
     {
+        "college_id": "2525",
+        "scholarship_name": "Scholarship Name",
+        "eligibility": "Description",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "KPMG Scholarships",
+        "eligibility": "These are prestigious scholarships awarded to meritorious students of the final year. Preference is given to students with special needs as well as students from single parent families.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "G.L. Bansal Scholarship",
+        "eligibility": "Awarded to one or two students in second year who have obtained good scores in the University examinations and have also been active participants in college activities.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "The Morada and Yashoda Chetna Scholarships",
+        "eligibility": "These scholarships are meant for visually challenged students of any year. Two or three such scholarships are awarded.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "The ELSA Scholarships",
+        "eligibility": "These are three to four scholarships given to meritorious students who have done well in their first-year University examinations and come from very disadvantaged backgrounds.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Sh. Onkar Nath Pandit Scholarships and Shri Hari Dayal Walia Scholarship",
+        "eligibility": "These scholarships are mainly given to final year students who have been among the top ranking students in their course.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Tejaswi Rao Scholarship",
+        "eligibility": "Is a scholarship instituted in memory of Ms. Rao and is meant for a student from the Journalism department. The scholarship pays the entire fees for the course.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Neha Puri Scholarships",
+        "eligibility": "These scholarships were instituted in memory of Ms. Puri and are meant for students from the Political Science department. Two scholarships are awarded and the scholarship covers the entire fees for the course.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Shri Manohar Shyam Joshi Scholarships",
+        "eligibility": "These are available to students of the Hindi and Journalism Departments. Usually two scholarships are given.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Shikha Chhabra Scholarship",
+        "eligibility": "Is a scholarship instituted in memory of Ms. Chhabra, a former student of the Economics department and is usually awarded to a student from the Economics department.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Tiara Scholarship",
+        "eligibility": "Is a scholarship given to two first year students at the end of the first year for exceptional merit-cum-need.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Dr. Sheila Grover Memorial Scholarship",
+        "eligibility": "Is a scholarship given to a deserving student preferably of the Hindi Department.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "Tazeem Imam Scholarship",
+        "eligibility": "Is a scholarship given to a deserving student preferably of the Economics Department.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "scholarship_name": "BlackRock Hallac Scholarship",
+        "eligibility": "This is exclusively for students of the Mathematics and Statistics Department and is based on exceptional merit and need.",
+        "amount": "Not Specified"
+    },
+    {
         "college_id": "25455",
         "scholarship_name": "Name of the Scholarship",
         "eligibility": "Eligibility",
@@ -51,6 +135,420 @@
         "college_id": "25455",
         "scholarship_name": "Prof. A.K. Mahalanabis Memorial Scholarship",
         "eligibility": "1st year UG Student of Electrical Engineering with highest JEE Rank",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "Name of Scholarship",
+        "eligibility": "Scholarship Amount (in INR)",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "IIMB PGP Alumni First Batch (1976) Scholarship",
+        "eligibility": "75,000 + Medallion + Certificate",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "NTPC Scholarship Scheme",
+        "eligibility": "48,000 per year",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "Employment in Social Sector Scholarship",
+        "eligibility": "N.A.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "Aditya Birla Scholarship",
+        "eligibility": "1.75 lakhs per student",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "OPJEMS Scholarship",
+        "eligibility": "1.50 lakh per student",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "Societe Generale Global Solution Centre India Scholarship",
+        "eligibility": "N.A.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "Runwal Education Trust Scholarship",
+        "eligibility": "1,00,000 + Medallion + Certificate",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "Hindustan Unilever / T Thomas Scholarship",
+        "eligibility": "1 lakh per student",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "Yes Bank Scholarship",
+        "eligibility": "2 lakhs",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "National Scholarship for Higher Education of Scheduled Tribe",
+        "eligibility": "N.A.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "scholarship_name": "National Scholarship for Higher Education for Scheduled Caste Students",
+        "eligibility": "N.A.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Name of the Scholarship",
+        "eligibility": "Eligibility Criteria",
+        "amount": "Award Scholarship"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Institute Merit-Cum Means Scholarship",
+        "eligibility": "Family annual income should not exceed INR 4.5 Lakhs",
+        "amount": "67% tuition exemption. Available for only 25% of students admitted. Renewal of scholarship every semester requires a minimum GPA of 5.0. in the previous semester."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Institute SC/ST Scholarship",
+        "eligibility": "Family annual income should not exceed INR 4.5 Lakhs",
+        "amount": "Free messing and pocket allowance of INR 250 per month, over and above tuition fee exemption. Renewal of scholarship every semester requires a minimum GPA of 5.0. in the previous semester."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Girish Ready Scholarship",
+        "eligibility": "2 Scholarships on the basis of highest JEE rank and annual family income not exceeding INR 5 lakhs and 1 Scholarship on the basis of best all-round performance in the previous school years and annual family income not exceeding INR 5 lakhs",
+        "amount": "INR 25,000 every year. Renewal of scholarship every semester requires a minimum GPA of 8.0. in the previous semester."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Indian Women\u2019s Association at Bonn Scholarship",
+        "eligibility": "On the basis of the highest JEE rank and annual family income not exceeding INR 5 lakhs",
+        "amount": "INR 1,250 to one B.Tech student only for 12 months."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Sri V Ranga Raju Memorial scholarship",
+        "eligibility": "On the basis of Merit cum Means and annual family income not exceeding INR 5 lakhs",
+        "amount": "INR 500 to one B.Tech student only for 4 years. Renewal of scholarship every semester requires a minimum GPA of 5.0. in the previous semester."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "M Sankaraiah and M Saradha (Mithigiri) Scholarship",
+        "eligibility": "On the basis of highest CGPA at the end of 4th semester of students of the B.Tech / Dual Degree Electrical Engineering",
+        "amount": "One-time payment of INR 20,000"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Dr K Vasanth Rau Scholarship",
+        "eligibility": "On the basis of the highest JEE rank and annual family income not exceeding INR 5.5 lakhs. Renewal is based on a GPA of 6.5 and above",
+        "amount": "INR 25,000 per annum to one student"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Scholarship",
+        "eligibility": "Eligibility Criteria",
+        "amount": "Amount of Scholarship"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Ministry of Social Justice and Empowerment, GoI. Central Sector Scholarship For SC students",
+        "eligibility": "Top 10 students based on JEE rank and parental income not exceeding INR 4.5 Lakhs (only students of B.Tech, MBA & Dual Degree students are eligible)",
+        "amount": "Personal PC of INR 45,000 (one time); Living Expenses INR 2,200 per month; Books and Stationery INR 3,000 per annum; Reimbursement of Fees."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Ministry of Tribal Affairs , GoI. - Central Sector Scholarship For ST students",
+        "eligibility": "Top 5 students based on JEE rank and parental income not exceeding INR 6 Lakhs (only students of B.Tech, MBA & Dual Degree students are eligible)",
+        "amount": "Personal PC Rs.45,000/- (one time); Living Expenses Rs.2,200/- per month; Books and Stationery Rs.3,000/- per annum; Reimbursement of Fees. Renewable subject to passing of the final examination of each year."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Ministry of Minority Affairs, GoI Meritcum-Means Scholarship",
+        "eligibility": "Students from minority groups like Muslims, Christians, Sikhs, Buddhists, and Parsis who have parents whose annual income does not exceed INR 2.5 Lakhs are eligible.",
+        "amount": "Maintenance Expenses @ Rs.10,000/- per annum for hostellers and for dayscholars Rs.5,000/- Reimbursement of course fee of Rs.20,000/- or the actual fees whichever is less. The scholarship amount will be sanctioned by the State Govt. 30% of the scholarship are reserved for girl students. Renewable subject to passing of the final examination of each year."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "MHRD scholarship for single Girl child",
+        "eligibility": "As per GoI norms",
+        "amount": "INR 40,000/- per year"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Pratibha Scholarship of Govt. of Andhra Pradesh",
+        "eligibility": "Open to B.Tech students. They should be native of the State of Andhra Pradesh and secured a minimum of first class with 60% marks in Intermediate / XII class or its equivalent with annual parental income not exceeding 1 Lakh",
+        "amount": "INR 20,000/- per annum and renewable every year. Students should apply directly to AP Govt."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Aditya Birla Scholarship",
+        "eligibility": "The selection will be made by the Aditya Birla Group among the top 20 students in JEE Rank.",
+        "amount": "INR 60,000 per annum"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Inlakhs Scholarship",
+        "eligibility": "Academic performance (CGPA of 9.0 & above) at the end of 2nd semester Selection by a Committee (One scholarship)",
+        "amount": "INR 25,000/- per semester for a period of four years."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "ST Engineering Scholarships",
+        "eligibility": "Offered to two BTech Students of II, III & IV Year, Amongst top 10% students of AE, CS, ME.",
+        "amount": "INR 80,000/- per annum"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Shipping Corporation of India Scholarship",
+        "eligibility": "For all SC / ST / BPL students of BTech Naval Architecture",
+        "amount": "INR 48,000/- per annum or full tuition fee / hostel charges"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "TODAI Scholarship",
+        "eligibility": "Offered to two BTech Students of I, II, III & IV year amongst AE, EE, ME to excellent students.",
+        "amount": "2 Lakhs Japanese yen per year"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Nissan Scholarship",
+        "eligibility": "Offered to two B.Tech / Dual Degree",
+        "amount": "Students III & IV year INR 70,000/- per annum"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "DAE, DGFS Scholarship by DRDO",
+        "eligibility": "B.Tech Aerospace students Minimum CGPA of 7.0 Based on JEE Rank",
+        "amount": "INR 5,000 per month for 4 years. One time book allowance of INR 10,000/-."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "IIT Madras 72 batch Scholarship",
+        "eligibility": "Trust is providing interest free Educational loan to B.Tech students.",
+        "amount": "INR 25,000/- per year"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Inspire Scholarship (Department of Science and Technology, Government of India)",
+        "eligibility": "All Students admitted to Dual Degree (B.S & M.S) \u2013 for 5 years",
+        "amount": "INR 80,000/- per annum per student"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Scholarship",
+        "eligibility": "Eligibility Criteria",
+        "amount": "Amount of Scholarship"
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Institute Merit-cum-Means Scholarship",
+        "eligibility": "Family income of not more than INR ,50,000",
+        "amount": "67% of the fees are exempted. 25% of the students can avail this. Renewal is done only for students having a minimum of 5 GPA every semester."
+    },
+    {
+        "college_id": "25881",
+        "scholarship_name": "Institute SC/ST Scholarship",
+        "eligibility": "Family income of not more than INR 4,50,000",
+        "amount": "Free mess and pocket money of INR 250 is provided to the students over and above tuition fee exemption. Renewal is done only for students having a minimum of 5 GPA every semester."
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Name of Donors Scholarship",
+        "eligibility": "Selection Criteria",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Babu Ram Jain and Mrs. Shanti Jain Memorial Scholarship",
+        "eligibility": "1st year UG student of any engineering department based on the lowest TFAI. Also, the student should not be getting any other scholarship.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Balajit and Nirmal Dhindsa Scholarship",
+        "eligibility": "1st year UG student of BSBE department based on the highest CPI.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Kinra Scholarship",
+        "eligibility": "1st year UG student of ME department based on the minimum CPI of 6.0",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Kunta Jha Scholarship",
+        "eligibility": "A UG Student in a 4 year or 5-year program of any department based on the minimum CPI of 6.0",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Mathur Brother Scholarship",
+        "eligibility": "1st year UG student of any department based on JEE-AIR. The student should be of General Category and must have studied in non-English medium school.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Prof. CNR Rao Science Talent Scholarship",
+        "eligibility": "UG student in 4-year or 5-year program of chemistry department based on MCM-Donor criteria.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "Shanti and Ramkishore Sahai Saxena Memorial Scholarship",
+        "eligibility": "1st year UG student of any department based on JEE-AIR.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "scholarship_name": "A Shrimati Madhuri Dubey Scholarship",
+        "eligibility": "Any UG or PG Student of any department based on the MCM Donor Criteria.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "Name of Scholarship",
+        "eligibility": "Eligibility Criteria",
+        "amount": "Scholarship Awards"
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "James Thomason Scholarship",
+        "eligibility": "The Best Ranked students with AIR up to 300",
+        "amount": "INR 25,000 per month to a student subject to securing a minimum of 8.00 CGPA in each academic year."
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "SC/ ST/ PH Scholarship",
+        "eligibility": "All the candidates belong to the category of SC/ST/PH.",
+        "amount": "Full tuition fee waiver"
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "Air Cmdr Shyam Chand Mehra Scholarship",
+        "eligibility": "A girl student of B.Tech 1st, 2nd, and 4th year on the basis of highest CGPA in the Electrical Engineering",
+        "amount": "INR 10,000 to the students of 1st and 2nd year. INR 15,000 to the students of 4th year."
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "Om Prakash Gupta and Sushila Devi Memorial Scholarship",
+        "eligibility": "A girl student of B.Tech 1st year having the highest grades in Mathematics in the final exams.",
+        "amount": "INR 10,000 per annum"
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "Prof. Dr. S.R. Gupta Memorial Scholarship",
+        "eligibility": "Student of B.Tech (Mechanical Engineering) as per the norms of MCM Scholarship",
+        "amount": "INR 25,000"
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "Jai Prakash Seva Sansthan Scholarship",
+        "eligibility": "B.Tech Civil Engineering students",
+        "amount": "INR 2000 per month for 10 consecutive months"
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "Naveen & Anu Jain Scholarship",
+        "eligibility": "B.Tech students whose annual family income is less than INR 2 lakhs",
+        "amount": "INR 1000 per month for 10 consecutive months"
+    },
+    {
+        "college_id": "25992",
+        "scholarship_name": "1940 batch Alumni Scholarship",
+        "eligibility": "1st-year students of B.Tech Civil Engineering based on the highest rank JEE",
+        "amount": "INR 1000 per month for 10 consecutive months"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Name of the Scholarship",
+        "eligibility": "Scholarship Details",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Prof. J.C. Luthra Shrimati Kesra Bai Luthra Endowment Scholarship",
+        "eligibility": "One each in the first year of Discipline course in Botany, Zoology, Physics or Chemistry Honours (in such a way that as far as possible 50% are women recipients) for students passing senior school examination not below high second class (INR 100 per month each).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Shrimati Kesra Bai Luthra Memorial Scholarship",
+        "eligibility": "One to a deserving and needy student who, upon graduating from Delhi Central Board with at least a high second division, is enrolling in the first year of a discipline course in botany or zoology (INR 100 per month).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Dr. Shrimati V. Hora Endowment Scholarship",
+        "eligibility": "One to a student who passed out from Delhi Central Board with a first division and joins Discipline Course in Zoology and needs financial assistance to pursue her studies (Rs. 100 per month).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "University of Delhi Women's Association Scholarship",
+        "eligibility": "Awarded to two deserving and needy students (who are daughters of jawans) who have passed from Delhi Central Board and joined the first year (Rs. 100 per month each).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Shri Uggersain Memorial Endowment Scholarship",
+        "eligibility": "Given to a candidate whose parent's monthly income does not surpass INR 1,000 and who enters the first year of study after graduating from Delhi Central Board with a first division.",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Dr. V.K.R.V. Rao Endowment Scholarship",
+        "eligibility": "To a deserving and needy student coming from a family of class IV or III employees of the University who after passing out from Delhi Central Board has joined the first year (INR 65 per month).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Ganga Sant Scholarship",
+        "eligibility": "To a deserving student requiring financial aid when entering the first year of Sanskrit. If not successful in the mathematics discipline course, try any other discipline course (INR 50 per month).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Subodh Chandra Amiya Banerjee Scholarship",
+        "eligibility": "To two meritorious and needy students whose parent's income does not exceed Rs. 500 per month and who join first year (INR 50 per month each).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "D.D. Kapoor Scholarship",
+        "eligibility": "To a student whose parent's income does not exceed Rs. 500 per month and who joins first year of 20 Discipline Course in Economics (INR 100 per month).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Shri Balak Ram Scholarship",
+        "eligibility": "To a meritorious student whose parent's income does not exceed Rs. 500 per month and who joins the first-year Discipline Course in Mathematics (INR 75 per month).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "All India Entrance Scholarship",
+        "eligibility": "Fifty in number for three years of an Honours degree (INR 250 per month).",
+        "amount": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "scholarship_name": "Pandit Man Mohan Dar Endowment Scholarship",
+        "eligibility": "To deserving or needy undergraduate students of B.A. Honours Sanskrit and Science subjects, viz. Physics, Chemistry, Botany, Zoology, Mathematics (INR 100 per month).",
         "amount": "Not Specified"
     }
 ]

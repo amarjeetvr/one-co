@@ -1,5 +1,77 @@
 [
     {
+        "college_id": "10343",
+        "highest_package": "Not Specified",
+        "average_package": "2.5 LPA",
+        "median_package": "4.77 Lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "10720",
+        "highest_package": "Not Specified",
+        "average_package": "Not Specified",
+        "median_package": "15.23 Lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "10842",
+        "highest_package": "Not Specified",
+        "average_package": "Not Specified",
+        "median_package": "11.5 lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "17904",
+        "highest_package": "60 LPA",
+        "average_package": "34.07 LPA",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "17905",
+        "highest_package": "66 Lakh",
+        "average_package": "33.25 Lakh",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "1859",
+        "highest_package": "67.80 LPA",
+        "average_package": "9 Lakh",
+        "median_package": "8.5 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "visit the campus, like Mc Kinsey, Futures First, Grant Thornton, The Smart Cube, IDInsight, Bain Capability Network, Genpact, EXL Consulting, BCG, DE Shaw, TresVista, Josh Talks, Ken Research, One Direct, and more."
+    },
+    {
+        "college_id": "1904",
+        "highest_package": "36.50 LPA",
+        "average_package": "8.4 Lakh",
+        "median_package": "INR 7.50 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "2525",
+        "highest_package": "INR 45 LPA",
+        "average_package": "12.18 Lakh",
+        "median_package": "INR 10.2 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "25366",
+        "highest_package": "65,00,000",
+        "average_package": "19,00,000",
+        "median_package": "7.8 Lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
         "college_id": "25446",
         "highest_package": "Not Specified",
         "average_package": "Not Specified",
@@ -16,11 +88,155 @@
         "top_recruiters": "Not Specified"
     },
     {
+        "college_id": "25469",
+        "highest_package": "Not Specified",
+        "average_package": "Not Specified",
+        "median_package": "7.5 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
         "college_id": "25494",
         "highest_package": "1,10,00,000",
         "average_package": "35,22,591",
         "median_package": "34.59 LPA",
         "placement_percentage": "100%",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "25602",
+        "highest_package": "1,15,00,000",
+        "average_package": "34,88,000",
+        "median_package": "33 LPA",
+        "placement_percentage": "100%",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "25621",
+        "highest_package": "18,00,000",
+        "average_package": "Not Specified",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "25703",
+        "highest_package": "1,00,00,000",
+        "average_package": "23,50,000",
+        "median_package": "17.92 LPA",
+        "placement_percentage": "90%",
+        "top_recruiters": "& Trends"
+    },
+    {
+        "college_id": "25881",
+        "highest_package": "4,30,00,000",
+        "average_package": "21,48,000",
+        "median_package": "46 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "25948",
+        "highest_package": "2,50,00,000",
+        "average_package": "17,20,000",
+        "median_package": "16.5 Lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "25992",
+        "highest_package": "1,50,00,000",
+        "average_package": "18,34,000",
+        "median_package": "18.09 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "26006",
+        "highest_package": "1,45,00,000",
+        "average_package": "34,23,000",
+        "median_package": "36.2 LPA",
+        "placement_percentage": "100%",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "26007",
+        "highest_package": "2,44,00,000",
+        "average_package": "24,30,000",
+        "median_package": "12 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "26016",
+        "highest_package": "22,00,000",
+        "average_package": "Not Specified",
+        "median_package": "10 Lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "27874",
+        "highest_package": "6.5 Lakh",
+        "average_package": "1.92 Lakh",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "3004",
+        "highest_package": "19 Lakh",
+        "average_package": "7.6 Lakh",
+        "median_package": "INR 6 LPA",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "4417",
+        "highest_package": "32 Lakh",
+        "average_package": "9.9 Lakh",
+        "median_package": "11.4 Lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "7798",
+        "highest_package": "Not Specified",
+        "average_package": "Not Specified",
+        "median_package": "1.25 Lakh",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "7960",
+        "highest_package": "8 Lakh",
+        "average_package": "3.75 Lakh",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "7980",
+        "highest_package": "8.8 Lakh",
+        "average_package": "5 LPA",
+        "median_package": "Not Specified",
+        "placement_percentage": "Not Specified",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "8164",
+        "highest_package": "Not Specified",
+        "average_package": "Not Specified",
+        "median_package": "Not Specified",
+        "placement_percentage": "100% placement",
+        "top_recruiters": "Not Specified"
+    },
+    {
+        "college_id": "9127",
+        "highest_package": "52 LPA",
+        "average_package": "12.75 LPA",
+        "median_package": "12 Lakh",
+        "placement_percentage": "Not Specified",
         "top_recruiters": "Not Specified"
     }
 ]

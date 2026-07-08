@@ -1,5 +1,95 @@
 [
     {
+        "college_id": "10343",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: The course structure is one of the best, with integrated learning programme and clinical from the 2 nd year of college. Cmc being the best college there are loads of opportunity, there is walk in interview in every possible hospitals around india and abroad. Internships and job shadowing offer a close-up look at life in the workplace, yet some high school students are so focused on academics that they pass up the opportunity, or they are uncertain about their interests and don't know where to start."
+    },
+    {
+        "college_id": "10720",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Synapse is the annual fest a fun fest with with lots of zeal and enthusiasm .there are many clubs and societies and they provide an opportunity of self development. I like the faculty and students here. all are very educated and informative Mamc is among the best government medical colleges in india, so it's is highly affordable."
+    },
+    {
+        "college_id": "10720",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: The dogs in the hostels are creating mess as they are not taken of and subsequently they died of some injuries and infectious following them. It is stress full, sometimes all the test and tutorials and just simply study become tough. "
+    },
+    {
+        "college_id": "10842",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Campus life is very good, various fest and events are organised by various departments, zenith is the biggest fest organised by the college in which many great personalities are welcomed, sports complex of the campus is very good No scholarship is provided by the college since it is a government body, but the internship provided is the best, which provides the students best clinical experience The course is pretty good and it's easy and you'll learn a lot."
+    },
+    {
+        "college_id": "10842",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: We are not allowed to play on the big ground because only association teams can play their which is very disappointing. There is no increase policy in tution fees the complete cost is around 1 lakh no scholarship and financial aid is avilable for students no campus employment and rupees 500 per month stipend is given for 3 years"
+    },
+    {
+        "college_id": "17904",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Pgpm for work executives is the perfect combination of knowledge and skill development of people like me and that's the reason i decided to opt for this programme. Our college's placement record is unquestionably deserving of a ten-star rating, as the packages on offer to our class were quite excellent. I was able to obtain an impressive stipend for a time span of 6 weeks by a sales domain company and the stipend offered was inr 29000."
+    },
+    {
+        "college_id": "17904",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: Unfortunately, there are no internship opportunities provided by the school as it is a short duration program of only 1 year as opposed to the usual 2-year mba programs offered by other business schools."
+    },
+    {
+        "college_id": "17905",
+        "reviewer_name": "Aditya Sharma",
+        "rating": 4.5,
+        "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."
+    },
+    {
+        "college_id": "1859",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: I love the staff which means teachers they are so frank they make the difficult syllabus easy and are so good. Placement rate: the placement rate for the 2022-23 academic year stood at a remarkable 80%, showcasing the college's success in connecting students with rewarding careers. Fees are taken annually and for my course i.e phy hons it is 26925?.several scholarship opportunities are given for ews category students.there is also a separate placement cell for placement opportunities exposure.alumnis also share fund for opportunities of students."
+    },
+    {
+        "college_id": "1859",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: I hate the bad politics of hansraj college campus which very much vulgar Hansraj has a good reputation in the science field but due to bad labs, the science faculty has gone down."
+    },
+    {
+        "college_id": "1904",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: The campus , the library,the canteen, the college fest ,society fest and my dearest friends and teachers the college gave me are the most valuable assets of my life i gained. The toppers the college provide special cash prize also you can avail scholarship like inspire that provide you about rupees 30000 per year Faculty is so good teacher are so careful and helpful thay good teaching style which all students like it."
+    },
+    {
+        "college_id": "1904",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: Fee hike is a very tough situation for college students, college students are facing a difficult situation so change them. Belonging from a low background the unavailability of a scholarship."
+    },
+    {
+        "college_id": "2525",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: The faculty which is very helpful, kind , sweet and supporting There are numbers of scholarship opportunities available for students .these scholarships recognised merit and talent for students .fee concession students in need of financial assistance may apply on the prescribed form available at the office.next one is student aid fund Placements of the college is very good many top companies visit the campus for placements."
+    },
+    {
+        "college_id": "2525",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: Class size was 55 which kind of made it difficult for teachers to provide individual attention. Students who opted for language hindi were more at loss as the reading material was a little difficult to access. Thing I didn't like was the busy and hectic schedule. It restricted our participation in various other  extra curricular activities and restricted us mostly to our course structure only"
+    },
+    {
+        "college_id": "25366",
+        "reviewer_name": "Aditya Sharma",
+        "rating": 4.5,
+        "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."
+    },
+    {
         "college_id": "25446",
         "reviewer_name": "Alumni Reviewer",
         "rating": 4.5,
@@ -18,7 +108,187 @@
         "review_text": "Cons: The hostel facilities are not as good as expected the meal is too bad. The race academy curriculum at iit delhi can be intense and demanding a leading to high levels of stress and pressure among students"
     },
     {
+        "college_id": "25469",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: The college has two annual fests called eutopia and mini eutopia also every festival from all across the country is celebrated on a huge scale. Spad is the place where we can get india's best faculty. Specifying the course details along with a detailed syllabus, past placement reports and future prospects will enable the juniors to make a better decision"
+    },
+    {
+        "college_id": "25469",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: The management of hostel and mess is really pathetic in the past few years with increase of fees at I dislike my hostel facilities. rooms are bad, food is average and washroom facility is really bad."
+    },
+    {
         "college_id": "25494",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: The PGP program offered here is the flagship program of this institute and one of the best in the world. Internships are a compulsory part of an MBA curriculum; every student gets an internship from within the campus. Companies conduct a GD/PI process to select the best candidates. All the top-notch companies from the areas of consulting, investment banking, and FMCG come for the placements. Salary figures in this industry are the best."
+    },
+    {
+        "college_id": "25602",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Great exposure to many subjects, case competitions, peer to peer learning The campus is equipped with top of the line tech facilities Placements options available and the ease of applying to the companies"
+    },
+    {
+        "college_id": "25621",
+        "reviewer_name": "Aditya Sharma",
+        "rating": 4.5,
+        "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."
+    },
+    {
+        "college_id": "25703",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: We have the best lecture halls, the best library, the best gymkhana, indoors, etc. The placements here are excellent and the alumni network is really very strong many times alumni help the students to get their dream job or internship. Cargill global scholarship and bain's true north scholarship are some of the opportunities for general category students."
+    },
+    {
+        "college_id": "25703",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: Placements of iit bombay are relatively better than most colleges in india but placements in chemical engineering are not that good. Th eold hostel are too bad to live in and are half damaged."
+    },
+    {
+        "college_id": "25881",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Faculty members are well experienced and up to date according to curriculum, faculty to student ratio is ok ok. teachers teach well, they are passionate about teaching. There are numerous scholarships that help students to afford the high fees from time to time. The admission process hall (student activity centre) was very big and amazing."
+    },
+    {
+        "college_id": "25881",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: We have to pay the fees in advance or we wont get to access our rooms or mess food. Hostels are bad except the mandakini hostel (first year) .the other hostels were very bad doesn't have a good facilities like washing machine and drinking water."
+    },
+    {
+        "college_id": "25948",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: A lot of scholarships are available like mcm, inspire etc to help students based on merit and needs They are master of their subjects and share a great passion towards the academics. In our branch the placement have not been started because it is new branch but it have very promising hopes of good employment in the upcoming years."
+    },
+    {
+        "college_id": "25948",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: However,due to recession, many students were unplaced,and the placement was very poor compared to normal years. I disliked that there are not enough sports facilities in hostel itself"
+    },
+    {
+        "college_id": "25992",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Dr. vinay pant is my favorite one, and he is the best at teaching in my department. The placements are good in iit roorkee as it is the top 5 engineering colleges in india from 4 th semester ending you will get internship companies like amazon flipkart google microsoft and all other popular companies. The prettiest thing in the whole campus is the james thomsan building. it has magnificent lawn and beautiful green and tall trees."
+    },
+    {
+        "college_id": "25992",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: Admission process was a bit difficult a lot of documents to prepare so take took.the cut-off was too low cause it was the toughest exam.i didn't like the procedure of admission, have to prepare so much documents it was hectic. A very few things that are dislike about the college is the rooms of hostels and washrooms of my block, not very much clean and with proper functions"
+    },
+    {
+        "college_id": "26006",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Placements: The best across India with space to explore every sector Exchange Programmes: With about 100 people getting into the student exchange programme every year IIM C provides a great opportunity to learn in a new setting at some of the best institutions in the world. Campus life and peer group: the chillest IIM, freedom to live life the way you want, a very talented peer group to learn from"
+    },
+    {
+        "college_id": "26006",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: Hostel Infrastructure: With the exception of LVH each hostel has small rooms and no accommodations for the extremely humid weather. Infrastructure: It is one of the oldest MBA colleges therefore infrastructure especially for the hostels is not as expected"
+    },
+    {
+        "college_id": "26007",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: All the big brands and big tech giants come to the campus for great opportunity opportunity for students you can apply for placements from the fifth semester itself. College provides a lot of scholarships like merit cum means scholarship, inspire scholarship, and fee waiver scheme. The faculty members are really good as they are great researchers in their respective fields."
+    },
+    {
+        "college_id": "26007",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: But, if we talk about scholarship then it's a bad news that there is no institute scholarship for unreserved students but u can get it for other organisations like nsp. The hostel rooms are also not good enough and lack cleanliness sometimes and have broken chairs/ tables, etc. at times."
+    },
+    {
+        "college_id": "26016",
+        "reviewer_name": "Aditya Sharma",
+        "rating": 4.5,
+        "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."
+    },
+    {
+        "college_id": "27874",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: The festivals like ganpati, diwali, navratri, onam, are celebrated in the college very enthusiasticly.. The class is further divided in 2 parts having 2 menotrs each and they ar constantly trying to impart the students and making the class strength good so that the batch excels and their reputations is increased. The hostel and the facilities provided are better than other hostels"
+    },
+    {
+        "college_id": "27874",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: First year does not get hostel and for second and third year seats are very limited Exams can be a little difficult, but not as much"
+    },
+    {
+        "college_id": "3004",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: The college and govt provides various scolarships in support of the students like inspire scholarahip for she, the college provied financial assistance to ews students. The faculty is also super talented and have a great knowledge. Our annual fest tempest was one of the best times of my life with dj nights, neeti mohan, several stalls and the freedom of being in a gender minority college just made everything a million times better."
+    },
+    {
+        "college_id": "3004",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: However, speaking for the political science faculty, although they are qualified, they are highly detached from the students. Faculty somehow as it was sometimes not that good as we thought."
+    },
+    {
+        "college_id": "4417",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Merit & need-based scholarships like [your scholarship name] & financial aid exist to help. The faculty is completely qualified with a lot of experience and expertise , has really good teaching skills, clears all the doubts and interacts with the students, is gentle and friendly with the students. Srcc has like the best placement's in the whole of du best companies hishest-35 lpa average -10-12 lpa package i don't really plan to take the placements and go for higher eduaction for mba or data science"
+    },
+    {
+        "college_id": "4417",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: The hostel facilities are not great as we thought and its not good as compare to the colleges like iit and iims Hostel seats are limited. many students have to opt for pgs"
+    },
+    {
+        "college_id": "7798",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: I didnt have the courage to save a life and perform surgery, but I think about paramedics who have a wonderful impact during this time. Internships are also available, and VMC offers you the best opportunity for placements and internships within our own college. You have to give a NEET-PG exam, which is again a national level exam, in order to qualify for getting a good hospital for post graduation."
+    },
+    {
+        "college_id": "7960",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Faculty, colleagues,classes, education i liked these things in college.placement is good.food is also good.cirriculum is good.chefs are good.it is clean and mantains hygiene in a very good way.students are well mannered.city is very good.hostels also The placements opportunities are good as you have wide range of options The college offers the best education possible and are supportive throughout the course"
+    },
+    {
+        "college_id": "7960",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: However, scholarships are provided only for low background students and not for others which makes it unfair. Nri students the fees is really high and we have to pay in whole for one year."
+    },
+    {
+        "college_id": "7980",
+        "reviewer_name": "Alumni Reviewer",
+        "rating": 4.5,
+        "review_text": "Pros: Firstly teaching quality is good of our faculty ndthe faculty members at our hotel management program are quite impressive nd our faculty members have a lot of experience in the hospitality industry. There is scholarship schemes for the national and state wise national scholarships are for the sc/st students and pwd students. Collage have very modern equipments and practical classes are best for learning new recipes."
+    },
+    {
+        "college_id": "7980",
+        "reviewer_name": "Student Reviewer",
+        "rating": 3.8,
+        "review_text": "Cons: The hostel facility are not too great as you have to live with two other students in the same room. Very hard to get the ihm pusa campus hostel is not too big ."
+    },
+    {
+        "college_id": "8164",
+        "reviewer_name": "Aditya Sharma",
+        "rating": 4.5,
+        "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."
+    },
+    {
+        "college_id": "9127",
         "reviewer_name": "Aditya Sharma",
         "rating": 4.5,
         "review_text": "Excellent academic atmosphere, world class research facilities, and amazing placements."

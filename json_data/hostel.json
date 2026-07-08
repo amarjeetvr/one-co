@@ -1,8 +1,48 @@
 [
     {
-        "college_id": "25446",
+        "college_id": "10343",
         "hostel_fees": "2026, ",
-        "facilities": "Wi-Fi, Gym, Mess, Double Occupancy"
+        "facilities": "Gym, Mess"
+    },
+    {
+        "college_id": "10720",
+        "hostel_fees": "2026, ",
+        "facilities": "Mess, Single Occupancy, Double Occupancy"
+    },
+    {
+        "college_id": "10842",
+        "hostel_fees": "2026, ",
+        "facilities": "Mess, Single Occupancy"
+    },
+    {
+        "college_id": "17904",
+        "hostel_fees": "2026, ",
+        "facilities": "Not Specified"
+    },
+    {
+        "college_id": "17905",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Sports"
+    },
+    {
+        "college_id": "1859",
+        "hostel_fees": "2026, ",
+        "facilities": "Gym, Laundry, Mess, Sports"
+    },
+    {
+        "college_id": "1904",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Mess, Sports"
+    },
+    {
+        "college_id": "2525",
+        "hostel_fees": "2026, ",
+        "facilities": "Single Occupancy, Double Occupancy"
+    },
+    {
+        "college_id": "25366",
+        "hostel_fees": "2026, ",
+        "facilities": "Gym, Mess, Single Occupancy, Double Occupancy"
     },
     {
         "college_id": "25455",
@@ -10,8 +50,98 @@
         "facilities": "Wi-Fi, Gym, Mess, Single Occupancy, Double Occupancy, Sports"
     },
     {
+        "college_id": "25469",
+        "hostel_fees": "2026, ",
+        "facilities": "Mess"
+    },
+    {
         "college_id": "25494",
         "hostel_fees": "2026, ",
         "facilities": "Gym, Laundry, Mess, Single Occupancy, Sports"
+    },
+    {
+        "college_id": "25602",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Laundry, Mess, Single Occupancy"
+    },
+    {
+        "college_id": "25621",
+        "hostel_fees": "2026, ",
+        "facilities": "Laundry, Mess"
+    },
+    {
+        "college_id": "25703",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Gym, Mess, Single Occupancy, Double Occupancy, Sports"
+    },
+    {
+        "college_id": "25881",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Gym, Mess, Single Occupancy, Double Occupancy, Sports"
+    },
+    {
+        "college_id": "25948",
+        "hostel_fees": "2026, ",
+        "facilities": "Laundry, Mess, Single Occupancy, Double Occupancy, Sports"
+    },
+    {
+        "college_id": "25992",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Gym, Laundry, Mess, Single Occupancy, Sports"
+    },
+    {
+        "college_id": "26006",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Mess, Sports"
+    },
+    {
+        "college_id": "26007",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Gym, Mess, Double Occupancy, Sports"
+    },
+    {
+        "college_id": "26016",
+        "hostel_fees": "2026, ",
+        "facilities": "Mess, Single Occupancy"
+    },
+    {
+        "college_id": "27874",
+        "hostel_fees": "2026, ",
+        "facilities": "Gym, Mess, Sports"
+    },
+    {
+        "college_id": "3004",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Mess, AC Rooms, Double Occupancy"
+    },
+    {
+        "college_id": "4417",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Mess, Sports"
+    },
+    {
+        "college_id": "7798",
+        "hostel_fees": "2026, ",
+        "facilities": "Mess"
+    },
+    {
+        "college_id": "7960",
+        "hostel_fees": "2026, ",
+        "facilities": "Gym"
+    },
+    {
+        "college_id": "7980",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Gym, Laundry, Mess, Sports"
+    },
+    {
+        "college_id": "8164",
+        "hostel_fees": "2026, ",
+        "facilities": "Not Specified"
+    },
+    {
+        "college_id": "9127",
+        "hostel_fees": "2026, ",
+        "facilities": "Not Specified"
     }
 ]
