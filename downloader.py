@@ -46,7 +46,20 @@ def handle_popups(page: Page):
         except Exception:
             continue
 
-def scroll_and_expand_page(page: Page):
+def is_valid_url_for_subpage(url: str, college_info: Dict[str, str], page_type: str) -> bool:
+    """Helper to check if a URL belongs to the targeted college subpage."""
+    if college_info['id'] not in url:
+        return False
+    suffix = SUBPAGE_MAPPING.get(page_type, "")
+    if suffix and suffix.lower() not in url.lower():
+        return False
+    if page_type == "info":
+        for other_type, other_suffix in SUBPAGE_MAPPING.items():
+            if other_type != "info" and other_suffix and other_suffix.lower() in url.lower():
+                return False
+    return True
+
+def scroll_and_expand_page(page: Page, college_info: Dict[str, str], page_type: str):
     """
     Scrolls down the page gradually to trigger lazy loaders and 
     clicks visible 'View More' / 'Read More' expanders.
@@ -107,11 +120,22 @@ def scroll_and_expand_page(page: Page):
                         if "apply" in text or "brochure" in text or "login" in text or "register" in text:
                             continue
                         
+                        # Store current URL to detect navigation
+                        current_url = page.url
+                        
                         # Click the button
                         loc.scroll_into_view_if_needed(timeout=1000)
                         loc.click(timeout=1000)
                         logger.info(f"Clicked expand button: {text.strip()}")
-                        page.wait_for_timeout(1000)
+                        page.wait_for_timeout(1500)
+                        
+                        # If URL changed to an invalid subpage, go back immediately
+                        if not is_valid_url_for_subpage(page.url, college_info, page_type):
+                            logger.warning(f"Clicking '{text.strip()}' navigated to invalid URL {page.url}. Going back...")
+                            page.go_back()
+                            page.wait_for_timeout(1500)
+                            continue
+                        
                         clicked_any = True
                         clicks_count += 1
                         if clicks_count >= max_clicks:
@@ -151,7 +175,7 @@ def download_subpage(context: BrowserContext, college_info: Dict[str, str], page
         
         # Scroll and expand sections (especially for courses/fees page)
         if page_type in ["courses", "reviews", "faculty", "placements", "scholarships"]:
-            scroll_and_expand_page(page)
+            scroll_and_expand_page(page, college_info, page_type)
         else:
             # General scroll to trigger simple dynamic content
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")

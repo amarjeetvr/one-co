@@ -1,20 +1,122 @@
 [
     {
-        "college_id": "25356",
-        "ranking_body": "NIRF",
-        "rank": "Rank #2",
-        "ranking_year": 2024
+        "college_id": "10343",
+        "ranking_body": "Collegedunia",
+        "rank": "#4",
+        "ranking_year": null
     },
     {
-        "college_id": "25396",
-        "ranking_body": "NIRF",
-        "rank": "Rank #2",
-        "ranking_year": 2024
+        "college_id": "10720",
+        "ranking_body": "Collegedunia",
+        "rank": "#2",
+        "ranking_year": 2026
+    },
+    {
+        "college_id": "10842",
+        "ranking_body": "Collegedunia",
+        "rank": "#3",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25366",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #12",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25446",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #3",
+        "ranking_year": null
     },
     {
         "college_id": "25455",
-        "ranking_body": "NIRF",
-        "rank": "Rank #2",
-        "ranking_year": 2024
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #1",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25469",
+        "ranking_body": "Collegedunia",
+        "rank": "#8",
+        "ranking_year": 2025
+    },
+    {
+        "college_id": "25494",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #2",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25602",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #14",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25621",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #4",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25703",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #6",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25881",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #15",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25948",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #22",
+        "ranking_year": null
+    },
+    {
+        "college_id": "25992",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #18",
+        "ranking_year": null
+    },
+    {
+        "college_id": "26006",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #7",
+        "ranking_year": null
+    },
+    {
+        "college_id": "26007",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #24",
+        "ranking_year": null
+    },
+    {
+        "college_id": "26016",
+        "ranking_body": "Collegedunia",
+        "rank": "CD Rank #19",
+        "ranking_year": null
+    },
+    {
+        "college_id": "7798",
+        "ranking_body": "Collegedunia",
+        "rank": "#3",
+        "ranking_year": 2026
+    },
+    {
+        "college_id": "7980",
+        "ranking_body": "Collegedunia",
+        "rank": "#1",
+        "ranking_year": 2025
+    },
+    {
+        "college_id": "9127",
+        "ranking_body": "Collegedunia",
+        "rank": "#5",
+        "ranking_year": 2025
     }
 ]
