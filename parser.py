@@ -184,6 +184,29 @@ def parse_college_info(html_content: str, college_id: str, url: str) -> Dict[str
     }
 
 # ----------------- 2. COURSES PARSER -----------------
+def is_valid_course(degree_name: str, course_name: str) -> bool:
+    name_lower = course_name.lower()
+    deg_lower = degree_name.lower()
+    
+    garbage_keywords = {
+        "fee", "fees", "charge", "charges", "chrage", "chrages", "stipend", "deposit", 
+        "expense", "expenses", "particulars", "amount", "living", "refundable", 
+        "hostel", "utility", "utilities", "payment", "gst", "tax", "caution",
+        "establishment", "annual", "academic year", "stipend structure", 
+        "indian students", "saarc", "non-saarc", "international students", 
+        "boys", "girls", "mess", "electricity"
+    }
+    
+    for kw in garbage_keywords:
+        if re.search(r'\b' + re.escape(kw) + r'\b', name_lower) or re.search(r'\b' + re.escape(kw) + r'\b', deg_lower):
+            return False
+            
+    if re.match(r'^\s*(\d+(?:st|nd|rd|th)?\s*year|year\s*\d+)\s*$', name_lower) or re.match(r'^\s*(\d+(?:st|nd|rd|th)?\s*year|year\s*\d+)\s*$', deg_lower):
+        return False
+        
+    return True
+
+
 def is_header_row(tr) -> bool:
     cells = tr.find_all(["td", "th"])
     if not cells:
@@ -204,15 +227,19 @@ def _normalize_degree_tag(course_tag: str) -> str:
     tag = clean_text(course_tag).lower()
     if not tag:
         return ""
+    
+    def has_word(w):
+        return bool(re.search(r'\b' + re.escape(w) + r'\b', tag))
+        
     if "b.tech" in tag or "be/b.tech" in tag or tag in {"be", "b.e", "be/b.e"}:
         return "B.Tech"
     if "m.tech" in tag or "me/m.tech" in tag or tag in {"me", "m.e", "me/m.e"}:
         return "M.Tech"
     if "mba" in tag or "pgdm" in tag or "pgpm" in tag or "pgpx" in tag or "pgp" in tag or "post graduate programme" in tag or "post graduate program" in tag:
         return "MBA"
-    if "b.sc" in tag or "bsc" in tag or "nursing" in tag:
+    if "b.sc" in tag or "bsc" in tag or "b.sc." in tag:
         return "B.Sc"
-    if "m.sc" in tag or "msc" in tag:
+    if "m.sc" in tag or "msc" in tag or "m.sc." in tag:
         return "M.Sc"
     if "mbbs" in tag:
         return "MBBS"
@@ -222,29 +249,58 @@ def _normalize_degree_tag(course_tag: str) -> str:
         return "BCA"
     if "bba" in tag or "bbm" in tag:
         return "BBA"
-    if "b.com" in tag:
+    if "b.com" in tag or "bcom" in tag:
         return "B.Com"
-    if tag.startswith("ba"):
+    if has_word("mpt"):
+        return "MPT"
+    if has_word("bpt"):
+        return "BPT"
+    if has_word("mot"):
+        return "MOT"
+    if has_word("bot"):
+        return "BOT"
+    if has_word("mch") or "m.ch" in tag:
+        return "M.Ch"
+    if has_word("dm") or "d.m." in tag:
+        return "DM"
+    if has_word("gnm") or "general nursing" in tag:
+        return "GNM"
+    if has_word("baslp"):
+        return "BASLP"
+    if has_word("bpo"):
+        return "BPO"
+    if has_word("optom") or "b.optom" in tag:
+        return "B.Optom"
+    if has_word("mph"):
+        return "MPH"
+    if has_word("mha"):
+        return "MHA"
+    if has_word("dnb"):
+        return "DNB"
+    if has_word("fnb"):
+        return "FNB"
+    if has_word("ba") or tag.startswith("ba ") or tag == "ba" or tag.startswith("b.a."):
         return "BA"
-    if tag.startswith("ma"):
+    if has_word("ma") or tag.startswith("ma ") or tag == "ma" or tag.startswith("m.a."):
         return "MA"
-    if "ph.d" in tag or tag.startswith("phd") or "fpm" in tag:
+    if "ph.d" in tag or "phd" in tag or "fpm" in tag:
         return "Ph.D"
-    if "b.des" in tag:
+    if "b.des" in tag or "bdes" in tag:
         return "B.Des"
-    if "m.des" in tag:
+    if "m.des" in tag or "mdes" in tag:
         return "M.Des"
     if "mpp" in tag:
         return "MPP"
     if "mds" in tag:
         return "MDS"
-    if "md" in tag:
+    if has_word("md") or "m.d." in tag:
         return "MD"
-    if "ms" in tag:
+    if has_word("ms") or "m.s." in tag:
         return "MS"
     if "executive" in tag:
         return "Executive Programme"
     return course_tag.strip()
+
 
 def deduce_course_details(degree: str, course_name: str) -> Dict[str, str]:
     duration = "Not Specified"
@@ -308,6 +364,51 @@ def deduce_course_details(degree: str, course_name: str) -> Dict[str, str]:
         duration = "3 Years"
         course_level = "PG"
         entrance_exam = "NEET PG"
+    elif "mpt" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+    elif "bpt" in deg_lower:
+        duration = "4 Years 6 Months"
+        course_level = "UG"
+    elif "mot" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+    elif "bot" in deg_lower:
+        duration = "4.5 Years"
+        course_level = "UG"
+    elif "m.ch" in deg_lower or "mch" in deg_lower:
+        duration = "3 Years"
+        course_level = "Doctorate"
+        entrance_exam = "NEET SS"
+    elif "dm" in deg_lower:
+        duration = "3 Years"
+        course_level = "Doctorate"
+        entrance_exam = "NEET SS"
+    elif "gnm" in deg_lower:
+        duration = "3 Years"
+        course_level = "UG"
+    elif "baslp" in deg_lower:
+        duration = "4 Years"
+        course_level = "UG"
+    elif "bpo" in deg_lower:
+        duration = "4.5 Years"
+        course_level = "UG"
+    elif "b.optom" in deg_lower or "optom" in deg_lower:
+        duration = "4 Years"
+        course_level = "UG"
+    elif "mph" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+    elif "mha" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
+    elif "dnb" in deg_lower:
+        duration = "3 Years"
+        course_level = "PG"
+        entrance_exam = "NEET PG"
+    elif "fnb" in deg_lower:
+        duration = "2 Years"
+        course_level = "PG"
     elif "ba" == deg_lower or "b.a." in deg_lower:
         duration = "3 Years"
         course_level = "UG"
@@ -592,6 +693,97 @@ def _extract_embedded_course_rows(html_content: str, college_id: str) -> List[Di
 
     return rows
 
+def _extract_dom_course_cards(html_content: str, college_id: str) -> List[Dict[str, Any]]:
+    """Extracts course details from CSS course-card elements in the HTML DOM."""
+    soup = BeautifulSoup(html_content, "html.parser")
+    rows: List[Dict[str, Any]] = []
+    seen = set()
+    
+    cards = soup.find_all(class_=lambda c: c and "course-card" in c)
+    for card in cards:
+        title_elem = card.find(class_=lambda c: c and "course-title" in c)
+        if not title_elem:
+            continue
+            
+        course_name = clean_text(title_elem.text)
+        if not course_name:
+            continue
+            
+        degree_name = _normalize_degree_tag(course_name)
+        if not degree_name:
+            csm_title = title_elem.get("data-csm-title")
+            if csm_title:
+                degree_name = _normalize_degree_tag(csm_title)
+            if not degree_name:
+                degree_name = "Other"
+                
+        if not is_valid_course(degree_name, course_name):
+            continue
+            
+        fee_elem = card.find(class_=lambda c: c and "course-fee-amount" in c)
+        total_fees = "Not Specified"
+        if fee_elem:
+            total_fees = clean_text(fee_elem.text)
+            if total_fees.startswith("₹"):
+                total_fees = total_fees[1:].strip()
+                
+        duration_elem = card.find(class_=lambda c: c and "course-duration" in c)
+        duration = "Not Specified"
+        if duration_elem:
+            duration = clean_text(duration_elem.text)
+            
+        type_elem = card.find(class_=lambda c: c and "course-duration-text" in c)
+        course_type = "Full Time"
+        if type_elem:
+            course_type = clean_text(type_elem.text).replace("(", "").replace(")", "").strip()
+            if not course_type:
+                course_type = "Full Time"
+                
+        details = deduce_course_details(degree_name, course_name)
+        if duration == "Not Specified" and details.get("duration"):
+            duration = details["duration"]
+        if course_type == "Full Time" and details.get("course_type") == "Part Time":
+            course_type = "Part Time"
+            
+        app_date = "Not Specified"
+        info_blocks = card.find_all(class_=lambda c: c and "course-info" in c)
+        for block in info_blocks:
+            lbl = block.find(class_=lambda c: c and "course-info-label" in c)
+            val = block.find(class_=lambda c: c and "course-info-value" in c)
+            if lbl and val and "application" in lbl.text.lower():
+                app_date = clean_text(val.text)
+                break
+                
+        row = {
+            "college_id": college_id,
+            "degree_name": degree_name,
+            "course_name": course_name,
+            "specialization": "General" if course_name.lower() == degree_name.lower() else course_name,
+            "total_fees": total_fees,
+            "duration": duration,
+            "course_type": course_type,
+            "eligibility": "Not Specified",
+            "entrance_exam": details.get("entrance_exam") or "Not Specified",
+            "application_date": app_date,
+            "intake_seats": "Not Specified",
+            "course_level": details.get("course_level") or "UG",
+        }
+        
+        row_key = (
+            row["degree_name"],
+            row["course_name"],
+            row["specialization"],
+            row["total_fees"],
+            row["duration"],
+            row["course_type"],
+        )
+        if row_key in seen:
+            continue
+        seen.add(row_key)
+        rows.append(row)
+        
+    return rows
+
 def parse_courses(html_content: str, college_id: str, college_url: str) -> List[Dict[str, Any]]:
     """Parses list of courses from the /courses-fees subpage html."""
     soup = BeautifulSoup(html_content, "html.parser")
@@ -599,9 +791,14 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
     seen = set()
 
     def add_row(row: Dict[str, Any]) -> None:
+        deg = row.get("degree_name", "")
+        name = row.get("course_name", "")
+        if not is_valid_course(deg, name):
+            return
+            
         row_key = (
-            row.get("degree_name", ""),
-            row.get("course_name", ""),
+            deg,
+            name,
             row.get("specialization", ""),
             row.get("total_fees", ""),
             row.get("duration", ""),
@@ -612,10 +809,15 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
         seen.add(row_key)
         rows.append(row)
 
+    # 1. First extract from DOM course cards (if loaded)
+    for row in _extract_dom_course_cards(html_content, college_id):
+        add_row(row)
+
+    # 2. Next extract from __NEXT_DATA__
     for row in _extract_next_data_course_rows(html_content, college_id):
         add_row(row)
     
-    # Locate all tables on the page
+    # 3. Locate all tables on the page
     tables = soup.find_all("table")
     
     for table in tables:
@@ -627,6 +829,18 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
         sibling = table.find_previous(["h1", "h2", "h3", "h4"])
         sh = sibling.text.strip().lower() if sibling else ""
         
+        # Check if the table is a fee structure/breakdown table by inspecting column 0 header cell
+        header_row = trs[0]
+        header_cells = header_row.find_all(["th", "td"])
+        if header_cells:
+            col0_text = clean_text(header_cells[0].text).lower()
+            fee_indicators = [
+                "particular", "fee", "stipend", "expense", "deposit", "charge", "chrage", 
+                "breakdown", "category", "year", "component", "detail", "cost"
+            ]
+            if any(ind in col0_text for ind in fee_indicators):
+                continue
+                
         # Determine category
         category = "Unknown"
         if "m.tech" in sh and "fees" in sh:

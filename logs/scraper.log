@@ -8835,3 +8835,287 @@ Call log:
 [2026-07-05 16:44:40] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\8164_welcomgroup-graduate-school-of-hotel-administration-wgsha-manipal.xlsx
 [2026-07-05 16:44:40] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\9127_symbiosis-law-school-sls-pune.xlsx
 [2026-07-05 16:44:40] INFO [main.py:229] Offline parsing and export complete.
+[2026-07-09 16:43:12] INFO [main.py:64] Starting Stage 2: Offline parsing and export...
+[2026-07-09 16:43:12] INFO [main.py:71] Found 30 college(s) to parse.
+[2026-07-09 16:43:12] INFO [main.py:85] Parsing college: christian-medical-college-cmc-vellore (ID: 10343)
+[2026-07-09 16:43:22] INFO [main.py:85] Parsing college: maulana-azad-medical-college-mamc-new-delhi (ID: 10720)
+[2026-07-09 16:43:31] INFO [main.py:85] Parsing college: post-graduate-institute-of-medical-education-and-research-pgimer-chandigarh (ID: 10842)
+[2026-07-09 16:43:38] INFO [main.py:85] Parsing college: isb-hyderabad-indian-school-of-business-hyderabad (ID: 17904)
+[2026-07-09 16:43:46] INFO [main.py:85] Parsing college: indian-school-of-business-isb-mohali (ID: 17905)
+[2026-07-09 16:43:54] INFO [main.py:85] Parsing college: hansraj-college-hrc-new-delhi (ID: 1859)
+[2026-07-09 16:44:03] INFO [main.py:85] Parsing college: hindu-college-new-delhi (ID: 1904)
+[2026-07-09 16:44:13] INFO [main.py:85] Parsing college: lady-shri-ram-college-for-women-lsr-new-delhi (ID: 2525)
+[2026-07-09 16:44:22] INFO [main.py:85] Parsing college: nalsar-university-of-law-nalsar-hyderabad (ID: 25366)
+[2026-07-09 16:44:30] INFO [main.py:85] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-09 16:44:36] INFO [main.py:85] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-09 16:44:47] INFO [main.py:85] Parsing college: school-of-planning-and-architecture-spa-new-delhi (ID: 25469)
+[2026-07-09 16:44:55] INFO [main.py:85] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-09 16:45:07] INFO [main.py:85] Parsing college: iim-bangalore-indian-institute-of-management-bangalore (ID: 25602)
+[2026-07-09 16:45:21] INFO [main.py:85] Parsing college: national-law-school-of-india-university-nlsiu-bangalore (ID: 25621)
+[2026-07-09 16:45:30] INFO [main.py:85] Parsing college: iit-bombay-indian-institute-of-technology-iitb-mumbai (ID: 25703)
+[2026-07-09 16:45:49] INFO [main.py:85] Parsing college: iit-madras-indian-institute-of-technology-iitm-chennai (ID: 25881)
+[2026-07-09 16:46:00] INFO [main.py:85] Parsing college: iit-kanpur-indian-institute-of-technology-iitk-kanpur (ID: 25948)
+[2026-07-09 16:46:11] INFO [main.py:85] Parsing college: iit-roorkee-indian-institute-of-technology-iitr-roorkee (ID: 25992)
+[2026-07-09 16:46:21] INFO [main.py:85] Parsing college: iimc-indian-institute-of-management-kolkata (ID: 26006)
+[2026-07-09 16:46:33] INFO [main.py:85] Parsing college: iit-kharagpur-indian-institute-of-technology-iitkgp-kharagpur (ID: 26007)
+[2026-07-09 16:46:47] INFO [main.py:85] Parsing college: the-west-bengal-national-university-of-juridical-sciences-wbnujs-kolkata (ID: 26016)
+[2026-07-09 16:46:55] INFO [main.py:85] Parsing college: institute-of-hotel-management-catering-technology-and-applied-nutrition-ihm-mumbai (ID: 27874)
+[2026-07-09 16:47:02] INFO [main.py:85] Parsing college: miranda-house-new-delhi (ID: 3004)
+[2026-07-09 16:47:14] INFO [main.py:85] Parsing college: shri-ram-college-of-commerce-srcc-new-delhi (ID: 4417)
+[2026-07-09 16:47:25] INFO [main.py:85] Parsing college: vardhman-mahavir-medical-college-vmmc-new-delhi (ID: 7798)
+[2026-07-09 16:47:37] INFO [main.py:85] Parsing college: institute-of-hotel-management-ihm-bangalore (ID: 7960)
+[2026-07-09 16:47:46] INFO [main.py:85] Parsing college: institute-of-hotel-management-catering-and-nutrition-ihm-pusa-new-delhi (ID: 7980)
+[2026-07-09 16:47:54] INFO [main.py:85] Parsing college: welcomgroup-graduate-school-of-hotel-administration-wgsha-manipal (ID: 8164)
+[2026-07-09 16:48:02] INFO [main.py:85] Parsing college: symbiosis-law-school-sls-pune (ID: 9127)
+[2026-07-09 16:48:09] INFO [exporter.py:35] Starting data export process...
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 30 records to JSON: E:\amar\development\one-co\json_data\colleges.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 1338 records to JSON: E:\amar\development\one-co\json_data\courses.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 29 records to JSON: E:\amar\development\one-co\json_data\admissions.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 30 records to JSON: E:\amar\development\one-co\json_data\placements.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 20 records to JSON: E:\amar\development\one-co\json_data\rankings.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 10 records to JSON: E:\amar\development\one-co\json_data\faculty.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 92 records to JSON: E:\amar\development\one-co\json_data\scholarships.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 29 records to JSON: E:\amar\development\one-co\json_data\hostel.json
+[2026-07-09 16:48:09] INFO [exporter.py:16] Saved 49 records to JSON: E:\amar\development\one-co\json_data\reviews.json
+[2026-07-09 16:48:10] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: E:\amar\development\one-co\exports\all_colleges.xlsx
+[2026-07-09 16:48:10] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10343_christian-medical-college-cmc-vellore.xlsx
+[2026-07-09 16:48:11] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10720_maulana-azad-medical-college-mamc-new-delhi.xlsx
+[2026-07-09 16:48:11] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10842_post-graduate-institute-of-medical-education-and-research-pgimer-chandigarh.xlsx
+[2026-07-09 16:48:11] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\17904_isb-hyderabad-indian-school-of-business-hyderabad.xlsx
+[2026-07-09 16:48:12] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\17905_indian-school-of-business-isb-mohali.xlsx
+[2026-07-09 16:48:12] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\1859_hansraj-college-hrc-new-delhi.xlsx
+[2026-07-09 16:48:12] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\1904_hindu-college-new-delhi.xlsx
+[2026-07-09 16:48:12] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\2525_lady-shri-ram-college-for-women-lsr-new-delhi.xlsx
+[2026-07-09 16:48:13] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25366_nalsar-university-of-law-nalsar-hyderabad.xlsx
+[2026-07-09 16:48:13] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-09 16:48:13] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-09 16:48:14] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25469_school-of-planning-and-architecture-spa-new-delhi.xlsx
+[2026-07-09 16:48:14] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-09 16:48:14] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25602_iim-bangalore-indian-institute-of-management-bangalore.xlsx
+[2026-07-09 16:48:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25621_national-law-school-of-india-university-nlsiu-bangalore.xlsx
+[2026-07-09 16:48:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25703_iit-bombay-indian-institute-of-technology-iitb-mumbai.xlsx
+[2026-07-09 16:48:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25881_iit-madras-indian-institute-of-technology-iitm-chennai.xlsx
+[2026-07-09 16:48:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25948_iit-kanpur-indian-institute-of-technology-iitk-kanpur.xlsx
+[2026-07-09 16:48:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25992_iit-roorkee-indian-institute-of-technology-iitr-roorkee.xlsx
+[2026-07-09 16:48:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26006_iimc-indian-institute-of-management-kolkata.xlsx
+[2026-07-09 16:48:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26007_iit-kharagpur-indian-institute-of-technology-iitkgp-kharagpur.xlsx
+[2026-07-09 16:48:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26016_the-west-bengal-national-university-of-juridical-sciences-wbnujs-kolkata.xlsx
+[2026-07-09 16:48:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\27874_institute-of-hotel-management-catering-technology-and-applied-nutrition-ihm-mumbai.xlsx
+[2026-07-09 16:48:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\3004_miranda-house-new-delhi.xlsx
+[2026-07-09 16:48:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\4417_shri-ram-college-of-commerce-srcc-new-delhi.xlsx
+[2026-07-09 16:48:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7798_vardhman-mahavir-medical-college-vmmc-new-delhi.xlsx
+[2026-07-09 16:48:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7960_institute-of-hotel-management-ihm-bangalore.xlsx
+[2026-07-09 16:48:19] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7980_institute-of-hotel-management-catering-and-nutrition-ihm-pusa-new-delhi.xlsx
+[2026-07-09 16:48:19] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\8164_welcomgroup-graduate-school-of-hotel-administration-wgsha-manipal.xlsx
+[2026-07-09 16:48:19] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\9127_symbiosis-law-school-sls-pune.xlsx
+[2026-07-09 16:48:19] INFO [main.py:229] Offline parsing and export complete.
+[2026-07-09 16:48:56] INFO [main.py:64] Starting Stage 2: Offline parsing and export...
+[2026-07-09 16:48:56] INFO [main.py:71] Found 30 college(s) to parse.
+[2026-07-09 16:48:56] INFO [main.py:85] Parsing college: christian-medical-college-cmc-vellore (ID: 10343)
+[2026-07-09 16:48:58] INFO [main.py:85] Parsing college: maulana-azad-medical-college-mamc-new-delhi (ID: 10720)
+[2026-07-09 16:49:00] INFO [main.py:85] Parsing college: post-graduate-institute-of-medical-education-and-research-pgimer-chandigarh (ID: 10842)
+[2026-07-09 16:49:03] INFO [main.py:85] Parsing college: isb-hyderabad-indian-school-of-business-hyderabad (ID: 17904)
+[2026-07-09 16:49:05] INFO [main.py:85] Parsing college: indian-school-of-business-isb-mohali (ID: 17905)
+[2026-07-09 16:49:07] INFO [main.py:85] Parsing college: hansraj-college-hrc-new-delhi (ID: 1859)
+[2026-07-09 16:49:10] INFO [main.py:85] Parsing college: hindu-college-new-delhi (ID: 1904)
+[2026-07-09 16:49:13] INFO [main.py:85] Parsing college: lady-shri-ram-college-for-women-lsr-new-delhi (ID: 2525)
+[2026-07-09 16:49:16] INFO [main.py:85] Parsing college: nalsar-university-of-law-nalsar-hyderabad (ID: 25366)
+[2026-07-09 16:49:18] INFO [main.py:85] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-09 16:49:21] INFO [main.py:85] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-09 16:49:24] INFO [main.py:85] Parsing college: school-of-planning-and-architecture-spa-new-delhi (ID: 25469)
+[2026-07-09 16:49:26] INFO [main.py:85] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-09 16:49:28] INFO [main.py:85] Parsing college: iim-bangalore-indian-institute-of-management-bangalore (ID: 25602)
+[2026-07-09 16:49:31] INFO [main.py:85] Parsing college: national-law-school-of-india-university-nlsiu-bangalore (ID: 25621)
+[2026-07-09 16:49:33] INFO [main.py:85] Parsing college: iit-bombay-indian-institute-of-technology-iitb-mumbai (ID: 25703)
+[2026-07-09 16:49:37] INFO [main.py:85] Parsing college: iit-madras-indian-institute-of-technology-iitm-chennai (ID: 25881)
+[2026-07-09 16:49:40] INFO [main.py:85] Parsing college: iit-kanpur-indian-institute-of-technology-iitk-kanpur (ID: 25948)
+[2026-07-09 16:49:43] INFO [main.py:85] Parsing college: iit-roorkee-indian-institute-of-technology-iitr-roorkee (ID: 25992)
+[2026-07-09 16:49:47] INFO [main.py:85] Parsing college: iimc-indian-institute-of-management-kolkata (ID: 26006)
+[2026-07-09 16:49:50] INFO [main.py:85] Parsing college: iit-kharagpur-indian-institute-of-technology-iitkgp-kharagpur (ID: 26007)
+[2026-07-09 16:49:53] INFO [main.py:85] Parsing college: the-west-bengal-national-university-of-juridical-sciences-wbnujs-kolkata (ID: 26016)
+[2026-07-09 16:49:56] INFO [main.py:85] Parsing college: institute-of-hotel-management-catering-technology-and-applied-nutrition-ihm-mumbai (ID: 27874)
+[2026-07-09 16:49:58] INFO [main.py:85] Parsing college: miranda-house-new-delhi (ID: 3004)
+[2026-07-09 16:50:01] INFO [main.py:85] Parsing college: shri-ram-college-of-commerce-srcc-new-delhi (ID: 4417)
+[2026-07-09 16:50:03] INFO [main.py:85] Parsing college: vardhman-mahavir-medical-college-vmmc-new-delhi (ID: 7798)
+[2026-07-09 16:50:06] INFO [main.py:85] Parsing college: institute-of-hotel-management-ihm-bangalore (ID: 7960)
+[2026-07-09 16:50:08] INFO [main.py:85] Parsing college: institute-of-hotel-management-catering-and-nutrition-ihm-pusa-new-delhi (ID: 7980)
+[2026-07-09 16:50:10] INFO [main.py:85] Parsing college: welcomgroup-graduate-school-of-hotel-administration-wgsha-manipal (ID: 8164)
+[2026-07-09 16:50:12] INFO [main.py:85] Parsing college: symbiosis-law-school-sls-pune (ID: 9127)
+[2026-07-09 16:50:14] INFO [exporter.py:35] Starting data export process...
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 30 records to JSON: E:\amar\development\one-co\json_data\colleges.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 1338 records to JSON: E:\amar\development\one-co\json_data\courses.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 29 records to JSON: E:\amar\development\one-co\json_data\admissions.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 30 records to JSON: E:\amar\development\one-co\json_data\placements.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 20 records to JSON: E:\amar\development\one-co\json_data\rankings.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 10 records to JSON: E:\amar\development\one-co\json_data\faculty.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 92 records to JSON: E:\amar\development\one-co\json_data\scholarships.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 29 records to JSON: E:\amar\development\one-co\json_data\hostel.json
+[2026-07-09 16:50:14] INFO [exporter.py:16] Saved 49 records to JSON: E:\amar\development\one-co\json_data\reviews.json
+[2026-07-09 16:50:15] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: E:\amar\development\one-co\exports\all_colleges.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10343_christian-medical-college-cmc-vellore.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10720_maulana-azad-medical-college-mamc-new-delhi.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10842_post-graduate-institute-of-medical-education-and-research-pgimer-chandigarh.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\17904_isb-hyderabad-indian-school-of-business-hyderabad.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\17905_indian-school-of-business-isb-mohali.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\1859_hansraj-college-hrc-new-delhi.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\1904_hindu-college-new-delhi.xlsx
+[2026-07-09 16:50:15] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\2525_lady-shri-ram-college-for-women-lsr-new-delhi.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25366_nalsar-university-of-law-nalsar-hyderabad.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25469_school-of-planning-and-architecture-spa-new-delhi.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25602_iim-bangalore-indian-institute-of-management-bangalore.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25621_national-law-school-of-india-university-nlsiu-bangalore.xlsx
+[2026-07-09 16:50:16] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25703_iit-bombay-indian-institute-of-technology-iitb-mumbai.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25881_iit-madras-indian-institute-of-technology-iitm-chennai.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25948_iit-kanpur-indian-institute-of-technology-iitk-kanpur.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25992_iit-roorkee-indian-institute-of-technology-iitr-roorkee.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26006_iimc-indian-institute-of-management-kolkata.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26007_iit-kharagpur-indian-institute-of-technology-iitkgp-kharagpur.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26016_the-west-bengal-national-university-of-juridical-sciences-wbnujs-kolkata.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\27874_institute-of-hotel-management-catering-technology-and-applied-nutrition-ihm-mumbai.xlsx
+[2026-07-09 16:50:17] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\3004_miranda-house-new-delhi.xlsx
+[2026-07-09 16:50:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\4417_shri-ram-college-of-commerce-srcc-new-delhi.xlsx
+[2026-07-09 16:50:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7798_vardhman-mahavir-medical-college-vmmc-new-delhi.xlsx
+[2026-07-09 16:50:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7960_institute-of-hotel-management-ihm-bangalore.xlsx
+[2026-07-09 16:50:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7980_institute-of-hotel-management-catering-and-nutrition-ihm-pusa-new-delhi.xlsx
+[2026-07-09 16:50:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\8164_welcomgroup-graduate-school-of-hotel-administration-wgsha-manipal.xlsx
+[2026-07-09 16:50:18] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\9127_symbiosis-law-school-sls-pune.xlsx
+[2026-07-09 16:50:18] INFO [main.py:229] Offline parsing and export complete.
+[2026-07-09 17:39:37] INFO [main.py:250] Starting Full End-to-End Scraper Pipeline...
+[2026-07-09 17:39:37] INFO [main.py:259] 
+========================================
+STARTING BATCH: 3 Colleges (Max: 6)
+========================================
+[2026-07-09 17:39:37] INFO [main.py:263] Stage 1: Discovering up to 3 URLs...
+[2026-07-09 17:39:37] INFO [discovery.py:98] Starting URL discovery from: https://collegedunia.com/india-colleges
+[2026-07-09 17:39:37] INFO [discovery.py:113] Loaded 30 existing URLs from E:\amar\development\one-co\urls\college_urls.csv
+[2026-07-09 17:39:40] INFO [discovery.py:118] Launching browser for discovery...
+[2026-07-09 17:39:43] INFO [discovery.py:126] Navigating to https://collegedunia.com/india-colleges...
+[2026-07-09 17:39:48] INFO [discovery.py:261] Saved 30 URLs to E:\amar\development\one-co\urls\college_urls.csv
+[2026-07-09 17:39:48] INFO [main.py:266] Stage 2: Downloading subpages up to 3 colleges...
+[2026-07-09 17:39:48] INFO [downloader.py:225] Preparing to download pages for 3 colleges.
+[2026-07-09 17:39:50] INFO [downloader.py:243] --- Processing College 1/3: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455) ---
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: info -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: courses -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: admissions -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: placements -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: reviews -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: faculty -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: scholarships -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: hostel -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: cutoff -> 25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:243] --- Processing College 2/3: iima-indian-institute-of-management-ahmedabad (ID: 25494) ---
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: info -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: courses -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: admissions -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: placements -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: reviews -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: faculty -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: scholarships -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: hostel -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: cutoff -> 25494_iima-indian-institute-of-management-ahmedabad.html
+[2026-07-09 17:39:50] INFO [downloader.py:243] --- Processing College 3/3: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446) ---
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: info -> 25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: courses -> 25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: admissions -> 25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: placements -> 25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: reviews -> 25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:157] Skipping already downloaded subpage: faculty -> 25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html
+[2026-07-09 17:39:50] INFO [downloader.py:160] Downloading scholarships from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/scholarship
+[2026-07-09 17:39:54] INFO [downloader.py:67] Scrolling and expanding page content...
+[2026-07-09 17:40:06] INFO [downloader.py:129] Clicked expand button: ...read more
+[2026-07-09 17:40:08] INFO [downloader.py:191] Successfully saved E:\amar\development\one-co\html\scholarships\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (631665 bytes)
+[2026-07-09 17:40:08] INFO [downloader.py:195] Sleeping for 2.40s...
+[2026-07-09 17:40:10] INFO [downloader.py:160] Downloading hostel from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/hostel
+[2026-07-09 17:40:16] INFO [downloader.py:191] Successfully saved E:\amar\development\one-co\html\hostel\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (556311 bytes)
+[2026-07-09 17:40:16] INFO [downloader.py:195] Sleeping for 3.25s...
+[2026-07-09 17:40:20] INFO [downloader.py:160] Downloading cutoff from https://collegedunia.com/university/25446-all-india-institute-of-medical-sciences-aiims-new-delhi/cutoff
+[2026-07-09 17:40:25] INFO [downloader.py:191] Successfully saved E:\amar\development\one-co\html\cutoff\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.html (2188321 bytes)
+[2026-07-09 17:40:25] INFO [downloader.py:195] Sleeping for 2.58s...
+[2026-07-09 17:40:30] INFO [downloader.py:251] Downloader task complete.
+[2026-07-09 17:40:30] INFO [main.py:269] Stage 3: Parsing and exporting data...
+[2026-07-09 17:40:38] INFO [main.py:64] Starting Stage 2: Offline parsing and export...
+[2026-07-09 17:40:38] INFO [main.py:71] Found 30 college(s) to parse.
+[2026-07-09 17:40:38] INFO [main.py:85] Parsing college: christian-medical-college-cmc-vellore (ID: 10343)
+[2026-07-09 17:40:55] INFO [main.py:85] Parsing college: maulana-azad-medical-college-mamc-new-delhi (ID: 10720)
+[2026-07-09 17:41:08] INFO [main.py:85] Parsing college: post-graduate-institute-of-medical-education-and-research-pgimer-chandigarh (ID: 10842)
+[2026-07-09 17:41:18] INFO [main.py:85] Parsing college: isb-hyderabad-indian-school-of-business-hyderabad (ID: 17904)
+[2026-07-09 17:41:29] INFO [main.py:85] Parsing college: indian-school-of-business-isb-mohali (ID: 17905)
+[2026-07-09 17:41:39] INFO [main.py:85] Parsing college: hansraj-college-hrc-new-delhi (ID: 1859)
+[2026-07-09 17:41:49] INFO [main.py:85] Parsing college: hindu-college-new-delhi (ID: 1904)
+[2026-07-09 17:42:00] INFO [main.py:85] Parsing college: lady-shri-ram-college-for-women-lsr-new-delhi (ID: 2525)
+[2026-07-09 17:42:11] INFO [main.py:85] Parsing college: nalsar-university-of-law-nalsar-hyderabad (ID: 25366)
+[2026-07-09 17:42:21] INFO [main.py:85] Parsing college: all-india-institute-of-medical-sciences-aiims-new-delhi (ID: 25446)
+[2026-07-09 17:42:36] INFO [main.py:85] Parsing college: iit-delhi-indian-institute-of-technology-iitd-new-delhi (ID: 25455)
+[2026-07-09 17:42:55] INFO [main.py:85] Parsing college: school-of-planning-and-architecture-spa-new-delhi (ID: 25469)
+[2026-07-09 17:43:05] INFO [main.py:85] Parsing college: iima-indian-institute-of-management-ahmedabad (ID: 25494)
+[2026-07-09 17:43:19] INFO [main.py:85] Parsing college: iim-bangalore-indian-institute-of-management-bangalore (ID: 25602)
+[2026-07-09 17:43:35] INFO [main.py:85] Parsing college: national-law-school-of-india-university-nlsiu-bangalore (ID: 25621)
+[2026-07-09 17:43:46] INFO [main.py:85] Parsing college: iit-bombay-indian-institute-of-technology-iitb-mumbai (ID: 25703)
+[2026-07-09 17:44:02] INFO [main.py:85] Parsing college: iit-madras-indian-institute-of-technology-iitm-chennai (ID: 25881)
+[2026-07-09 17:44:15] INFO [main.py:85] Parsing college: iit-kanpur-indian-institute-of-technology-iitk-kanpur (ID: 25948)
+[2026-07-09 17:44:27] INFO [main.py:85] Parsing college: iit-roorkee-indian-institute-of-technology-iitr-roorkee (ID: 25992)
+[2026-07-09 17:44:38] INFO [main.py:85] Parsing college: iimc-indian-institute-of-management-kolkata (ID: 26006)
+[2026-07-09 17:44:50] INFO [main.py:85] Parsing college: iit-kharagpur-indian-institute-of-technology-iitkgp-kharagpur (ID: 26007)
+[2026-07-09 17:45:05] INFO [main.py:85] Parsing college: the-west-bengal-national-university-of-juridical-sciences-wbnujs-kolkata (ID: 26016)
+[2026-07-09 17:45:15] INFO [main.py:85] Parsing college: institute-of-hotel-management-catering-technology-and-applied-nutrition-ihm-mumbai (ID: 27874)
+[2026-07-09 17:45:23] INFO [main.py:85] Parsing college: miranda-house-new-delhi (ID: 3004)
+[2026-07-09 17:45:34] INFO [main.py:85] Parsing college: shri-ram-college-of-commerce-srcc-new-delhi (ID: 4417)
+[2026-07-09 17:45:44] INFO [main.py:85] Parsing college: vardhman-mahavir-medical-college-vmmc-new-delhi (ID: 7798)
+[2026-07-09 17:45:56] INFO [main.py:85] Parsing college: institute-of-hotel-management-ihm-bangalore (ID: 7960)
+[2026-07-09 17:46:06] INFO [main.py:85] Parsing college: institute-of-hotel-management-catering-and-nutrition-ihm-pusa-new-delhi (ID: 7980)
+[2026-07-09 17:46:14] INFO [main.py:85] Parsing college: welcomgroup-graduate-school-of-hotel-administration-wgsha-manipal (ID: 8164)
+[2026-07-09 17:46:22] INFO [main.py:85] Parsing college: symbiosis-law-school-sls-pune (ID: 9127)
+[2026-07-09 17:46:30] INFO [exporter.py:35] Starting data export process...
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 30 records to JSON: E:\amar\development\one-co\json_data\colleges.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 1338 records to JSON: E:\amar\development\one-co\json_data\courses.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 29 records to JSON: E:\amar\development\one-co\json_data\admissions.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 30 records to JSON: E:\amar\development\one-co\json_data\placements.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 13 records to JSON: E:\amar\development\one-co\json_data\rankings.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 10 records to JSON: E:\amar\development\one-co\json_data\faculty.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 92 records to JSON: E:\amar\development\one-co\json_data\scholarships.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 30 records to JSON: E:\amar\development\one-co\json_data\hostel.json
+[2026-07-09 17:46:30] INFO [exporter.py:16] Saved 49 records to JSON: E:\amar\development\one-co\json_data\reviews.json
+[2026-07-09 17:46:31] INFO [exporter.py:84] Excel workbook compiled and saved successfully to: E:\amar\development\one-co\exports\all_colleges.xlsx
+[2026-07-09 17:46:31] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10343_christian-medical-college-cmc-vellore.xlsx
+[2026-07-09 17:46:32] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10720_maulana-azad-medical-college-mamc-new-delhi.xlsx
+[2026-07-09 17:46:32] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\10842_post-graduate-institute-of-medical-education-and-research-pgimer-chandigarh.xlsx
+[2026-07-09 17:46:32] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\17904_isb-hyderabad-indian-school-of-business-hyderabad.xlsx
+[2026-07-09 17:46:33] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\17905_indian-school-of-business-isb-mohali.xlsx
+[2026-07-09 17:46:33] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\1859_hansraj-college-hrc-new-delhi.xlsx
+[2026-07-09 17:46:33] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\1904_hindu-college-new-delhi.xlsx
+[2026-07-09 17:46:34] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\2525_lady-shri-ram-college-for-women-lsr-new-delhi.xlsx
+[2026-07-09 17:46:34] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25366_nalsar-university-of-law-nalsar-hyderabad.xlsx
+[2026-07-09 17:46:34] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25446_all-india-institute-of-medical-sciences-aiims-new-delhi.xlsx
+[2026-07-09 17:46:35] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25455_iit-delhi-indian-institute-of-technology-iitd-new-delhi.xlsx
+[2026-07-09 17:46:35] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25469_school-of-planning-and-architecture-spa-new-delhi.xlsx
+[2026-07-09 17:46:35] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25494_iima-indian-institute-of-management-ahmedabad.xlsx
+[2026-07-09 17:46:35] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25602_iim-bangalore-indian-institute-of-management-bangalore.xlsx
+[2026-07-09 17:46:36] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25621_national-law-school-of-india-university-nlsiu-bangalore.xlsx
+[2026-07-09 17:46:36] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25703_iit-bombay-indian-institute-of-technology-iitb-mumbai.xlsx
+[2026-07-09 17:46:36] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25881_iit-madras-indian-institute-of-technology-iitm-chennai.xlsx
+[2026-07-09 17:46:37] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25948_iit-kanpur-indian-institute-of-technology-iitk-kanpur.xlsx
+[2026-07-09 17:46:37] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\25992_iit-roorkee-indian-institute-of-technology-iitr-roorkee.xlsx
+[2026-07-09 17:46:37] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26006_iimc-indian-institute-of-management-kolkata.xlsx
+[2026-07-09 17:46:38] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26007_iit-kharagpur-indian-institute-of-technology-iitkgp-kharagpur.xlsx
+[2026-07-09 17:46:38] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\26016_the-west-bengal-national-university-of-juridical-sciences-wbnujs-kolkata.xlsx
+[2026-07-09 17:46:38] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\27874_institute-of-hotel-management-catering-technology-and-applied-nutrition-ihm-mumbai.xlsx
+[2026-07-09 17:46:38] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\3004_miranda-house-new-delhi.xlsx
+[2026-07-09 17:46:39] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\4417_shri-ram-college-of-commerce-srcc-new-delhi.xlsx
+[2026-07-09 17:46:39] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7798_vardhman-mahavir-medical-college-vmmc-new-delhi.xlsx
+[2026-07-09 17:46:39] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7960_institute-of-hotel-management-ihm-bangalore.xlsx
+[2026-07-09 17:46:39] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\7980_institute-of-hotel-management-catering-and-nutrition-ihm-pusa-new-delhi.xlsx
+[2026-07-09 17:46:40] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\8164_welcomgroup-graduate-school-of-hotel-administration-wgsha-manipal.xlsx
+[2026-07-09 17:46:40] INFO [exporter.py:194] Saved college-wise Excel sheet: E:\amar\development\one-co\exports\colleges\9127_symbiosis-law-school-sls-pune.xlsx
+[2026-07-09 17:46:40] INFO [main.py:229] Offline parsing and export complete.
+[2026-07-09 17:46:40] INFO [main.py:259] 
+========================================
+STARTING BATCH: 6 Colleges (Max: 6)
+========================================
+[2026-07-09 17:46:40] INFO [main.py:263] Stage 1: Discovering up to 6 URLs...
+[2026-07-09 17:46:40] INFO [discovery.py:98] Starting URL discovery from: https://collegedunia.com/india-colleges
+[2026-07-09 17:46:40] INFO [discovery.py:113] Loaded 30 existing URLs from E:\amar\development\one-co\urls\college_urls.csv
+[2026-07-09 17:46:41] INFO [discovery.py:118] Launching browser for discovery...
+[2026-07-09 17:46:41] INFO [discovery.py:126] Navigating to https://collegedunia.com/india-colleges...

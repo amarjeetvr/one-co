@@ -45,6 +45,11 @@
         "facilities": "Gym, Mess, Single Occupancy, Double Occupancy"
     },
     {
+        "college_id": "25446",
+        "hostel_fees": "2026, ",
+        "facilities": "Wi-Fi, Gym, Mess, Double Occupancy"
+    },
+    {
         "college_id": "25455",
         "hostel_fees": "2026, ",
         "facilities": "Wi-Fi, Gym, Mess, Single Occupancy, Double Occupancy, Sports"
