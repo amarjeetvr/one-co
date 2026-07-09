@@ -129,7 +129,8 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
             page.wait_for_timeout(2000)
 
             scroll_count = 0
-            max_scrolls = 20
+            # Dynamic max scrolls to support larger limits (e.g. 500 colleges)
+            max_scrolls = max(200, max_colleges * 2)
 
             while len(discovered_list) < max_colleges and scroll_count < max_scrolls:
                 from bs4 import BeautifulSoup

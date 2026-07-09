@@ -235,7 +235,8 @@ def main():
     parser.add_argument("--stage1-download", action="store_true", help="Run only Stage 1 page downloading")
     parser.add_argument("--stage2-parse", action="store_true", help="Run only Stage 2 HTML offline parsing & export")
     parser.add_argument("--all", action="store_true", default=True, help="Run full end-to-end pipeline (default)")
-    parser.add_argument("--limit", type=int, default=100, help="Limit number of colleges to process")
+    parser.add_argument("--limit", type=int, default=500, help="Limit number of colleges to process")
+    parser.add_argument("--batch-size", type=int, default=100, help="Batch size for incremental discovery and download")
 
     args = parser.parse_args()
 
@@ -247,9 +248,31 @@ def main():
         run_parsing_and_export()
     else:
         logger.info("Starting Full End-to-End Scraper Pipeline...")
-        discover_college_urls(max_colleges=args.limit)
-        run_downloader(limit=args.limit)
-        run_parsing_and_export()
+        total_limit = args.limit
+        batch_size = args.batch_size
+
+        if batch_size <= 0:
+            batch_size = 100
+
+        current_limit = min(batch_size, total_limit)
+        while current_limit <= total_limit:
+            logger.info(f"\n========================================\n"
+                        f"STARTING BATCH: {current_limit} Colleges (Max: {total_limit})\n"
+                        f"========================================")
+            
+            logger.info(f"Stage 1: Discovering up to {current_limit} URLs...")
+            discover_college_urls(max_colleges=current_limit)
+            
+            logger.info(f"Stage 2: Downloading subpages up to {current_limit} colleges...")
+            run_downloader(limit=current_limit)
+            
+            logger.info(f"Stage 3: Parsing and exporting data...")
+            run_parsing_and_export()
+            
+            if current_limit >= total_limit:
+                break
+            current_limit = min(current_limit + batch_size, total_limit)
+
         logger.info("Pipeline Execution Finished.")
 
 
