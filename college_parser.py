@@ -5,6 +5,13 @@ from bs4 import BeautifulSoup
 from typing import List, Dict, Any
 from logger import logger
 
+RECOGNIZED_DEGREES = {
+    "B.Tech", "M.Tech", "MBA", "B.Sc", "M.Sc", "MBBS", "MCA", "BCA", "BBA", "B.Com",
+    "MPT", "BPT", "MOT", "BOT", "M.Ch", "DM", "GNM", "BASLP", "BPO", "B.Optom",
+    "MPH", "MHA", "DNB", "FNB", "BA", "MA", "Ph.D", "B.Des", "M.Des", "MPP",
+    "MDS", "MD", "MS", "Executive Programme"
+}
+
 def clean_text(text: str) -> str:
     """Helper to remove extra spaces, newlines, and non-breaking spaces."""
     if not text:
@@ -754,33 +761,80 @@ def _extract_dom_course_cards(html_content: str, college_id: str) -> List[Dict[s
                 app_date = clean_text(val.text)
                 break
                 
-        row = {
-            "college_id": college_id,
-            "degree_name": degree_name,
-            "course_name": course_name,
-            "specialization": "General" if course_name.lower() == degree_name.lower() else course_name,
-            "total_fees": total_fees,
-            "duration": duration,
-            "course_type": course_type,
-            "eligibility": "Not Specified",
-            "entrance_exam": details.get("entrance_exam") or "Not Specified",
-            "application_date": app_date,
-            "intake_seats": "Not Specified",
-            "course_level": details.get("course_level") or "UG",
-        }
-        
-        row_key = (
-            row["degree_name"],
-            row["course_name"],
-            row["specialization"],
-            row["total_fees"],
-            row["duration"],
-            row["course_type"],
-        )
-        if row_key in seen:
-            continue
-        seen.add(row_key)
-        rows.append(row)
+        # Check for child specialization streams
+        streams = card.find_all(class_=lambda c: c and "stream-text" in c)
+        if streams:
+            for s in streams:
+                spec = clean_text(s.text)
+                if not spec:
+                    continue
+                fee_val = total_fees
+                
+                # Try to find corresponding fee in parent/grandparent
+                p = s.parent
+                fee_elem = p.find(class_=lambda c: c and "primary-green" in c) if p else None
+                if not fee_elem and p and p.parent:
+                    fee_elem = p.parent.find(class_=lambda c: c and "primary-green" in c)
+                if fee_elem:
+                    fee_val = clean_text(fee_elem.text)
+                    if fee_val.startswith("₹"):
+                        fee_val = fee_val[1:].strip()
+                
+                row = {
+                    "college_id": college_id,
+                    "degree_name": degree_name,
+                    "course_name": course_name,
+                    "specialization": spec,
+                    "total_fees": fee_val,
+                    "duration": duration,
+                    "course_type": course_type,
+                    "eligibility": "Not Specified",
+                    "entrance_exam": details.get("entrance_exam") or "Not Specified",
+                    "application_date": app_date,
+                    "intake_seats": "Not Specified",
+                    "course_level": details.get("course_level") or "UG",
+                }
+                
+                row_key = (
+                    row["degree_name"],
+                    row["course_name"],
+                    row["specialization"],
+                    row["total_fees"],
+                    row["duration"],
+                    row["course_type"],
+                )
+                if row_key in seen:
+                    continue
+                seen.add(row_key)
+                rows.append(row)
+        else:
+            row = {
+                "college_id": college_id,
+                "degree_name": degree_name,
+                "course_name": course_name,
+                "specialization": "General" if course_name.lower() == degree_name.lower() else course_name,
+                "total_fees": total_fees,
+                "duration": duration,
+                "course_type": course_type,
+                "eligibility": "Not Specified",
+                "entrance_exam": details.get("entrance_exam") or "Not Specified",
+                "application_date": app_date,
+                "intake_seats": "Not Specified",
+                "course_level": details.get("course_level") or "UG",
+            }
+            
+            row_key = (
+                row["degree_name"],
+                row["course_name"],
+                row["specialization"],
+                row["total_fees"],
+                row["duration"],
+                row["course_type"],
+            )
+            if row_key in seen:
+                continue
+            seen.add(row_key)
+            rows.append(row)
         
     return rows
 
@@ -789,17 +843,23 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
     soup = BeautifulSoup(html_content, "html.parser")
     rows = []
     seen = set()
+    seen_course_specs = set()
 
     def add_row(row: Dict[str, Any]) -> None:
         deg = row.get("degree_name", "")
         name = row.get("course_name", "")
+        spec = row.get("specialization", "")
         if not is_valid_course(deg, name):
+            return
+            
+        spec_key = (name.lower(), spec.lower())
+        if spec_key in seen_course_specs:
             return
             
         row_key = (
             deg,
             name,
-            row.get("specialization", ""),
+            spec,
             row.get("total_fees", ""),
             row.get("duration", ""),
             row.get("course_type", ""),
@@ -807,6 +867,7 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
         if row_key in seen:
             return
         seen.add(row_key)
+        seen_course_specs.add(spec_key)
         rows.append(row)
 
     # 1. First extract from DOM course cards (if loaded)
@@ -912,13 +973,25 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
                     continue
                     
                 degree = _normalize_degree_tag(course_name_raw)
-                if not degree or degree.lower() in {"course", "specialization", "other"}:
-                    # Try to get from heading sh
-                    degree = _normalize_degree_tag(sh)
-                if not degree:
-                    degree = "Other"
+                course_name = course_name_raw
+                specialization = course_name_raw
+                
+                # If the parsed degree name is not a recognized degree tag, it's likely a specialization
+                if not degree or degree not in RECOGNIZED_DEGREES:
+                    heading_degree = _normalize_degree_tag(sh)
+                    if heading_degree and heading_degree in RECOGNIZED_DEGREES:
+                        degree = heading_degree
+                        course_name = sh if sh else heading_degree
+                        specialization = course_name_raw
+                    else:
+                        if not degree:
+                            degree = "Other"
+                        course_name = course_name_raw
+                        specialization = "General" if course_name.lower() == degree.lower() else course_name
+                else:
+                    specialization = "General" if course_name.lower() == degree.lower() else course_name
                     
-                details = deduce_course_details(degree, course_name_raw)
+                details = deduce_course_details(degree, course_name)
                 
                 eligibility = "Not Specified"
                 if eligibility_col_idx != -1 and len(tds) > eligibility_col_idx:
@@ -929,8 +1002,8 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
                 add_row({
                     "college_id": college_id,
                     "degree_name": degree,
-                    "course_name": course_name_raw,
-                    "specialization": course_name_raw,
+                    "course_name": course_name,
+                    "specialization": specialization,
                     "total_fees": fees_raw.replace("INR ", "").strip(),
                     "duration": details["duration"],
                     "course_type": details["course_type"],
@@ -1327,33 +1400,89 @@ def _sanitize_recruiters(value: str) -> str:
 
     return cleaned
 
+def _format_package_value(val) -> str:
+    if not val:
+        return "Not Specified"
+    try:
+        val_int = int(float(val))
+        if val_int <= 0:
+            return "Not Specified"
+        if val_int >= 10000000:
+            cr_val = val_int / 10000000
+            if cr_val == int(cr_val):
+                return f"{int(cr_val)} Crore"
+            return f"{cr_val:.2f} Cr"
+        if val_int >= 100000:
+            lpa_val = val_int / 100000
+            if lpa_val == int(lpa_val):
+                return f"{int(lpa_val)} LPA"
+            return f"{lpa_val:.2f} LPA"
+        return f"{val_int}"
+    except Exception:
+        return str(val)
+
 def parse_placements(html_content: str, college_id: str) -> Dict[str, Any]:
     """Parses details from the /placement subpage."""
     soup = BeautifulSoup(html_content, "html.parser")
     text = _extract_main_text(soup)
 
+    # Try extracting structured overall packages from NEXT_DATA via regex
+    overall_high = "Not Specified"
+    overall_avg = "Not Specified"
+    try:
+        script_match = re.search(r'<script[^>]*id="__NEXT_DATA__"[^>]*>(.*?)</script>', html_content, re.DOTALL)
+        if script_match:
+            data = json.loads(script_match.group(1).strip())
+            placements_data = (
+                data.get("props", {})
+                .get("initialProps", {})
+                .get("pageProps", {})
+                .get("data", {})
+                .get("placements", {})
+            )
+            highest_salary = placements_data.get("highest_salary")
+            average_salary = placements_data.get("average_salary")
+            if highest_salary and int(float(highest_salary)) > 0:
+                overall_high = _format_package_value(highest_salary)
+            if average_salary and int(float(average_salary)) > 0:
+                overall_avg = _format_package_value(average_salary)
+    except Exception as e:
+        logger.warning(f"Error parsing NEXT_DATA overall placements: {e}")
+
     mba_values = _extract_mba_highlights_from_raw_html(html_content)
     summary_values = _extract_placement_summary_from_raw_html(html_content)
     table_values = _extract_placement_table_values(soup)
 
-    # Use the MBA highlights block first, then embedded summary text, then structured tables, then regex extraction.
-    high_pkg = mba_values["highest_package"]
-    if high_pkg == "Not Specified":
-        high_pkg = summary_values["highest_package"]
-    if high_pkg == "Not Specified":
-        high_pkg = table_values["highest_package"]
-    if high_pkg == "Not Specified":
-        high_pkg = _extract_pkg(r"Highest\s*(?:Salary|Package|CTC|Offer)", text)
+    is_overall = (overall_high != "Not Specified" or overall_avg != "Not Specified")
 
-    avg_pkg = mba_values["average_package"]
-    if avg_pkg == "Not Specified":
-        avg_pkg = summary_values["average_package"]
-    if avg_pkg == "Not Specified":
-        avg_pkg = table_values["average_package"]
-    if avg_pkg == "Not Specified":
-        avg_pkg = _extract_pkg(r"(?:Average|Avg\.?)\s*(?:Salary|Package|CTC|Offer)", text)
+    # Resolve Highest Package
+    high_pkg = overall_high
+    if high_pkg == "Not Specified":
+        if not is_overall:
+            high_pkg = mba_values["highest_package"]
+        if high_pkg == "Not Specified":
+            high_pkg = summary_values["highest_package"]
+        if high_pkg == "Not Specified":
+            high_pkg = table_values["highest_package"]
+        if high_pkg == "Not Specified":
+            high_pkg = _extract_pkg(r"Highest\s*(?:Salary|Package|CTC|Offer)", text)
 
-    med_pkg = mba_values["median_package"]
+    # Resolve Average Package
+    avg_pkg = overall_avg
+    if avg_pkg == "Not Specified":
+        if not is_overall:
+            avg_pkg = mba_values["average_package"]
+        if avg_pkg == "Not Specified":
+            avg_pkg = summary_values["average_package"]
+        if avg_pkg == "Not Specified":
+            avg_pkg = table_values["average_package"]
+        if avg_pkg == "Not Specified":
+            avg_pkg = _extract_pkg(r"(?:Average|Avg\.?)\s*(?:Salary|Package|CTC|Offer)", text)
+
+    # Resolve Median Package
+    med_pkg = "Not Specified"
+    if not is_overall:
+        med_pkg = mba_values["median_package"]
     if med_pkg == "Not Specified":
         med_pkg = summary_values["median_package"]
     if med_pkg == "Not Specified":
@@ -1370,7 +1499,9 @@ def parse_placements(html_content: str, college_id: str) -> Dict[str, Any]:
                                 "Infosys", "Wipro", "Cognizant", "HCL", "Intel",
                                 "Cisco", "Jane Street", "Goldman Sachs", "Flipkart"]
                    if r.lower() in text.lower()]
-    top_recruiters = mba_values["top_recruiters"]
+    top_recruiters = "Not Specified"
+    if not is_overall:
+        top_recruiters = mba_values["top_recruiters"]
     if top_recruiters == "Not Specified":
         top_recruiters = summary_values["top_recruiters"]
     if top_recruiters == "Not Specified":
@@ -1391,64 +1522,136 @@ def parse_placements(html_content: str, college_id: str) -> Dict[str, Any]:
 def parse_rankings(html_content: str, college_id: str, extra_html: str = "") -> List[Dict[str, Any]]:
     """Parses rankings from placement page + optionally info page HTML."""
     rankings = []
-    seen_bodies = set()
+    seen = set()
+    cd_ranks = []
 
-    # Map of body name -> aliases to search in text
-    bodies = {
-        "NIRF":        ["NIRF"],
-        "QS World":    ["QS World", "QS World University"],
-        "Collegedunia": ["Collegedunia"],
-        "QS India":    ["QS India"],
-        "The Week":    ["The Week"],
-        "Outlook":     ["Outlook"],
-        "India Today": ["India Today"],
-        "IIRF":        ["IIRF"],
-    }
-
-    def _extract_rankings_from_text(text: str):
-        for body, aliases in bodies.items():
-            if body in seen_bodies:
-                continue
-            for alias in aliases:
-                # Pattern A: "ranked Nth in ... by NIRF 2025" prose style
-                # e.g. "ranked 3rd in the B.Tech. category by NIRF 2025"
-                pa = re.search(
-                    r"ranked\s+(\d+)(?:st|nd|rd|th)?[^.]{0,80}" + re.escape(alias) + r"[^\d]*(\d{4})?",
-                    text, re.I
+    # 1. Try parsing structured rankings from __NEXT_DATA__ via regex
+    for html_source in [extra_html, html_content]:
+        if not html_source:
+            continue
+        try:
+            script_match = re.search(r'<script[^>]*id="__NEXT_DATA__"[^>]*>(.*?)</script>', html_source, re.DOTALL)
+            if script_match:
+                data = json.loads(script_match.group(1).strip())
+                basic_rankings = (
+                    data.get("props", {})
+                    .get("initialProps", {})
+                    .get("pageProps", {})
+                    .get("data", {})
+                    .get("basic_info", {})
+                    .get("ranking", [])
                 )
-                # Pattern B: "NIRF Ranking 2025: Rank 3" or "NIRF 2025 rank 3"
-                pb = re.search(
-                    re.escape(alias) + r"[^.]{0,40}?(?:rank|#)\s*#?(\d+)[^\d]*(\d{4})?",
-                    text, re.I
-                )
-                # Pattern C: "Rank #3 by NIRF" or "Rank 3 in NIRF"
-                pc = re.search(
-                    r"[Rr]ank\s*#?(\d+)[^.]{0,40}" + re.escape(alias) + r"[^\d]*(\d{4})?",
-                    text, re.I
-                )
-                match = pa or pb or pc
-                if match:
-                    rank_num = match.group(1)
-                    # Reject clearly wrong values: rank > 5000 is likely a year or ID
-                    if int(rank_num) > 5000:
+                for r in basic_rankings:
+                    if not isinstance(r, dict):
                         continue
-                    year_grp = match.lastindex
-                    year = None
-                    if year_grp and year_grp >= 2 and match.group(2):
-                        yr = int(match.group(2))
-                        year = yr if 2000 <= yr <= 2030 else None
-                    rankings.append({
-                        "college_id": college_id,
-                        "ranking_body": body,
-                        "rank": f"#{rank_num}",
-                        "ranking_year": year
-                    })
-                    seen_bodies.add(body)
-                    break
+                    agency = r.get("agency") or r.get("agency_name") or r.get("ranking_agency")
+                    rank_val = r.get("rank")
+                    year = r.get("year")
+                    
+                    if agency and rank_val:
+                        agency_name = clean_text(str(agency))
+                        if agency_name.lower() in ["collegedunia", "collegedunia.com"]:
+                            agency_name = "Collegedunia"
+                        elif agency_name.lower() in ["india today", "indiatoday"]:
+                            agency_name = "India Today"
+                        
+                        rank_str = f"#{rank_val}"
+                        if agency_name == "Collegedunia":
+                            rank_str = f"CD Rank #{rank_val}"
+                            
+                        rec = {
+                            "college_id": college_id,
+                            "ranking_body": agency_name,
+                            "rank": rank_str,
+                            "ranking_year": int(year) if year and str(year).isdigit() else None
+                        }
+                        
+                        key = (rec["ranking_body"], rec["rank"], rec["ranking_year"])
+                        if key not in seen:
+                            seen.add(key)
+                            if agency_name == "Collegedunia":
+                                cd_ranks.append(rec)
+                            else:
+                                rankings.append(rec)
+        except Exception as e:
+            logger.warning(f"Error parsing structured rankings in parse_rankings: {e}")
 
-    _extract_rankings_from_text(_extract_main_text(BeautifulSoup(html_content, "html.parser")))
-    if extra_html:
-        _extract_rankings_from_text(_extract_main_text(BeautifulSoup(extra_html, "html.parser")))
+    # 2. Fallback to text regex scanning if structured rankings are empty
+    if not rankings and not cd_ranks:
+        seen_bodies = set()
+        bodies = {
+            "NIRF":        ["NIRF"],
+            "QS World":    ["QS World", "QS World University"],
+            "Collegedunia": ["Collegedunia"],
+            "QS India":    ["QS India"],
+            "The Week":    ["The Week"],
+            "Outlook":     ["Outlook"],
+            "India Today": ["India Today"],
+            "IIRF":        ["IIRF"],
+        }
+
+        def _extract_rankings_from_text(text: str):
+            for body, aliases in bodies.items():
+                if body in seen_bodies:
+                    continue
+                for alias in aliases:
+                    # Pattern A: "ranked Nth in ... by NIRF 2025" prose style
+                    # e.g. "ranked 3rd in the B.Tech. category by NIRF 2025"
+                    pa = re.search(
+                        r"ranked\s+(\d+)(?:st|nd|rd|th)?[^.]{0,80}" + re.escape(alias) + r"[^\d]*(\d{4})?",
+                        text, re.I
+                    )
+                    # Pattern B: "NIRF Ranking 2025: Rank 3" or "NIRF 2025 rank 3"
+                    pb = re.search(
+                        re.escape(alias) + r"[^.]{0,40}?(?:rank|#)\s*#?(\d+)[^\d]*(\d{4})?",
+                        text, re.I
+                    )
+                    # Pattern C: "Rank #3 by NIRF" or "Rank 3 in NIRF"
+                    pc = re.search(
+                        r"[Rr]ank\s*#?(\d+)[^.]{0,40}" + re.escape(alias) + r"[^\d]*(\d{4})?",
+                        text, re.I
+                    )
+                    match = pa or pb or pc
+                    if match:
+                        rank_num = match.group(1)
+                        # Reject clearly wrong values: rank > 5000 is likely a year or ID
+                        if int(rank_num) > 5000:
+                            continue
+                        year_grp = match.lastindex
+                        year = None
+                        if year_grp and year_grp >= 2 and match.group(2):
+                            yr = int(match.group(2))
+                            year = yr if 2000 <= yr <= 2030 else None
+                        
+                        rank_str = f"#{rank_num}"
+                        if body == "Collegedunia":
+                            rank_str = f"CD Rank #{rank_num}"
+
+                        rec = {
+                            "college_id": college_id,
+                            "ranking_body": body,
+                            "rank": rank_str,
+                            "ranking_year": year
+                        }
+                        if body == "Collegedunia":
+                            cd_ranks.append(rec)
+                        else:
+                            rankings.append(rec)
+                        seen_bodies.add(body)
+                        break
+
+        _extract_rankings_from_text(_extract_main_text(BeautifulSoup(html_content, "html.parser")))
+        if extra_html:
+            _extract_rankings_from_text(_extract_main_text(BeautifulSoup(extra_html, "html.parser")))
+
+    # Keep only the single best (minimum) Collegedunia rank
+    if cd_ranks:
+        def get_rank_num(rec):
+            m = re.search(r'\d+', rec["rank"])
+            return int(m.group(0)) if m else 999999
+        best_cd_rec = min(cd_ranks, key=get_rank_num)
+        rankings.append(best_cd_rec)
+
     return rankings
 
 # ----------------- 5. FACULTY PARSER -----------------

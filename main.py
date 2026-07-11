@@ -7,7 +7,7 @@ from config import HTML_DIR, SUBPAGE_MAPPING, COLLEGE_URLS_CSV
 from logger import logger
 from discovery import discover_college_urls
 from downloader import run_downloader
-import parser
+import college_parser as parser
 
 
 def discover_downloaded_colleges() -> List[Tuple[str, str]]:
@@ -136,15 +136,29 @@ def run_parsing_and_export():
 
                 placement_data = parser.parse_placements(placement_html, college_id)
 
-                # Prefer listing-card placement metrics when metadata exists for this URL.
+                # Fall back to listing-card metrics ONLY if parsed subpage metrics are "Not Specified"
                 card = listing_meta.get(college_url, {})
                 if card:
-                    placement_data["average_package"] = card.get("listing_avg_package") or "Not Specified"
-                    placement_data["highest_package"] = card.get("listing_highest_package") or "Not Specified"
-                    if card.get("listing_placement_percentage"):
-                        placement_data["placement_percentage"] = card["listing_placement_percentage"]
-                    elif placement_data.get("placement_percentage") in (None, ""):
-                        placement_data["placement_percentage"] = "Not Specified"
+                    if placement_data.get("average_package") in (None, "", "Not Specified"):
+                        listing_avg = card.get("listing_avg_package")
+                        if listing_avg and listing_avg.strip():
+                            placement_data["average_package"] = listing_avg.strip()
+                        else:
+                            placement_data["average_package"] = "Not Specified"
+
+                    if placement_data.get("highest_package") in (None, "", "Not Specified"):
+                        listing_highest = card.get("listing_highest_package")
+                        if listing_highest and listing_highest.strip():
+                            placement_data["highest_package"] = listing_highest.strip()
+                        else:
+                            placement_data["highest_package"] = "Not Specified"
+
+                    if placement_data.get("placement_percentage") in (None, "", "Not Specified"):
+                        listing_pct = card.get("listing_placement_percentage")
+                        if listing_pct and listing_pct.strip():
+                            placement_data["placement_percentage"] = listing_pct.strip()
+                        else:
+                            placement_data["placement_percentage"] = "Not Specified"
 
                 all_placements.append(placement_data)
 
