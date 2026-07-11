@@ -26,6 +26,30 @@ def parse_college_url(url: str) -> Dict[str, str]:
 
 def handle_popups(page: Page):
     """Closes any unwanted registration/login/newsletter popups if visible."""
+    # Remove modal overlays directly from DOM
+    try:
+        page.evaluate("""() => {
+            const selectors = [
+                '#modal-root', '.modal', '.modal-backdrop', 
+                '[class*="modal"]', '[class*="backdrop"]', '[class*="popup"]'
+            ];
+            selectors.forEach(sel => {
+                try {
+                    document.querySelectorAll(sel).forEach(el => {
+                        if (el.id === 'modal-root') {
+                            el.innerHTML = '';
+                        } else {
+                            el.remove();
+                        }
+                    });
+                } catch(e) {}
+            });
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto';
+        }""")
+    except Exception:
+        pass
+
     popup_selectors = [
         "button.close", "span.close", ".modal-close", ".close-btn", 
         "[class*='close']", "[id*='close']", "button:has-text('Close')", "span:has-text('✕')"
@@ -144,6 +168,29 @@ def scroll_and_expand_page(page: Page, college_info: Dict[str, str], page_type: 
                 continue
             if clicked_any:
                 break
+
+    # 3. If we are on the courses page, find and expand all collapsed courses lists
+    if page_type == "courses":
+        try:
+            locators = page.locator(".course-info").all()
+            logger.info(f"Found {len(locators)} course info/toggle sections to check.")
+            for loc in locators:
+                try:
+                    if loc.is_visible():
+                        text = loc.evaluate("node => node.textContent")
+                        if "courses" in text.lower():
+                            loc.scroll_into_view_if_needed(timeout=2000)
+                            handle_popups(page)
+                            try:
+                                loc.click(timeout=2000)
+                            except Exception:
+                                loc.evaluate("node => node.click()")
+                            logger.info("Expanded a collapsed course section.")
+                            page.wait_for_timeout(1000)
+                except Exception:
+                    continue
+        except Exception as e:
+            logger.warning(f"Error expanding course sections: {e}")
 
 def download_subpage(context: BrowserContext, college_info: Dict[str, str], page_type: str, subpage_url: str) -> bool:
     """Downloads a single subpage and saves it to html/<page_type>/<college_id>_<slug>.html."""

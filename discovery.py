@@ -225,6 +225,18 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                     break
 
                 logger.info(f"Scroll #{scroll_count}: total URLs={len(discovered_list)}")
+                # Bypass popup modals to prevent scroll block
+                try:
+                    page.evaluate("""() => {
+                        const modalRoot = document.getElementById('modal-root');
+                        if (modalRoot) modalRoot.remove();
+                        const modals = document.querySelectorAll('.modal, .modal-backdrop, [class*="modal"], [class*="Popup"]');
+                        modals.forEach(m => m.remove());
+                        document.body.style.overflow = 'auto';
+                        document.documentElement.style.overflow = 'auto';
+                    }""")
+                except Exception:
+                    pass
                 page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
                 page.wait_for_timeout(2000)
                 scroll_count += 1

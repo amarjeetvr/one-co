@@ -1,2 +1,8 @@
 # Ignore exports folder
 exports/
+
+# Ignore generated/logs/data directories
+html/
+logs/
+json_data/
+urls/

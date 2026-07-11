@@ -4,59 +4,5 @@
         "faculty_name": "Professors are legit best . They have more than enough knowledge of their field.",
         "designation": "Professor",
         "department": "Engineering"
-    },
-    {
-        "college_id": "26007",
-        "faculty_name": "Professor",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "26007",
-        "faculty_name": "Assistant Professor; Grade I",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "26007",
-        "faculty_name": "Professor",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "26007",
-        "faculty_name": "Professor",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "26007",
-        "faculty_name": "Assistant Professor; Grade II",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "3004",
-        "faculty_name": "Dr. Veena BeriDepartment of Botanyveenaberi@gmail.comAssociate Professor",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "3004",
-        "faculty_name": "Ms. Alka BudhirajaDepartment of EconomicsAssociate Professor",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "3004",
-        "faculty_name": "Ms. Meeta KumarDepartment of Economicsmeeta.kumar@mirandahouse.ac.inAssociate Professor",
-        "designation": "Professor",
-        "department": "Engineering"
-    },
-    {
-        "college_id": "3004",
-        "faculty_name": "",
-        "designation": "Professor",
-        "department": "Engineering"
     }
 ]

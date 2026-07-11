@@ -1,15 +1,17 @@
- //script run commond 
+ //script run command 
  
- python main.py --stage1-discover
+# Run the entire pipeline in batches of 100 up to 500 colleges:
+python main.py --limit 500 --batch-size 100
 
-python main.py --stage1-download --limit 3
-
-python main.py --stage2-parse
+python main.py --stage1-download; python main.py --stage2-parse
 
 
-before runing delete this 
+# (Alternative) Just run with default values (limit 500, batch 100):
+python main.py
+
+
+before running delete these folders to start fresh (optional):
       folder urls/college_urls.csv
       exports/
       json_data/
       html/
-      
