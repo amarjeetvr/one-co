@@ -5,4 +5,23 @@ exports/
 html/
 logs/
 json_data/
-urls/
+
+# Ignore master URL list and discovery state (machine-specific)
+urls/college_urls.csv
+urls/.discovery_state
+
+# Track part files so each laptop can be assigned one
+!urls/parts/
+!urls/parts/*.csv
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db

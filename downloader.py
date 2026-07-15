@@ -11,16 +11,20 @@ from logger import logger
 def parse_college_url(url: str) -> Dict[str, str]:
     """
     Extracts the college_id, type (colleges/university), and slug from a Collegedunia URL.
-    Example: https://collegedunia.com/university/25455-iit-delhi-indian-institute-of-technology-iitd-new-delhi
+    Strips any trailing subpage suffix (e.g. /ranking, /courses-fees) so the
+    returned base_url is always the clean college profile root.
+    Example: https://collegedunia.com/university/25455-iit-delhi-...
     id: 25455
-    slug: iit-delhi-indian-institute-of-technology-iitd-new-delhi
+    slug: iit-delhi-...
     """
     match = re.search(r"/(colleges?|university)/(\d+)-([^/?#]+)", url)
     if match:
+        base_url = f"https://collegedunia.com/{match.group(1)}/{match.group(2)}-{match.group(3)}"
         return {
             "type": match.group(1),
             "id": match.group(2),
-            "slug": match.group(3)
+            "slug": match.group(3),
+            "base_url": base_url,
         }
     return {}
 
@@ -251,49 +255,69 @@ def download_subpage(context: BrowserContext, college_info: Dict[str, str], page
 
 def run_downloader(limit: int = 0):
     """
-    Main function to read college URLs from CSV and download all subpages.
-    limit: if > 0, only download pages for the first `limit` colleges.
+    Reads college URLs from CSV, skips already-downloaded colleges,
+    and downloads only NEW ones up to `limit` count.
     """
     if not os.path.exists(COLLEGE_URLS_CSV):
         logger.error(f"College URLs CSV not found at {COLLEGE_URLS_CSV}. Run discovery.py first.")
         return
-        
+
     urls = []
     with open(COLLEGE_URLS_CSV, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
-        next(reader, None)  # skip header
+        next(reader, None)
         for row in reader:
             if row:
                 urls.append(row[0])
-                
+
+    # Build set of already-downloaded college IDs from html/info/
+    info_dir = os.path.join(HTML_DIR, "info")
+    downloaded_ids = set()
+    if os.path.exists(info_dir):
+        for fname in os.listdir(info_dir):
+            m = re.match(r"^(\d+)_", fname)
+            if m:
+                downloaded_ids.add(m.group(1))
+
+    # Filter to only pending (not yet downloaded) URLs
+    pending = []
+    for url in urls:
+        info = parse_college_url(url)
+        if info and info["id"] not in downloaded_ids:
+            pending.append(url)
+
+    logger.info(f"Total in CSV: {len(urls)} | Already downloaded: {len(downloaded_ids)} | Pending: {len(pending)}")
+
+    if not pending:
+        logger.info("All colleges already downloaded. Nothing to do.")
+        return
+
+    # Apply batch limit to pending only
     if limit > 0:
-        urls = urls[:limit]
-        
-    logger.info(f"Preparing to download pages for {len(urls)} colleges.")
-    
+        pending = pending[:limit]
+
+    logger.info(f"Downloading {len(pending)} new college(s) this batch.")
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=HEADLESS)
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
             viewport={"width": 1280, "height": 800}
         )
-        
-        # Accept cookies globally if needed or setup mock location
         context.add_cookies([])
-        
-        for idx, url in enumerate(urls, 1):
+
+        for idx, url in enumerate(pending, 1):
             info = parse_college_url(url)
             if not info:
                 logger.warning(f"Could not parse college URL: {url}")
                 continue
-                
-            logger.info(f"--- Processing College {idx}/{len(urls)}: {info['slug']} (ID: {info['id']}) ---")
-            
+
+            logger.info(f"--- Downloading College {idx}/{len(pending)}: {info['slug']} (ID: {info['id']}) ---")
+
             for page_type, path_suffix in SUBPAGE_MAPPING.items():
-                # Form subpage URL
-                subpage_url = url + path_suffix
+                subpage_url = info["base_url"] + path_suffix
                 download_subpage(context, info, page_type, subpage_url)
-                
+
         browser.close()
     logger.info("Downloader task complete.")
 

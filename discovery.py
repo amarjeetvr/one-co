@@ -19,9 +19,20 @@ def clean_url(url: str) -> str:
     url = url.split("?")[0].split("#")[0]
     return url.strip()
 
+# Known subpage suffixes that must NOT be stored as base college URLs
+_SUBPAGE_SUFFIXES = re.compile(
+    r"/(courses?-fees?|admission|placement|reviews?|faculty|scholarship|hostel|cutoff|ranking|gallery|news|contact|about|infrastructure|alumni|events?)/?$",
+    re.I
+)
+
 def is_college_url(url: str) -> bool:
-    """Check if the URL points to a college or university profile."""
-    return bool(re.search(r"/(colleges?|university)/\d+", url))
+    """Check if the URL points to a college or university profile (base URL only)."""
+    if not re.search(r"/(colleges?|university)/\d+", url):
+        return False
+    # Reject subpage URLs — only accept base college profile URLs
+    if _SUBPAGE_SUFFIXES.search(url):
+        return False
+    return True
 
 
 def _extract_listing_placement_metrics(card_text: str) -> dict:
@@ -89,6 +100,29 @@ def extract_cd_rank(card) -> str:
 
     return ""
 
+def _get_discovery_state_file() -> str:
+    return os.path.join(os.path.dirname(COLLEGE_URLS_CSV), ".discovery_state")
+
+
+def _load_last_page() -> int:
+    state_file = _get_discovery_state_file()
+    if os.path.exists(state_file):
+        try:
+            with open(state_file, "r") as f:
+                return int(f.read().strip())
+        except Exception:
+            pass
+    return 1
+
+
+def _save_last_page(page_num: int):
+    try:
+        with open(_get_discovery_state_file(), "w") as f:
+            f.write(str(page_num))
+    except Exception:
+        pass
+
+
 def discover_college_urls(listing_url: str = "https://collegedunia.com/india-colleges", max_colleges: int = 50):
     """
     Crawls the listing page, scrolls to load dynamic content,
@@ -104,12 +138,18 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
     if os.path.exists(COLLEGE_URLS_CSV):
         try:
             with open(COLLEGE_URLS_CSV, "r", encoding="utf-8") as f:
-                reader = csv.reader(f)
-                next(reader, None)
+                reader = csv.DictReader(f)
                 for row in reader:
-                    if row:
-                        discovered_list.append(row[0])
-                        discovered_set.add(row[0])
+                    url = row.get("url", "").strip()
+                    if url:
+                        discovered_list.append(url)
+                        discovered_set.add(url)
+                        card_meta[url] = {
+                            "listing_avg_package": row.get("listing_avg_package", ""),
+                            "listing_highest_package": row.get("listing_highest_package", ""),
+                            "listing_placement_percentage": row.get("listing_placement_percentage", ""),
+                            "listing_rank": row.get("listing_rank", ""),
+                        }
             logger.info(f"Loaded {len(discovered_list)} existing URLs from {COLLEGE_URLS_CSV}")
         except Exception as e:
             logger.warning(f"Error loading existing URLs: {e}")
@@ -123,19 +163,31 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
         page = context.new_page()
 
         try:
-            logger.info(f"Navigating to {listing_url}...")
-            page.goto(listing_url, timeout=TIMEOUT)
-            page.wait_for_load_state("domcontentloaded")
-            page.wait_for_timeout(2000)
+            page_num = _load_last_page()
+            stagnant_pages = 0
+            max_pages = page_num + max(20, max_colleges)
+            logger.info(f"Resuming discovery from listing page {page_num}")
 
-            scroll_count = 0
-            # Dynamic max scrolls to support larger limits (e.g. 500 colleges)
-            max_scrolls = max(200, max_colleges * 2)
+            while len(discovered_list) < max_colleges and page_num <= max_pages:
+                paged_url = listing_url if page_num == 1 else f"{listing_url}?page={page_num}"
+                logger.info(f"Navigating to listing page {page_num}: {paged_url}")
+                page.goto(paged_url, timeout=TIMEOUT)
+                page.wait_for_load_state("domcontentloaded")
+                page.wait_for_timeout(2000)
 
-            while len(discovered_list) < max_colleges and scroll_count < max_scrolls:
                 from bs4 import BeautifulSoup
+
+                # Light in-page scroll helps hydrate cards before parsing.
+                for _ in range(3):
+                    try:
+                        page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+                        page.wait_for_timeout(800)
+                    except Exception:
+                        break
+
                 html = page.content()
                 soup = BeautifulSoup(html, "html.parser")
+                before_count = len(discovered_list)
 
                 # Extract college card containers and read visible listing metrics.
                 card_containers = soup.find_all("tr", class_=re.compile(r"table-row", re.I))
@@ -172,10 +224,7 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                         listing_rank_val = f"#{rank_m.group(1)}"
                     elif cd_rank:
                         listing_rank_val = cd_rank
-
-                    # If we didn't find a rank token, use the card position as CD Rank.
-                    if not listing_rank_val:
-                        listing_rank_val = f"#{len(discovered_list)}"
+                    # If no rank token found, leave blank — do NOT assign by position.
 
                     card_meta[href] = {
                         "listing_avg_package": placement_metrics.get("listing_avg_package", ""),
@@ -224,22 +273,20 @@ def discover_college_urls(listing_url: str = "https://collegedunia.com/india-col
                 if len(discovered_list) >= max_colleges:
                     break
 
-                logger.info(f"Scroll #{scroll_count}: total URLs={len(discovered_list)}")
-                # Bypass popup modals to prevent scroll block
-                try:
-                    page.evaluate("""() => {
-                        const modalRoot = document.getElementById('modal-root');
-                        if (modalRoot) modalRoot.remove();
-                        const modals = document.querySelectorAll('.modal, .modal-backdrop, [class*="modal"], [class*="Popup"]');
-                        modals.forEach(m => m.remove());
-                        document.body.style.overflow = 'auto';
-                        document.documentElement.style.overflow = 'auto';
-                    }""")
-                except Exception:
-                    pass
-                page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-                page.wait_for_timeout(2000)
-                scroll_count += 1
+                gained = len(discovered_list) - before_count
+                logger.info(f"Listing page {page_num}: discovered {gained} new URL(s), total={len(discovered_list)}")
+
+                if gained == 0:
+                    stagnant_pages += 1
+                else:
+                    stagnant_pages = 0
+                    _save_last_page(page_num)  # persist progress after each productive page
+
+                if stagnant_pages >= 3:
+                    logger.warning("No new URLs found in 3 consecutive listing pages. Stopping discovery.")
+                    break
+
+                page_num += 1
 
         except Exception as e:
             logger.error(f"Error during URL discovery: {e}")

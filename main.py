@@ -57,8 +57,24 @@ def load_listing_metadata() -> Dict[str, Dict]:
     return meta
 
 
+def _load_existing_json() -> Dict[str, List]:
+    """Load all existing JSON data files into memory, keyed by dataset name."""
+    import json
+    from config import JSON_DIR
+    datasets = ["colleges", "courses", "admissions", "placements", "rankings",
+                "faculty", "scholarships", "hostel", "reviews"]
+    result = {}
+    for name in datasets:
+        path = os.path.join(JSON_DIR, f"{name}.json")
+        try:
+            result[name] = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else []
+        except Exception:
+            result[name] = []
+    return result
+
+
 def run_parsing_and_export():
-    """Reads all downloaded HTML files, parses them offline, and exports to JSON and Excel."""
+    """Parses only NEW colleges (not already in JSON) and merges into existing data."""
     import exporter
 
     logger.info("Starting Stage 2: Offline parsing and export...")
@@ -68,179 +84,167 @@ def run_parsing_and_export():
         logger.warning(f"No downloaded HTML files found under {HTML_DIR}. Run stage 1 first.")
         return
 
-    logger.info(f"Found {len(downloaded)} college(s) to parse.")
+    # Load existing JSON — skip colleges already parsed
+    existing = _load_existing_json()
+    already_parsed_ids = {c["college_id"] for c in existing["colleges"]}
+    new_colleges = [(cid, slug) for cid, slug in downloaded if cid not in already_parsed_ids]
+
+    logger.info(f"Total downloaded: {len(downloaded)} | Already parsed: {len(already_parsed_ids)} | New to parse: {len(new_colleges)}")
+
+    if not new_colleges:
+        logger.info("Nothing new to parse. All downloaded colleges are already in JSON.")
+        return
+
     listing_meta = load_listing_metadata()
 
-    all_colleges = []
-    all_courses = []
-    all_admissions = []
-    all_placements = []
-    all_rankings = []
-    all_faculty = []
-    all_scholarships = []
-    all_hostels = []
-    all_reviews = []
+    new_data: Dict[str, List] = {
+        "colleges": [], "courses": [], "admissions": [], "placements": [],
+        "rankings": [], "faculty": [], "scholarships": [], "hostel": [], "reviews": []
+    }
 
-    for college_id, slug in downloaded:
-        logger.info(f"Parsing college: {slug} (ID: {college_id})")
+    for college_id, slug in new_colleges:
+        logger.info(f"Parsing NEW college: {slug} (ID: {college_id})")
 
         info_file = os.path.join(HTML_DIR, "info", f"{college_id}_{slug}.html")
-        college_url = f"https://collegedunia.com/university/{college_id}-{slug}"
 
-        # 1. Parse Info — merge listing-page metadata if available
+        # Resolve correct base URL (/university/ or /college/)
+        college_url = f"https://collegedunia.com/university/{college_id}-{slug}"
+        for candidate in [
+            f"https://collegedunia.com/university/{college_id}-{slug}",
+            f"https://collegedunia.com/college/{college_id}-{slug}",
+        ]:
+            if candidate in listing_meta:
+                college_url = candidate
+                break
+
         info_html = ""
-        info_data = {}
         if os.path.exists(info_file):
             try:
                 with open(info_file, "r", encoding="utf-8") as f:
                     info_html = f.read()
                 info_data = parser.parse_college_info(info_html, college_id, college_url)
-
-                # Always prefer the listing page's Collegedunia rank for the college summary
                 card = listing_meta.get(college_url, {})
                 if card.get("listing_rank"):
                     info_data["ranking"] = f"CD Rank {card['listing_rank']}"
-
-                all_colleges.append(info_data)
+                new_data["colleges"].append(info_data)
             except Exception as e:
                 logger.error(f"Error parsing info for {slug}: {e}")
         else:
-            logger.warning(f"Info HTML file missing for {slug}: {info_file}")
+            logger.warning(f"Info HTML missing for {slug}")
 
-        # 2. Parse Courses
-        courses_file = os.path.join(HTML_DIR, "courses", f"{college_id}_{slug}.html")
-        if os.path.exists(courses_file):
-            try:
-                with open(courses_file, "r", encoding="utf-8") as f:
-                    html = f.read()
-                all_courses.extend(parser.parse_courses(html, college_id, college_url))
-            except Exception as e:
-                logger.error(f"Error parsing courses for {slug}: {e}")
+        for subpage, key, parse_fn, is_list in [
+            ("courses",      "courses",      lambda h: parser.parse_courses(h, college_id, college_url),      True),
+            ("admissions",   "admissions",   lambda h: parser.parse_admissions(h, college_id),               False),
+            ("faculty",      "faculty",      lambda h: parser.parse_faculty(h, college_id),                  True),
+            ("scholarships", "scholarships", lambda h: parser.parse_scholarships(h, college_id),             True),
+            ("hostel",       "hostel",       lambda h: parser.parse_hostel(h, college_id),                   False),
+            ("reviews",      "reviews",      lambda h: parser.parse_reviews(h, college_id),                  True),
+        ]:
+            fpath = os.path.join(HTML_DIR, subpage, f"{college_id}_{slug}.html")
+            if os.path.exists(fpath):
+                try:
+                    with open(fpath, "r", encoding="utf-8") as f:
+                        h = f.read()
+                    result = parse_fn(h)
+                    if is_list:
+                        new_data[key].extend(result)
+                    else:
+                        new_data[key].append(result)
+                except Exception as e:
+                    logger.error(f"Error parsing {subpage} for {slug}: {e}")
 
-        # 3. Parse Admissions
-        admissions_file = os.path.join(HTML_DIR, "admissions", f"{college_id}_{slug}.html")
-        if os.path.exists(admissions_file):
-            try:
-                with open(admissions_file, "r", encoding="utf-8") as f:
-                    html = f.read()
-                all_admissions.append(parser.parse_admissions(html, college_id))
-            except Exception as e:
-                logger.error(f"Error parsing admissions for {slug}: {e}")
-
-        # 4. Parse Placements & Rankings
+        # Placements + Rankings together
         placements_file = os.path.join(HTML_DIR, "placements", f"{college_id}_{slug}.html")
         if os.path.exists(placements_file):
             try:
                 with open(placements_file, "r", encoding="utf-8") as f:
                     placement_html = f.read()
-
                 placement_data = parser.parse_placements(placement_html, college_id)
-
-                # Fall back to listing-card metrics ONLY if parsed subpage metrics are "Not Specified"
                 card = listing_meta.get(college_url, {})
                 if card:
-                    if placement_data.get("average_package") in (None, "", "Not Specified"):
-                        listing_avg = card.get("listing_avg_package")
-                        if listing_avg and listing_avg.strip():
-                            placement_data["average_package"] = listing_avg.strip()
-                        else:
-                            placement_data["average_package"] = "Not Specified"
-
-                    if placement_data.get("highest_package") in (None, "", "Not Specified"):
-                        listing_highest = card.get("listing_highest_package")
-                        if listing_highest and listing_highest.strip():
-                            placement_data["highest_package"] = listing_highest.strip()
-                        else:
-                            placement_data["highest_package"] = "Not Specified"
-
-                    if placement_data.get("placement_percentage") in (None, "", "Not Specified"):
-                        listing_pct = card.get("listing_placement_percentage")
-                        if listing_pct and listing_pct.strip():
-                            placement_data["placement_percentage"] = listing_pct.strip()
-                        else:
-                            placement_data["placement_percentage"] = "Not Specified"
-
-                all_placements.append(placement_data)
-
-                # Rankings: search both placement page + info page
-                all_rankings.extend(
+                    for field, listing_key in [("average_package", "listing_avg_package"),
+                                               ("highest_package", "listing_highest_package"),
+                                               ("placement_percentage", "listing_placement_percentage")]:
+                        if placement_data.get(field) in (None, "", "Not Specified"):
+                            v = card.get(listing_key, "").strip()
+                            placement_data[field] = v or "Not Specified"
+                new_data["placements"].append(placement_data)
+                new_data["rankings"].extend(
                     parser.parse_rankings(placement_html, college_id, extra_html=info_html)
                 )
-                # Always use discovery's listing_rank as the authoritative CD Rank.
-                # Parsed Collegedunia ranks can capture other rank snippets (e.g. #1/500)
-                # that are not the listing CD Rank we want to store.
-                card = listing_meta.get(college_url, {})
-                listing_rank = card.get("listing_rank")
-                if listing_rank:
-                    # Drop existing Collegedunia entries for this college, then append CD Rank.
-                    all_rankings = [
-                        r for r in all_rankings
-                        if not (r.get("college_id") == college_id and r.get("ranking_body") == "Collegedunia")
-                    ]
-                    all_rankings.append({
-                        "college_id": college_id,
-                        "ranking_body": "Collegedunia",
-                        "rank": f"CD Rank {listing_rank}",
-                        "ranking_year": None
-                    })
             except Exception as e:
                 logger.error(f"Error parsing placements for {slug}: {e}")
 
-        # 5. Parse Faculty
-        faculty_file = os.path.join(HTML_DIR, "faculty", f"{college_id}_{slug}.html")
-        if os.path.exists(faculty_file):
-            try:
-                with open(faculty_file, "r", encoding="utf-8") as f:
-                    html = f.read()
-                all_faculty.extend(parser.parse_faculty(html, college_id))
-            except Exception as e:
-                logger.error(f"Error parsing faculty for {slug}: {e}")
+    # Deduplicate new rankings
+    existing_rank_keys = {
+        (r["college_id"], r["ranking_body"], r["ranking_year"])
+        for r in existing["rankings"]
+    }
+    deduped_new_rankings = []
+    for r in new_data["rankings"]:
+        key = (r.get("college_id"), r.get("ranking_body"), r.get("ranking_year"))
+        if key not in existing_rank_keys:
+            existing_rank_keys.add(key)
+            deduped_new_rankings.append(r)
+    new_data["rankings"] = deduped_new_rankings
 
-        # 6. Parse Scholarships
-        scholarships_file = os.path.join(HTML_DIR, "scholarships", f"{college_id}_{slug}.html")
-        if os.path.exists(scholarships_file):
-            try:
-                with open(scholarships_file, "r", encoding="utf-8") as f:
-                    html = f.read()
-                all_scholarships.extend(parser.parse_scholarships(html, college_id))
-            except Exception as e:
-                logger.error(f"Error parsing scholarships for {slug}: {e}")
+    # Merge new data into existing
+    merged = {
+        "colleges":      existing["colleges"]      + new_data["colleges"],
+        "courses":       existing["courses"]       + new_data["courses"],
+        "admissions":    existing["admissions"]    + new_data["admissions"],
+        "placements":    existing["placements"]    + new_data["placements"],
+        "rankings":      existing["rankings"]      + new_data["rankings"],
+        "faculty":       existing["faculty"]       + new_data["faculty"],
+        "scholarships":  existing["scholarships"]  + new_data["scholarships"],
+        "hostel":        existing["hostel"]        + new_data["hostel"],
+        "reviews":       existing["reviews"]       + new_data["reviews"],
+    }
 
-        # 7. Parse Hostel
-        hostel_file = os.path.join(HTML_DIR, "hostel", f"{college_id}_{slug}.html")
-        if os.path.exists(hostel_file):
-            try:
-                with open(hostel_file, "r", encoding="utf-8") as f:
-                    html = f.read()
-                all_hostels.append(parser.parse_hostel(html, college_id))
-            except Exception as e:
-                logger.error(f"Error parsing hostel for {slug}: {e}")
-
-        # 8. Parse Reviews
-        reviews_file = os.path.join(HTML_DIR, "reviews", f"{college_id}_{slug}.html")
-        if os.path.exists(reviews_file):
-            try:
-                with open(reviews_file, "r", encoding="utf-8") as f:
-                    html = f.read()
-                all_reviews.extend(parser.parse_reviews(html, college_id))
-            except Exception as e:
-                logger.error(f"Error parsing reviews for {slug}: {e}")
-
-    # Only keep Collegedunia ranking records for export
-    all_rankings = [r for r in all_rankings if r.get("ranking_body") == "Collegedunia"]
+    logger.info(f"Merged totals — colleges: {len(merged['colleges'])}, courses: {len(merged['courses'])}, rankings: {len(merged['rankings'])}")
 
     exporter.export_all_to_excel(
-        colleges=all_colleges,
-        courses=all_courses,
-        admissions=all_admissions,
-        placements=all_placements,
-        rankings=all_rankings,
-        faculty=all_faculty,
-        scholarships=all_scholarships,
-        hostels=all_hostels,
-        reviews=all_reviews
+        colleges=merged["colleges"],
+        courses=merged["courses"],
+        admissions=merged["admissions"],
+        placements=merged["placements"],
+        rankings=merged["rankings"],
+        faculty=merged["faculty"],
+        scholarships=merged["scholarships"],
+        hostels=merged["hostel"],
+        reviews=merged["reviews"]
     )
     logger.info("Offline parsing and export complete.")
+
+
+
+def _split_urls(n_parts: int):
+    """Split college_urls.csv into N equal part files under urls/parts/."""
+    if not os.path.exists(COLLEGE_URLS_CSV):
+        logger.error(f"CSV not found: {COLLEGE_URLS_CSV}")
+        return
+    with open(COLLEGE_URLS_CSV, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        fieldnames = reader.fieldnames
+        rows = list(reader)
+
+    total = len(rows)
+    chunk = (total + n_parts - 1) // n_parts  # ceiling division
+    parts_dir = os.path.join(os.path.dirname(COLLEGE_URLS_CSV), "parts")
+    os.makedirs(parts_dir, exist_ok=True)
+
+    for i in range(n_parts):
+        part_rows = rows[i * chunk: (i + 1) * chunk]
+        if not part_rows:
+            break
+        out_path = os.path.join(parts_dir, f"college_urls_part{i + 1}.csv")
+        with open(out_path, "w", encoding="utf-8", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(part_rows)
+        logger.info(f"Part {i + 1}: {len(part_rows)} URLs → {out_path}")
+
+    logger.info(f"Split complete: {total} URLs → {n_parts} parts in {parts_dir}")
 
 
 def main():
@@ -249,12 +253,18 @@ def main():
     parser.add_argument("--stage1-download", action="store_true", help="Run only Stage 1 page downloading")
     parser.add_argument("--stage2-parse", action="store_true", help="Run only Stage 2 HTML offline parsing & export")
     parser.add_argument("--all", action="store_true", default=True, help="Run full end-to-end pipeline (default)")
-    parser.add_argument("--limit", type=int, default=500, help="Limit number of colleges to process")
-    parser.add_argument("--batch-size", type=int, default=100, help="Batch size for incremental discovery and download")
+    parser.add_argument("--limit", type=int, default=1000, help="Limit number of colleges to process")
+    parser.add_argument("--batch-size", type=int, default=50, help="Batch size for incremental discovery and download")
+    parser.add_argument("--discover-only", type=int, metavar="N", help="Only discover N URLs and stop (no download/parse)")
+    parser.add_argument("--split", type=int, metavar="PARTS", help="Split college_urls.csv into N equal part files under urls/parts/")
 
     args = parser.parse_args()
 
-    if args.stage1_discover:
+    if args.discover_only:
+        discover_college_urls(max_colleges=args.discover_only)
+    elif args.split:
+        _split_urls(args.split)
+    elif args.stage1_discover:
         discover_college_urls(max_colleges=args.limit)
     elif args.stage1_download:
         run_downloader(limit=args.limit)
@@ -266,26 +276,32 @@ def main():
         batch_size = args.batch_size
 
         if batch_size <= 0:
-            batch_size = 100
+            batch_size = 300
 
-        current_limit = min(batch_size, total_limit)
-        while current_limit <= total_limit:
+        # Discover all URLs up front (resumes from last listing page)
+        logger.info(f"Stage 1: Discovering up to {total_limit} URLs...")
+        discover_college_urls(max_colleges=total_limit)
+
+        # Download and parse in batches of `batch_size` new colleges at a time
+        current_batch = 1
+        while True:
             logger.info(f"\n========================================\n"
-                        f"STARTING BATCH: {current_limit} Colleges (Max: {total_limit})\n"
+                        f"BATCH {current_batch}: downloading up to {batch_size} new colleges\n"
                         f"========================================")
-            
-            logger.info(f"Stage 1: Discovering up to {current_limit} URLs...")
-            discover_college_urls(max_colleges=current_limit)
-            
-            logger.info(f"Stage 2: Downloading subpages up to {current_limit} colleges...")
-            run_downloader(limit=current_limit)
-            
-            logger.info(f"Stage 3: Parsing and exporting data...")
-            run_parsing_and_export()
-            
-            if current_limit >= total_limit:
+
+            before = len(discover_downloaded_colleges())
+            run_downloader(limit=batch_size)
+            after = len(discover_downloaded_colleges())
+            new_count = after - before
+
+            if new_count > 0:
+                logger.info(f"Downloaded {new_count} new colleges. Parsing...")
+                run_parsing_and_export()
+            else:
+                logger.info("No new colleges downloaded. All pending colleges done or CSV exhausted.")
                 break
-            current_limit = min(current_limit + batch_size, total_limit)
+
+            current_batch += 1
 
         logger.info("Pipeline Execution Finished.")
 

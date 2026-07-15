@@ -542,19 +542,6 @@ def _extract_next_data_course_rows(html_content: str, college_id: str) -> List[D
         if not degree_name:
             continue
 
-        course_name = display_name or course_tag or short_head or degree_name
-        specialization = course_name
-        if course_tag and course_tag != degree_name:
-            display_lower = course_name.lower()
-            generic_display = bool(
-                re.search(
-                    r"\b(bachelor|master|post graduate|graduate diploma|mba|m\.tech|b\.tech|m\.sc|b\.sc|mbbs|mca|bba|bca|b\.com|b\.des|m\.des|mpp|ph\.d)\b",
-                    display_lower,
-                )
-            )
-            if generic_display and not re.search(r"\b(in|of|for|with|and)\b", display_lower):
-                specialization = course_tag
-
         level_text = clean_text(str(course.get("level", ""))).lower()
         if "doctor" in level_text or "ph.d" in degree_name.lower():
             course_level = "Doctorate"
@@ -568,39 +555,69 @@ def _extract_next_data_course_rows(html_content: str, college_id: str) -> List[D
             course_level = "PG" if degree_name in {"MBA", "M.Tech", "M.Sc", "MCA", "MA", "M.Des", "MPP", "Ph.D", "Executive Programme"} else "UG"
 
         exams_text = _format_exam_list(course.get("exams", ""))
+        duration = clean_text(str(course.get("duration", ""))) or "Not Specified"
+        course_type = clean_text(str(course.get("type", ""))) or "Full Time"
+        eligibility = clean_text(str(course.get("eligibility", ""))) or "Not Specified"
 
-        seats_value = course.get("available_seats", "")
-        seats_text = clean_text(str(seats_value))
-        if seats_text.lower() in {"", "none", "not specified"}:
-            seats_text = "Not Specified"
+        streams = course.get("streams") or []
 
-        row = {
-            "college_id": college_id,
-            "degree_name": degree_name,
-            "course_name": course_name,
-            "specialization": specialization if specialization != course_name else ("General" if course_name.lower() == degree_name.lower() else specialization),
-            "total_fees": _format_fee_amount(course.get("fees_data", {})),
-            "duration": clean_text(str(course.get("duration", ""))) or "Not Specified",
-            "course_type": clean_text(str(course.get("type", ""))) or "Full Time",
-            "eligibility": clean_text(str(course.get("eligibility", ""))) or "Not Specified",
-            "entrance_exam": exams_text or "Not Specified",
-            "application_date": "Not Specified",
-            "intake_seats": seats_text,
-            "course_level": course_level,
-        }
+        if streams:
+            # Emit one row per specialization stream
+            for stream in streams:
+                if not isinstance(stream, dict):
+                    continue
+                spec_name = clean_text(str(stream.get("name") or stream.get("custom_name") or ""))
+                if not spec_name:
+                    continue
+                course_name = clean_text(str(stream.get("course_name") or stream.get("display_course_name") or display_name))
+                fees = _format_fee_amount(stream.get("fees_data") or {})
 
-        row_key = (
-            row["degree_name"],
-            row["course_name"],
-            row["specialization"],
-            row["total_fees"],
-            row["duration"],
-            row["course_type"],
-        )
-        if row_key in seen:
-            continue
-        seen.add(row_key)
-        rows.append(row)
+                row = {
+                    "college_id": college_id,
+                    "degree_name": degree_name,
+                    "course_name": course_name,
+                    "specialization": spec_name,
+                    "total_fees": fees,
+                    "duration": duration,
+                    "course_type": course_type,
+                    "eligibility": eligibility,
+                    "entrance_exam": exams_text or "Not Specified",
+                    "application_date": "Not Specified",
+                    "intake_seats": "Not Specified",
+                    "course_level": course_level,
+                }
+                row_key = (row["degree_name"], row["specialization"], row["total_fees"])
+                if row_key not in seen:
+                    seen.add(row_key)
+                    rows.append(row)
+        else:
+            # No streams — emit one row for the degree itself
+            course_name = display_name or course_tag or short_head or degree_name
+            specialization = course_name if course_name.lower() != degree_name.lower() else "General"
+            fees = _format_fee_amount(course.get("fees_data") or {})
+            seats_value = course.get("available_seats", "")
+            seats_text = clean_text(str(seats_value))
+            if seats_text.lower() in {"", "none", "not specified"}:
+                seats_text = "Not Specified"
+
+            row = {
+                "college_id": college_id,
+                "degree_name": degree_name,
+                "course_name": course_name,
+                "specialization": specialization,
+                "total_fees": fees,
+                "duration": duration,
+                "course_type": course_type,
+                "eligibility": eligibility,
+                "entrance_exam": exams_text or "Not Specified",
+                "application_date": "Not Specified",
+                "intake_seats": seats_text,
+                "course_level": course_level,
+            }
+            row_key = (row["degree_name"], row["course_name"], row["specialization"], row["total_fees"])
+            if row_key not in seen:
+                seen.add(row_key)
+                rows.append(row)
 
     return rows
 
@@ -851,8 +868,10 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
         spec = row.get("specialization", "")
         if not is_valid_course(deg, name):
             return
-            
-        spec_key = (name.lower(), spec.lower())
+
+        # Deduplicate on (degree, specialization) so NEXT_DATA rows block
+        # DOM/table rows for the same degree+spec combination.
+        spec_key = (deg.lower(), spec.lower())
         if spec_key in seen_course_specs:
             return
             
@@ -870,13 +889,18 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
         seen_course_specs.add(spec_key)
         rows.append(row)
 
-    # 1. First extract from DOM course cards (if loaded)
+    # 1. Primary: extract from __NEXT_DATA__ (streams-aware, most accurate)
+    for row in _extract_next_data_course_rows(html_content, college_id):
+        add_row(row)
+
+    # 2. Supplement with DOM course cards (contains full specialization list
+    #    that NEXT_DATA only partially embeds)
     for row in _extract_dom_course_cards(html_content, college_id):
         add_row(row)
 
-    # 2. Next extract from __NEXT_DATA__
-    for row in _extract_next_data_course_rows(html_content, college_id):
-        add_row(row)
+    # Skip table and regex parsing when structured sources already produced rows
+    if rows:
+        return rows
     
     # 3. Locate all tables on the page
     tables = soup.find_all("table")
@@ -1523,61 +1547,82 @@ def parse_rankings(html_content: str, college_id: str, extra_html: str = "") -> 
     """Parses rankings from placement page + optionally info page HTML."""
     rankings = []
     seen = set()
-    cd_ranks = []
+    found_structured = False
 
-    # 1. Try parsing structured rankings from __NEXT_DATA__ via regex
+    # 1. Try parsing structured rankings from __NEXT_DATA__.
+    # The ranking array contains stream-specific entries (e.g. B.Tech #1, MBA #3).
+    # Each stream entry is stored as a separate row — never collapsed to a minimum.
     for html_source in [extra_html, html_content]:
         if not html_source:
             continue
         try:
             script_match = re.search(r'<script[^>]*id="__NEXT_DATA__"[^>]*>(.*?)</script>', html_source, re.DOTALL)
-            if script_match:
-                data = json.loads(script_match.group(1).strip())
-                basic_rankings = (
-                    data.get("props", {})
-                    .get("initialProps", {})
-                    .get("pageProps", {})
-                    .get("data", {})
-                    .get("basic_info", {})
-                    .get("ranking", [])
-                )
-                for r in basic_rankings:
-                    if not isinstance(r, dict):
-                        continue
-                    agency = r.get("agency") or r.get("agency_name") or r.get("ranking_agency")
-                    rank_val = r.get("rank")
-                    year = r.get("year")
-                    
-                    if agency and rank_val:
-                        agency_name = clean_text(str(agency))
-                        if agency_name.lower() in ["collegedunia", "collegedunia.com"]:
-                            agency_name = "Collegedunia"
-                        elif agency_name.lower() in ["india today", "indiatoday"]:
-                            agency_name = "India Today"
-                        
-                        rank_str = f"#{rank_val}"
-                        if agency_name == "Collegedunia":
-                            rank_str = f"CD Rank #{rank_val}"
-                            
-                        rec = {
-                            "college_id": college_id,
-                            "ranking_body": agency_name,
-                            "rank": rank_str,
-                            "ranking_year": int(year) if year and str(year).isdigit() else None
-                        }
-                        
-                        key = (rec["ranking_body"], rec["rank"], rec["ranking_year"])
-                        if key not in seen:
-                            seen.add(key)
-                            if agency_name == "Collegedunia":
-                                cd_ranks.append(rec)
-                            else:
-                                rankings.append(rec)
-        except Exception as e:
-            logger.warning(f"Error parsing structured rankings in parse_rankings: {e}")
+            if not script_match:
+                continue
+            data = json.loads(script_match.group(1).strip())
+            basic_rankings = (
+                data.get("props", {})
+                .get("initialProps", {})
+                .get("pageProps", {})
+                .get("data", {})
+                .get("basic_info", {})
+                .get("ranking", [])
+            )
+            for r in basic_rankings:
+                if not isinstance(r, dict):
+                    continue
+                agency = r.get("agency") or r.get("agency_name") or r.get("ranking_agency")
+                rank_val = r.get("rank")
+                year = r.get("year")
+                stream = clean_text(str(r.get("stream", "") or ""))
 
-    # 2. Fallback to text regex scanning if structured rankings are empty
-    if not rankings and not cd_ranks:
+                if not agency or not rank_val:
+                    continue
+
+                # Validate rank_val is a real number, not a year or garbage
+                try:
+                    rank_int = int(str(rank_val).strip())
+                except (ValueError, TypeError):
+                    logger.warning(f"[{college_id}] Skipping non-numeric rank value: {rank_val!r}")
+                    continue
+                if rank_int <= 0 or rank_int > 50000:
+                    logger.warning(f"[{college_id}] Skipping out-of-range rank: {rank_int}")
+                    continue
+
+                agency_name = clean_text(str(agency))
+                if agency_name.lower() in ["collegedunia", "collegedunia.com"]:
+                    agency_name = "Collegedunia"
+                elif agency_name.lower() in ["india today", "indiatoday"]:
+                    agency_name = "India Today"
+
+                ranking_year = int(year) if year and str(year).strip().isdigit() else None
+
+                if agency_name == "Collegedunia":
+                    # Store each stream-specific CD Rank as its own row.
+                    # ranking_body includes the stream so rows are distinct and
+                    # no two colleges can accidentally share the same entry.
+                    body_label = f"Collegedunia ({stream})" if stream else "Collegedunia"
+                    rank_str = f"CD Rank #{rank_int}"
+                else:
+                    body_label = agency_name
+                    rank_str = f"#{rank_int}"
+
+                rec = {
+                    "college_id": college_id,
+                    "ranking_body": body_label,
+                    "rank": rank_str,
+                    "ranking_year": ranking_year,
+                }
+                key = (rec["ranking_body"], rec["rank"], rec["ranking_year"])
+                if key not in seen:
+                    seen.add(key)
+                    rankings.append(rec)
+                    found_structured = True
+        except Exception as e:
+            logger.warning(f"[{college_id}] Error parsing structured rankings: {e}")
+
+    # 2. Fallback to text regex scanning only when __NEXT_DATA__ yielded nothing.
+    if not found_structured:
         seen_bodies = set()
         bodies = {
             "NIRF":        ["NIRF"],
@@ -1595,18 +1640,14 @@ def parse_rankings(html_content: str, college_id: str, extra_html: str = "") -> 
                 if body in seen_bodies:
                     continue
                 for alias in aliases:
-                    # Pattern A: "ranked Nth in ... by NIRF 2025" prose style
-                    # e.g. "ranked 3rd in the B.Tech. category by NIRF 2025"
                     pa = re.search(
                         r"ranked\s+(\d+)(?:st|nd|rd|th)?[^.]{0,80}" + re.escape(alias) + r"[^\d]*(\d{4})?",
                         text, re.I
                     )
-                    # Pattern B: "NIRF Ranking 2025: Rank 3" or "NIRF 2025 rank 3"
                     pb = re.search(
                         re.escape(alias) + r"[^.]{0,40}?(?:rank|#)\s*#?(\d+)[^\d]*(\d{4})?",
                         text, re.I
                     )
-                    # Pattern C: "Rank #3 by NIRF" or "Rank 3 in NIRF"
                     pc = re.search(
                         r"[Rr]ank\s*#?(\d+)[^.]{0,40}" + re.escape(alias) + r"[^\d]*(\d{4})?",
                         text, re.I
@@ -1614,28 +1655,23 @@ def parse_rankings(html_content: str, college_id: str, extra_html: str = "") -> 
                     match = pa or pb or pc
                     if match:
                         rank_num = match.group(1)
-                        # Reject clearly wrong values: rank > 5000 is likely a year or ID
                         if int(rank_num) > 5000:
                             continue
-                        year_grp = match.lastindex
                         year = None
-                        if year_grp and year_grp >= 2 and match.group(2):
+                        if match.lastindex and match.lastindex >= 2 and match.group(2):
                             yr = int(match.group(2))
                             year = yr if 2000 <= yr <= 2030 else None
-                        
-                        rank_str = f"#{rank_num}"
-                        if body == "Collegedunia":
-                            rank_str = f"CD Rank #{rank_num}"
 
+                        rank_str = f"CD Rank #{rank_num}" if body == "Collegedunia" else f"#{rank_num}"
                         rec = {
                             "college_id": college_id,
                             "ranking_body": body,
                             "rank": rank_str,
-                            "ranking_year": year
+                            "ranking_year": year,
                         }
-                        if body == "Collegedunia":
-                            cd_ranks.append(rec)
-                        else:
+                        key = (rec["ranking_body"], rec["rank"], rec["ranking_year"])
+                        if key not in seen:
+                            seen.add(key)
                             rankings.append(rec)
                         seen_bodies.add(body)
                         break
@@ -1644,13 +1680,8 @@ def parse_rankings(html_content: str, college_id: str, extra_html: str = "") -> 
         if extra_html:
             _extract_rankings_from_text(_extract_main_text(BeautifulSoup(extra_html, "html.parser")))
 
-    # Keep only the single best (minimum) Collegedunia rank
-    if cd_ranks:
-        def get_rank_num(rec):
-            m = re.search(r'\d+', rec["rank"])
-            return int(m.group(0)) if m else 999999
-        best_cd_rec = min(cd_ranks, key=get_rank_num)
-        rankings.append(best_cd_rec)
+        if not rankings:
+            logger.warning(f"[{college_id}] No rankings extracted from structured data or text fallback.")
 
     return rankings
 
