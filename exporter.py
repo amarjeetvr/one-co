@@ -176,6 +176,10 @@ def export_college_wise_excel(
             "Reviews": pd.DataFrame(reviews_by_id[cid])
         }
         
+        if os.path.exists(filepath):
+            logger.info(f"Skipping existing college Excel: {filepath}")
+            continue
+
         try:
             with pd.ExcelWriter(filepath, engine="openpyxl") as writer:
                 for sheet_name, df in college_dfs.items():
