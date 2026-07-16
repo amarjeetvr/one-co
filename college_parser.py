@@ -20,6 +20,48 @@ def clean_text(text: str) -> str:
     text = text.replace("\xa0", " ").strip()
     return re.sub(r'\s+', ' ', text)
 
+def clean_course_parent_name(course_name: str) -> str:
+    """Removes trailing parentheses containing specialization/stream info from course name."""
+    if not course_name:
+        return ""
+    cleaned = re.sub(r'\s*\([^)]*\)\s*$', '', course_name).strip()
+    return cleaned if cleaned else course_name
+
+def extract_course_and_specialization(course_name_raw: str, specialization_fallback: str = None) -> tuple:
+    """Extracts clean parent course name and specialization from a raw course name string."""
+    if not course_name_raw:
+        return "", ""
+    course_name_raw = clean_text(course_name_raw)
+    m = re.search(r'\(([^)]+)\)\s*$', course_name_raw)
+    if m:
+        specialization = m.group(1).strip()
+        course_name = re.sub(r'\s*\([^)]*\)\s*$', '', course_name_raw).strip()
+        return course_name, specialization
+    course_name = course_name_raw
+    specialization = specialization_fallback or "General"
+    return course_name, specialization
+
+def _map_course_row_keys(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Maps the internal parsed keys to target output column schema."""
+    mapped_rows = []
+    for row in rows:
+        mapped_row = {
+            "college_id": row.get("college_id"),
+            "degree_name": row.get("course_name"),
+            "course_name": row.get("specialization"),
+            "total_fees": row.get("total_fees"),
+            "duration": row.get("duration"),
+            "course_type": row.get("course_type"),
+            "eligibility": row.get("eligibility"),
+            "entrance_exam": row.get("entrance_exam"),
+            "application_date": row.get("application_date"),
+            "intake_seats": row.get("intake_seats"),
+            "course_level": row.get("course_level"),
+        }
+        mapped_rows.append(mapped_row)
+    return mapped_rows
+
+
 def extract_json_ld(soup: BeautifulSoup) -> List[Dict[str, Any]]:
     """Extracts all JSON-LD data from script tags."""
     json_ld_data = []
@@ -570,6 +612,7 @@ def _extract_next_data_course_rows(html_content: str, college_id: str) -> List[D
                 if not spec_name:
                     continue
                 course_name = clean_text(str(stream.get("course_name") or stream.get("display_course_name") or display_name))
+                course_name = clean_course_parent_name(course_name)
                 fees = _format_fee_amount(stream.get("fees_data") or {})
 
                 row = {
@@ -593,6 +636,7 @@ def _extract_next_data_course_rows(html_content: str, college_id: str) -> List[D
         else:
             # No streams — emit one row for the degree itself
             course_name = display_name or course_tag or short_head or degree_name
+            course_name = clean_course_parent_name(course_name)
             specialization = course_name if course_name.lower() != degree_name.lower() else "General"
             fees = _format_fee_amount(course.get("fees_data") or {})
             seats_value = course.get("available_seats", "")
@@ -681,6 +725,7 @@ def _extract_embedded_course_rows(html_content: str, college_id: str) -> List[Di
 
         specialization = clean_text(match.group(1))
         course_name = clean_text(match.group(2))
+        course_name = clean_course_parent_name(course_name)
         if not specialization or specialization.lower() in {"general", degree_name.lower()}:
             specialization = "General"
 
@@ -730,6 +775,7 @@ def _extract_dom_course_cards(html_content: str, college_id: str) -> List[Dict[s
             continue
             
         course_name = clean_text(title_elem.text)
+        course_name = clean_course_parent_name(course_name)
         if not course_name:
             continue
             
@@ -900,7 +946,8 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
 
     # Skip table and regex parsing when structured sources already produced rows
     if rows:
-        return rows
+        return _map_course_row_keys(rows)
+    
     
     # 3. Locate all tables on the page
     tables = soup.find_all("table")
@@ -997,20 +1044,19 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
                     continue
                     
                 degree = _normalize_degree_tag(course_name_raw)
-                course_name = course_name_raw
-                specialization = course_name_raw
+                course_name, specialization = extract_course_and_specialization(course_name_raw, course_name_raw)
                 
                 # If the parsed degree name is not a recognized degree tag, it's likely a specialization
                 if not degree or degree not in RECOGNIZED_DEGREES:
                     heading_degree = _normalize_degree_tag(sh)
                     if heading_degree and heading_degree in RECOGNIZED_DEGREES:
                         degree = heading_degree
-                        course_name = sh if sh else heading_degree
+                        course_name = clean_course_parent_name(sh if sh else heading_degree)
                         specialization = course_name_raw
                     else:
                         if not degree:
                             degree = "Other"
-                        course_name = course_name_raw
+                        course_name = clean_course_parent_name(course_name_raw)
                         specialization = "General" if course_name.lower() == degree.lower() else course_name
                 else:
                     specialization = "General" if course_name.lower() == degree.lower() else course_name
@@ -1139,11 +1185,14 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
                 if not re.search(r"INR|\bRs\b|\bLakh\b|\bLakhs\b|^\s*[0-9\.,\-]+\s*$", text_3, re.IGNORECASE):
                     eligibility = text_3
                 
+            course_name_cleaned = clean_course_parent_name(course_name)
+            specialization = course_name if course_name != f"{degree} (General)" else "General"
+            
             add_row({
                 "college_id": college_id,
                 "degree_name": degree,
-                "course_name": course_name,
-                "specialization": course_name if course_name != f"{degree} (General)" else "General",
+                "course_name": course_name_cleaned,
+                "specialization": specialization,
                 "total_fees": fees,
                 "duration": duration,
                 "course_type": course_type,
@@ -1211,7 +1260,7 @@ def parse_courses(html_content: str, college_id: str, college_url: str) -> List[
     if not rows:
         rows = _extract_embedded_course_rows(html_content, college_id)
 
-    return rows
+    return _map_course_row_keys(rows)
 
 # ----------------- 3. ADMISSIONS PARSER -----------------
 def parse_admissions(html_content: str, college_id: str) -> Dict[str, Any]:
