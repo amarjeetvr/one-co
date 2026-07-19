@@ -142,9 +142,28 @@ Each laptop starts fresh — make sure to delete any existing `html/` and `json_
 
 ### 4. Run the scraper on each laptop
 ```bash
-python main.py --limit 3500 --batch-size 50
+python main.py --limit 3500 --batch-size 100
 ```
-Each laptop will download and parse its ~3,243 colleges independently.
+Each laptop will download its ~3,243 colleges, then parse + export **once** at the
+end (parsing is offline and fast; re-exporting the growing Excel workbook after
+every batch was quadratic and has been removed).
+
+**Faster / more robust: decouple the two stages.** Download everything first, then
+parse once. This survives interruptions (HTML stays on disk) and avoids any
+per-batch export cost:
+```bash
+python main.py --stage1-download --limit 3500   # download only (repeat-safe; resumes)
+python main.py --stage2-parse                    # parse all HTML → JSON + Excel, once
+```
+
+> ⚠️ **Geo-restriction — read this first.** Collegedunia is served via CloudFront
+> and blocks requests from outside India with an HTTP **403** page. If a laptop is
+> not on an Indian IP, every page returns a ~1 KB error page. The downloader now
+> **detects these blocks and refuses to save them** (the college stays *pending*
+> instead of being silently marked done), so you won't corrupt the dataset — but
+> that laptop will make zero progress. Run from India, or use an India-based
+> VPN/proxy. Verify with `python status.py` after the first batch: if "Downloaded"
+> stays at 0 and the log shows `Blocked/error HTTP 403`, the IP is the problem.
 
 ---
 
@@ -177,10 +196,37 @@ This regenerates the consolidated Excel file `exports/all_colleges.xlsx` and ind
 
 ## Time Estimates
 
-| Batch size | Time per batch | 3,243 colleges total |
-| :--- | :--- | :--- |
-| 10 colleges | ~8–10 min | ~26–32 hours per laptop |
-| 50 colleges | ~40–50 min | ~26–32 hours per laptop |
+Original: each college = 9 subpages × ~25 sec + 2 sec delay ≈ **4–5 min/college**
+→ ~26–32 hours per laptop, ~400 hours total across the pipeline.
 
-> Each college = 9 subpages × ~25 sec + 2 sec delay = ~4–5 min per college.
-> Running 6 laptops in parallel reduces the total pipeline run time from ~400 hours down to ~26–32 hours (~1.5 days).
+### Speed optimizations applied (per-request, lossless)
+
+These cut the per-college time without changing what data is captured:
+
+| Optimization | Effect |
+| :--- | :--- |
+| **Block images / fonts / media** (`config.BLOCK_RESOURCE_TYPES`) | Pages fetch only the HTML/text we actually parse — the single biggest safe win. Stylesheets are kept (Playwright needs CSS to compute element visibility). |
+| **Fixed the dead scroll-break** | Heavy pages used to always burn the full 10 × 0.8 s = 8 s of scrolling. The loop now exits as soon as the page height stops growing. |
+| **Trimmed fixed waits** | Hydration wait 2.0 s → 1.2 s (`HYDRATION_WAIT_MS`); base delay 2 s → 1 s (`DELAY_BETWEEN_REQUESTS`). |
+| **Parse once, not per batch** | Removed the quadratic re-export of the whole Excel workbook after every batch. |
+
+Together these should roughly **halve** per-request time. All knobs live in
+`config.py` — tune them per your bandwidth and how aggressively the site rate-limits.
+
+> **Validate before a full run.** These speed knobs *can* silently drop lazy-loaded
+> data if pushed too hard. On an India-located laptop that can actually reach the
+> site, download ~5 colleges, run `--stage2-parse`, and confirm all 9 subpages
+> populate in the JSON. (This could not be verified from a geo-blocked machine.)
+
+### Next lever: concurrency (test before trusting)
+
+The current downloader is fully **sequential** — one subpage at a time. Real
+parallelism (downloading a college's 9 subpages, or several colleges, at once) is
+the path to another big speed-up, but it also raises the risk of CloudFront
+CAPTCHAs / IP bans — remember 6 laptops each firing N concurrent requests hit one
+host simultaneously. If you pursue it, wire up the already-defined
+`config.CONCURRENCY_LIMIT` (start at 3–4), test on a small sample, and watch for
+403/429 before scaling.
+
+> Running 6 laptops in parallel already reduces total run time from ~400 h to
+> ~26–32 h; the optimizations above bring each laptop down further.

@@ -93,6 +93,23 @@ def run_parsing_and_export():
 
     if not new_colleges:
         logger.info("Nothing new to parse. All downloaded colleges are already in JSON.")
+        from config import EXPORTS_EXCEL
+        if not os.path.exists(EXPORTS_EXCEL) or any(existing.values()):
+            if any(existing.values()):
+                logger.info("Compiling/re-compiling Excel workbook from existing JSON data...")
+                exporter.export_all_to_excel(
+                    colleges=existing["colleges"],
+                    courses=existing["courses"],
+                    admissions=existing["admissions"],
+                    placements=existing["placements"],
+                    rankings=existing["rankings"],
+                    faculty=existing["faculty"],
+                    scholarships=existing["scholarships"],
+                    hostels=existing["hostel"],
+                    reviews=existing["reviews"]
+                )
+            else:
+                logger.warning("No parsed data found in JSON to compile.")
         return
 
     listing_meta = load_listing_metadata()
@@ -282,8 +299,14 @@ def main():
         logger.info(f"Stage 1: Discovering up to {total_limit} URLs...")
         discover_college_urls(max_colleges=total_limit)
 
-        # Download and parse in batches of `batch_size` new colleges at a time
+        # Download in batches of `batch_size` new colleges at a time.
+        # NOTE: parsing/export is deliberately deferred until ALL downloads
+        # finish. run_parsing_and_export() reloads every JSON file and rewrites
+        # the entire Excel workbook, so calling it per-batch is O(N^2) over a
+        # run (65 batches would re-export a growing workbook 65 times). Parsing
+        # is fast and offline — do it once at the end from the HTML on disk.
         current_batch = 1
+        downloaded_any = False
         while True:
             logger.info(f"\n========================================\n"
                         f"BATCH {current_batch}: downloading up to {batch_size} new colleges\n"
@@ -295,13 +318,18 @@ def main():
             new_count = after - before
 
             if new_count > 0:
-                logger.info(f"Downloaded {new_count} new colleges. Parsing...")
-                run_parsing_and_export()
+                logger.info(f"Downloaded {new_count} new colleges this batch.")
+                downloaded_any = True
             else:
                 logger.info("No new colleges downloaded. All pending colleges done or CSV exhausted.")
                 break
 
             current_batch += 1
+
+        from config import EXPORTS_EXCEL
+        if downloaded_any or not os.path.exists(EXPORTS_EXCEL):
+            logger.info("Parsing + exporting once...")
+            run_parsing_and_export()
 
         logger.info("Pipeline Execution Finished.")
 
