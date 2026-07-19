@@ -21,9 +21,26 @@ NAVIGATION_TIMEOUT = 60000  # 60 seconds
 
 # Scraper Settings
 CONCURRENCY_LIMIT = 2  # Keep concurrency low to prevent detection and rate limiting
-DELAY_BETWEEN_REQUESTS = 2.0  # seconds
+DELAY_BETWEEN_REQUESTS = 1.0  # seconds (base; a small random jitter is added on top)
 MAX_RETRIES = 3
 BACKOFF_FACTOR = 2.0
+
+# --- Speed tuning ---------------------------------------------------------
+# We only ever parse the *text* of the DOM offline, so downloading images,
+# fonts, media and (optionally) tracking scripts is pure waste. Blocking them
+# is the single biggest safe speed-up: pages load far faster and use a
+# fraction of the bandwidth, with zero loss of parsed data.
+# NOTE: stylesheets are intentionally NOT blocked — Playwright computes
+# element visibility (used by the scroll/expand logic) from CSS.
+BLOCK_RESOURCE_TYPES = {"image", "media", "font"}
+
+# Milliseconds to wait after DOMContentLoaded for client-side hydration.
+HYDRATION_WAIT_MS = 1200
+
+# Max gradual-scroll steps used to trigger lazy loading. The loop now exits
+# early once the page height stops growing, so this is just an upper bound.
+MAX_SCROLL_STEPS = 10
+SCROLL_STEP_WAIT_MS = 600
 
 # Subpages to download for each college
 SUBPAGE_MAPPING = {
