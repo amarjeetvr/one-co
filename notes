@@ -19,21 +19,4 @@ before running delete these folders to start fresh (optional):
 divide url part
 python main.py --split 5
 
-
-
-      $target = 1000
-while ($true) {
-    Write-Host "Running downloader..."
-    python main.py --stage1-download --limit $target
-
-    $count = (Get-ChildItem .\html\info\*.html -ErrorAction SilentlyContinue | Measure-Object).Count
-    Write-Host "Downloaded info pages: $count / $target"
-
-    if ($count -ge $target) { break }
-
-    Write-Host "Not complete (network may be down). Retrying in 60 seconds..."
-    Start-Sleep -Seconds 60
-}
-
-Write-Host "Download complete. Starting parse/export..."
-python main.py --stage2-parse
+copy urls\parts\college_urls_part2.csv urls\college_urls.csv
