@@ -6,7 +6,7 @@ from typing import List, Dict, Tuple, Any
 from config import HTML_DIR, SUBPAGE_MAPPING, COLLEGE_URLS_CSV
 from logger import logger
 from discovery import discover_college_urls
-from downloader import run_downloader
+from downloader import run_downloader, compute_pending_urls
 from downloader_async import run_downloader_concurrent
 import college_parser as parser
 
@@ -304,12 +304,19 @@ def main():
 
         current_batch = 1
         total_processed = 0
+        downloaded_any = False
         while total_processed < total_limit:
             logger.info(f"\n========================================\n"
                         f"BATCH {current_batch}: discovering + downloading up to {batch_size} new colleges\n"
                         f"========================================")
 
-            discover_college_urls(max_colleges=total_processed + batch_size)
+            # Grow the discovery target each batch (discovery resumes from the
+            # last listing page), capped at total_limit.
+            discover_college_urls(max_colleges=min(total_processed + batch_size, total_limit))
+
+            # How many colleges are still pending BEFORE this batch — used to
+            # tell "nothing left to do" apart from "batch was blocked".
+            pending_before = len(compute_pending_urls(0))
 
             before = len(discover_downloaded_colleges())
             downloader_fn(limit=batch_size)
@@ -317,16 +324,33 @@ def main():
             new_count = after - before
 
             if new_count > 0:
-                logger.info(f"Downloaded {new_count} new colleges this batch.")
+                total_processed += new_count      # NOTE: must advance, or --limit and discovery target never move
                 downloaded_any = True
+                logger.info(f"Downloaded {new_count} new colleges this batch (total {total_processed}).")
                 if args.parse_per_batch:
                     logger.info("Incremental parsing and export triggered for batch...")
                     run_parsing_and_export()
             else:
-                logger.info("No new colleges downloaded. All pending colleges done or CSV exhausted.")
+                # No progress this batch. Distinguish the two causes honestly so
+                # a transient block is not misreported as successful completion.
+                if pending_before == 0:
+                    logger.info("No pending colleges remain — all downloaded. Stopping.")
+                else:
+                    logger.warning(
+                        f"Batch made no progress, but {pending_before} college(s) are still "
+                        f"pending — likely a geo-block / rate-limit (HTTP 403/429), or a cluster "
+                        f"of removed (404) base URLs. Stopping early; re-run to resume from here."
+                    )
                 break
 
             current_batch += 1
+
+        # Always produce JSON + Excel at the end of a run (unless we already
+        # exported per-batch). Without this the default pipeline downloads but
+        # never generates any output.
+        if downloaded_any and not args.parse_per_batch:
+            logger.info("Downloads finished for this run. Parsing + exporting once...")
+            run_parsing_and_export()
 
         logger.info("Pipeline Execution Finished.")
 

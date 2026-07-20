@@ -144,9 +144,17 @@ Each laptop starts fresh — make sure to delete any existing `html/` and `json_
 ```bash
 python main.py --limit 3500 --batch-size 100
 ```
-Each laptop will download its ~3,243 colleges, then parse + export **once** at the
-end (parsing is offline and fast; re-exporting the growing Excel workbook after
-every batch was quadratic and has been removed).
+Each laptop discovers + downloads its colleges in batches, then parses + exports
+**once at the end** (parsing is offline and fast; re-exporting the growing Excel
+workbook after every batch was quadratic and has been removed). Add
+`--parse-per-batch` if you want an incremental Excel after every batch instead
+(useful to watch progress, at the cost of repeated exports).
+
+If a batch makes no progress, the run now reports *why* honestly:
+- **all pending done** → `No pending colleges remain — all downloaded. Stopping.`
+- **blocked / stalled** → `Batch made no progress, but N still pending … Stopping
+  early; re-run to resume.` (It no longer falsely claims the pipeline "Finished"
+  when a 403/429 window stalled it — just re-run to pick up where it left off.)
 
 **Faster / more robust: decouple the two stages.** Download everything first, then
 parse once. This survives interruptions (HTML stays on disk) and avoids any
@@ -164,6 +172,21 @@ python main.py --stage2-parse                    # parse all HTML → JSON + Exc
 > that laptop will make zero progress. Run from India, or use an India-based
 > VPN/proxy. Verify with `python status.py` after the first batch: if "Downloaded"
 > stays at 0 and the log shows `Blocked/error HTTP 403`, the IP is the problem.
+
+> ℹ️ **`HTTP 404` in the logs is usually normal — not an error.** Many colleges
+> simply do not have every subpage (no `/hostel`, `/cutoff`, `/scholarship`,
+> `/faculty`, …). The downloader now classifies responses instead of lumping them
+> together:
+> - **404 / 410 on a subpage** → logged at `INFO`: *"subpage 'hostel' does not exist
+>   for this college — skipping (normal, not an error)."* No data is lost.
+> - **404 / 410 on the base page** (bare `/college/{id}-{slug}`) → logged at
+>   `WARNING` as `NOT FOUND … no data captured`: that college was removed from the
+>   site since discovery. These are rare; grep for `NOT FOUND` to count them.
+> - **403 / 429 / 5xx** → logged at `ERROR` as `Blocked/error` and kept *pending*
+>   for a re-run (a real block/rate-limit, not a missing page).
+>
+> So `grep 'HTTP 404' logs/scraper.log` and check the URL suffix: suffix present =
+> harmless missing subpage; bare base URL = a genuinely removed college.
 
 > ⚠️ **Known limitation — partial-download holes.** A college is marked "done" as
 > soon as its **info** page is saved; the other 8 subpages are *not* re-checked. If
@@ -199,12 +222,17 @@ This regenerates the consolidated Excel file `exports/all_colleges.xlsx` and ind
 
 | Command | What it does |
 | :--- | :--- |
-| `python status.py` | Show counts: CSV URLs, downloaded, pending, JSON records |
-| `python main.py --discover-only 19455` | Discover up to 19,455 URLs |
+| `python status.py` | Show counts + subpage-completeness audit (flags partial colleges) |
+| `python main.py --discover-only 19455` | Discover up to 19,455 URLs and stop |
 | `python main.py --split 6` | Split CSV into 6 part files |
-| `python main.py --stage1-download --limit 50` | Download next 50 pending colleges |
-| `python main.py --stage2-parse` | Parse all downloaded HTML → JSON + Excel |
-| `python main.py --limit 3500 --batch-size 50` | Full loop: download + parse in batches of 50 |
+| `python main.py --stage1-download --limit 50` | Download next 50 pending colleges (sequential) |
+| `python main.py --stage1-download --limit 50 --concurrent` | Same, but fetch each college's subpages in parallel |
+| `python main.py --stage2-parse` | Parse all downloaded HTML → JSON + Excel (once) |
+| `python main.py --limit 3500 --batch-size 100` | Full loop: discover + download in batches, parse once at end |
+| `python main.py --limit 3500 --batch-size 100 --parse-per-batch` | Full loop, exporting Excel after every batch |
+
+**Flags:** `--concurrent` (parallel subpages, see below) and `--parse-per-batch`
+(export each batch) can be combined with the full-loop or `--stage1-download` runs.
 
 ---
 
