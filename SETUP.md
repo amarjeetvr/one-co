@@ -165,6 +165,20 @@ python main.py --stage2-parse                    # parse all HTML → JSON + Exc
 > VPN/proxy. Verify with `python status.py` after the first batch: if "Downloaded"
 > stays at 0 and the log shows `Blocked/error HTTP 403`, the IP is the problem.
 
+> ⚠️ **Known limitation — partial-download holes.** A college is marked "done" as
+> soon as its **info** page is saved; the other 8 subpages are *not* re-checked. If
+> info saves but a sibling subpage fails (a transient 403/429/timeout), that college
+> is skipped forever with missing data. The guards prevent saving *garbage*, but not
+> marking a college *complete-while-incomplete*. **Concurrency makes this more
+> likely** (a parallel burst is more prone to a partial rate-limit than a spaced-out
+> sequential run). Mitigations:
+> - `python status.py` now prints a **subpage completeness audit** — colleges with
+>   fewer than 9 subpages are flagged. Run it after each batch.
+> - Some subpages are legitimately absent (a college with no `/cutoff`), so a partial
+>   count isn't always an error — spot-check flagged colleges in a browser.
+> - **Follow-up fix (not yet implemented):** track per-subpage failures and retry
+>   only the missing ones, distinguishing "failed" from "legitimately absent."
+
 ---
 
 ## Merging Results (After All Laptops Finish)
@@ -218,15 +232,38 @@ Together these should roughly **halve** per-request time. All knobs live in
 > site, download ~5 colleges, run `--stage2-parse`, and confirm all 9 subpages
 > populate in the JSON. (This could not be verified from a geo-blocked machine.)
 
-### Next lever: concurrency (test before trusting)
+### Next lever: concurrency (implemented, opt-in — A/B before trusting)
 
-The current downloader is fully **sequential** — one subpage at a time. Real
-parallelism (downloading a college's 9 subpages, or several colleges, at once) is
-the path to another big speed-up, but it also raises the risk of CloudFront
-CAPTCHAs / IP bans — remember 6 laptops each firing N concurrent requests hit one
-host simultaneously. If you pursue it, wire up the already-defined
-`config.CONCURRENCY_LIMIT` (start at 3–4), test on a small sample, and watch for
-403/429 before scaling.
+The default downloader is **sequential** (one subpage at a time). An **async
+downloader** (`downloader_async.py`) is now available that fetches a college's 9
+subpages **in parallel**, bounded by `config.SUBPAGE_CONCURRENCY` (default 4).
+Enable it with the `--concurrent` flag:
+
+```bash
+python main.py --stage1-download --limit 3500 --concurrent
+```
+
+It reuses the exact same URL selection, block-detection, resource-blocking and
+config knobs as the sequential path, so the only variable is concurrency. Colleges
+are still processed one at a time, so **at most `SUBPAGE_CONCURRENCY` requests hit
+collegedunia at once per laptop.**
+
+> ⚠️ Concurrency raises the risk of CloudFront **403** / rate-limit **429** blocks —
+> and 6 laptops each firing `SUBPAGE_CONCURRENCY` requests multiply on one host.
+> **A/B test on a sample before a full run** (on an India-located laptop):
+>
+> ```bash
+> # baseline (sequential)
+> time python main.py --stage1-download --limit 10
+> rm -rf html/*                       # reset
+> # concurrent
+> time python main.py --stage1-download --limit 10 --concurrent
+> ```
+>
+> Compare wall-clock **and** grep the log for `Blocked/error` — if concurrency
+> introduces 403/429s that the sequential run didn't have, lower
+> `SUBPAGE_CONCURRENCY` (try 2–3) or stay sequential. Then `--stage2-parse` both and
+> confirm the JSON is identical in completeness.
 
 > Running 6 laptops in parallel already reduces total run time from ~400 h to
 > ~26–32 h; the optimizations above bring each laptop down further.

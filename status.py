@@ -31,3 +31,32 @@ except:
 
 state_file = 'urls/.discovery_state'
 print('Discovery state:', open(state_file).read().strip() if os.path.exists(state_file) else 'NOT FOUND')
+
+# --- Subpage completeness audit ------------------------------------------
+# A college is treated as "downloaded" as soon as its info page exists, so a
+# partial failure (info saved but a sibling subpage 403'd/timed out) leaves a
+# silent data hole that is never retried. Concurrency makes partial failures
+# more likely, so audit how many of the 9 subpages each downloaded college has.
+SUBPAGES = ['info', 'courses', 'admissions', 'placements', 'reviews',
+            'faculty', 'scholarships', 'hostel', 'cutoff']
+present = {}  # college_id -> set(subpages present)
+for sub in SUBPAGES:
+    d = os.path.join('html', sub)
+    if os.path.isdir(d):
+        for f in os.listdir(d):
+            m = re.match(r'^(\d+)_', f)
+            if f.endswith('.html') and m:
+                present.setdefault(m.group(1), set()).add(sub)
+
+if present:
+    full = sum(1 for s in present.values() if len(s) == len(SUBPAGES))
+    print(f'\nSubpage completeness: {len(present)} colleges downloaded | '
+          f'{full} complete (all {len(SUBPAGES)}) | {len(present) - full} partial')
+    incomplete = {cid: s for cid, s in present.items() if len(s) < len(SUBPAGES)}
+    for cid, s in list(incomplete.items())[:10]:
+        missing = [x for x in SUBPAGES if x not in s]
+        print(f'  {cid}: has {len(s)}/{len(SUBPAGES)}, missing {missing}')
+    if len(incomplete) > 10:
+        print(f'  ... and {len(incomplete) - 10} more partial colleges')
+    print('  NOTE: some subpages may be legitimately absent (site has no '
+          '/cutoff etc.). Spot-check a few flagged colleges in the browser.')

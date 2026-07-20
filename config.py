@@ -42,6 +42,14 @@ HYDRATION_WAIT_MS = 1200
 MAX_SCROLL_STEPS = 10
 SCROLL_STEP_WAIT_MS = 600
 
+# --- Concurrency (async downloader, opt-in via `--concurrent`) -----------
+# Max subpages fetched at the same time within ONE browser context. This is
+# the number of simultaneous requests that hit collegedunia per laptop, so
+# keep it modest — remember 6 laptops multiply this. Start at 3–4 and only
+# raise it after confirming a sample run doesn't trigger 403/429 blocks.
+# Set to 1 to effectively serialize (equivalent to the sync path).
+SUBPAGE_CONCURRENCY = 4
+
 # Subpages to download for each college
 SUBPAGE_MAPPING = {
     "info": "",  # Base URL

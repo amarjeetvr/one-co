@@ -7,6 +7,7 @@ from config import HTML_DIR, SUBPAGE_MAPPING, COLLEGE_URLS_CSV
 from logger import logger
 from discovery import discover_college_urls
 from downloader import run_downloader
+from downloader_async import run_downloader_concurrent
 import college_parser as parser
 
 
@@ -273,8 +274,15 @@ def main():
     parser.add_argument("--batch-size", type=int, default=50, help="Batch size for incremental discovery and download")
     parser.add_argument("--discover-only", type=int, metavar="N", help="Only discover N URLs and stop (no download/parse)")
     parser.add_argument("--split", type=int, metavar="PARTS", help="Split college_urls.csv into N equal part files under urls/parts/")
+    parser.add_argument("--concurrent", action="store_true", help="Use the concurrent/async downloader (fetches a college's subpages in parallel, bounded by config.SUBPAGE_CONCURRENCY). Opt-in — validate on a sample first.")
+    parser.add_argument("--parse-per-batch", action="store_true", help="Run offline parsing and export to Excel after every batch of downloads instead of waiting until the end.")
 
     args = parser.parse_args()
+
+    # Pick the download implementation once; both share the same signature.
+    downloader_fn = run_downloader_concurrent if args.concurrent else run_downloader
+    if args.concurrent:
+        logger.info("Using CONCURRENT downloader (subpages fetched in parallel).")
 
     if args.discover_only:
         discover_college_urls(max_colleges=args.discover_only)
@@ -283,7 +291,7 @@ def main():
     elif args.stage1_discover:
         discover_college_urls(max_colleges=args.limit)
     elif args.stage1_download:
-        run_downloader(limit=args.limit)
+        downloader_fn(limit=args.limit)
     elif args.stage2_parse:
         run_parsing_and_export()
     else:
@@ -304,14 +312,16 @@ def main():
             discover_college_urls(max_colleges=total_processed + batch_size)
 
             before = len(discover_downloaded_colleges())
-            run_downloader(limit=batch_size)
+            downloader_fn(limit=batch_size)
             after = len(discover_downloaded_colleges())
             new_count = after - before
 
             if new_count > 0:
-                logger.info(f"Downloaded {new_count} new colleges. Parsing and saving...")
-                run_parsing_and_export()
-                total_processed += new_count
+                logger.info(f"Downloaded {new_count} new colleges this batch.")
+                downloaded_any = True
+                if args.parse_per_batch:
+                    logger.info("Incremental parsing and export triggered for batch...")
+                    run_parsing_and_export()
             else:
                 logger.info("No new colleges downloaded. All pending colleges done or CSV exhausted.")
                 break
