@@ -94,6 +94,23 @@ def run_parsing_and_export():
 
     if not new_colleges:
         logger.info("Nothing new to parse. All downloaded colleges are already in JSON.")
+        from config import EXPORTS_EXCEL
+        if not os.path.exists(EXPORTS_EXCEL) or any(existing.values()):
+            if any(existing.values()):
+                logger.info("Compiling/re-compiling Excel workbook from existing JSON data...")
+                exporter.export_all_to_excel(
+                    colleges=existing["colleges"],
+                    courses=existing["courses"],
+                    admissions=existing["admissions"],
+                    placements=existing["placements"],
+                    rankings=existing["rankings"],
+                    faculty=existing["faculty"],
+                    scholarships=existing["scholarships"],
+                    hostels=existing["hostel"],
+                    reviews=existing["reviews"]
+                )
+            else:
+                logger.warning("No parsed data found in JSON to compile.")
         return
 
     listing_meta = load_listing_metadata()
@@ -316,8 +333,9 @@ def main():
 
             current_batch += 1
 
-        if downloaded_any:
-            logger.info("All downloads complete. Parsing + exporting once...")
+        from config import EXPORTS_EXCEL
+        if downloaded_any or not os.path.exists(EXPORTS_EXCEL):
+            logger.info("Parsing + exporting once...")
             run_parsing_and_export()
 
         logger.info("Pipeline Execution Finished.")
