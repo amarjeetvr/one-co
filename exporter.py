@@ -88,6 +88,15 @@ def export_all_to_excel(
             colleges, courses, admissions, placements, rankings, faculty, scholarships, hostels, reviews
         )
         
+    except PermissionError as e:
+        logger.error(f"Permission denied: {e}")
+        logger.warning(
+            "\n======================================================================\n"
+            f"WARNING: The Excel file '{EXPORTS_EXCEL}' is currently open in Excel or another program.\n"
+            "Please close it so Python can write to it.\n"
+            "JSON data backups have been successfully saved, so no data is lost.\n"
+            "======================================================================"
+        )
     except Exception as e:
         logger.error(f"Failed to generate Excel workbook: {e}")
         raise e
