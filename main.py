@@ -119,12 +119,16 @@ def run_parsing_and_export():
         "rankings": [], "faculty": [], "scholarships": [], "hostel": [], "reviews": []
     }
 
+    existing_rank_keys = {
+        (r["college_id"], r["ranking_body"], r["ranking_year"])
+        for r in existing["rankings"]
+    }
+
     for college_id, slug in new_colleges:
         logger.info(f"Parsing NEW college: {slug} (ID: {college_id})")
 
         info_file = os.path.join(HTML_DIR, "info", f"{college_id}_{slug}.html")
 
-        # Resolve correct base URL (/university/ or /college/)
         college_url = f"https://collegedunia.com/university/{college_id}-{slug}"
         for candidate in [
             f"https://collegedunia.com/university/{college_id}-{slug}",
@@ -170,7 +174,6 @@ def run_parsing_and_export():
                 except Exception as e:
                     logger.error(f"Error parsing {subpage} for {slug}: {e}")
 
-        # Placements + Rankings together
         placements_file = os.path.join(HTML_DIR, "placements", f"{college_id}_{slug}.html")
         if os.path.exists(placements_file):
             try:
@@ -186,51 +189,39 @@ def run_parsing_and_export():
                             v = card.get(listing_key, "").strip()
                             placement_data[field] = v or "Not Specified"
                 new_data["placements"].append(placement_data)
-                new_data["rankings"].extend(
-                    parser.parse_rankings(placement_html, college_id, extra_html=info_html)
-                )
+                for r in parser.parse_rankings(placement_html, college_id, extra_html=info_html):
+                    key = (r.get("college_id"), r.get("ranking_body"), r.get("ranking_year"))
+                    if key not in existing_rank_keys:
+                        existing_rank_keys.add(key)
+                        new_data["rankings"].append(r)
             except Exception as e:
                 logger.error(f"Error parsing placements for {slug}: {e}")
 
-    # Deduplicate new rankings
-    existing_rank_keys = {
-        (r["college_id"], r["ranking_body"], r["ranking_year"])
-        for r in existing["rankings"]
-    }
-    deduped_new_rankings = []
-    for r in new_data["rankings"]:
-        key = (r.get("college_id"), r.get("ranking_body"), r.get("ranking_year"))
-        if key not in existing_rank_keys:
-            existing_rank_keys.add(key)
-            deduped_new_rankings.append(r)
-    new_data["rankings"] = deduped_new_rankings
+        # Merge and save after every college
+        merged = {
+            "colleges":     existing["colleges"]     + new_data["colleges"],
+            "courses":      existing["courses"]      + new_data["courses"],
+            "admissions":   existing["admissions"]   + new_data["admissions"],
+            "placements":   existing["placements"]   + new_data["placements"],
+            "rankings":     existing["rankings"]     + new_data["rankings"],
+            "faculty":      existing["faculty"]      + new_data["faculty"],
+            "scholarships": existing["scholarships"] + new_data["scholarships"],
+            "hostel":       existing["hostel"]        + new_data["hostel"],
+            "reviews":      existing["reviews"]      + new_data["reviews"],
+        }
+        exporter.export_all_to_excel(
+            colleges=merged["colleges"],
+            courses=merged["courses"],
+            admissions=merged["admissions"],
+            placements=merged["placements"],
+            rankings=merged["rankings"],
+            faculty=merged["faculty"],
+            scholarships=merged["scholarships"],
+            hostels=merged["hostel"],
+            reviews=merged["reviews"]
+        )
+        logger.info(f"Saved after college {college_id} ({slug}). Total colleges in Excel: {len(merged['colleges'])}")
 
-    # Merge new data into existing
-    merged = {
-        "colleges":      existing["colleges"]      + new_data["colleges"],
-        "courses":       existing["courses"]       + new_data["courses"],
-        "admissions":    existing["admissions"]    + new_data["admissions"],
-        "placements":    existing["placements"]    + new_data["placements"],
-        "rankings":      existing["rankings"]      + new_data["rankings"],
-        "faculty":       existing["faculty"]       + new_data["faculty"],
-        "scholarships":  existing["scholarships"]  + new_data["scholarships"],
-        "hostel":        existing["hostel"]        + new_data["hostel"],
-        "reviews":       existing["reviews"]       + new_data["reviews"],
-    }
-
-    logger.info(f"Merged totals — colleges: {len(merged['colleges'])}, courses: {len(merged['courses'])}, rankings: {len(merged['rankings'])}")
-
-    exporter.export_all_to_excel(
-        colleges=merged["colleges"],
-        courses=merged["courses"],
-        admissions=merged["admissions"],
-        placements=merged["placements"],
-        rankings=merged["rankings"],
-        faculty=merged["faculty"],
-        scholarships=merged["scholarships"],
-        hostels=merged["hostel"],
-        reviews=merged["reviews"]
-    )
     logger.info("Offline parsing and export complete.")
 
 
@@ -295,22 +286,14 @@ def main():
         if batch_size <= 0:
             batch_size = 300
 
-        # Discover all URLs up front (resumes from last listing page)
-        logger.info(f"Stage 1: Discovering up to {total_limit} URLs...")
-        discover_college_urls(max_colleges=total_limit)
-
-        # Download in batches of `batch_size` new colleges at a time.
-        # NOTE: parsing/export is deliberately deferred until ALL downloads
-        # finish. run_parsing_and_export() reloads every JSON file and rewrites
-        # the entire Excel workbook, so calling it per-batch is O(N^2) over a
-        # run (65 batches would re-export a growing workbook 65 times). Parsing
-        # is fast and offline — do it once at the end from the HTML on disk.
         current_batch = 1
-        downloaded_any = False
-        while True:
+        total_processed = 0
+        while total_processed < total_limit:
             logger.info(f"\n========================================\n"
-                        f"BATCH {current_batch}: downloading up to {batch_size} new colleges\n"
+                        f"BATCH {current_batch}: discovering + downloading up to {batch_size} new colleges\n"
                         f"========================================")
+
+            discover_college_urls(max_colleges=total_processed + batch_size)
 
             before = len(discover_downloaded_colleges())
             run_downloader(limit=batch_size)
@@ -318,18 +301,14 @@ def main():
             new_count = after - before
 
             if new_count > 0:
-                logger.info(f"Downloaded {new_count} new colleges this batch.")
-                downloaded_any = True
+                logger.info(f"Downloaded {new_count} new colleges. Parsing and saving...")
+                run_parsing_and_export()
+                total_processed += new_count
             else:
                 logger.info("No new colleges downloaded. All pending colleges done or CSV exhausted.")
                 break
 
             current_batch += 1
-
-        from config import EXPORTS_EXCEL
-        if downloaded_any or not os.path.exists(EXPORTS_EXCEL):
-            logger.info("Parsing + exporting once...")
-            run_parsing_and_export()
 
         logger.info("Pipeline Execution Finished.")
 
