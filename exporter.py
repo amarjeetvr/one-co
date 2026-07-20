@@ -26,7 +26,8 @@ def export_all_to_excel(
     faculty: List[Dict[str, Any]],
     scholarships: List[Dict[str, Any]],
     hostels: List[Dict[str, Any]],
-    reviews: List[Dict[str, Any]]
+    reviews: List[Dict[str, Any]],
+    new_colleges_only: List[Dict[str, Any]] = None
 ):
     """
     Saves lists of dicts directly to JSON files first, 
@@ -34,18 +35,7 @@ def export_all_to_excel(
     """
     logger.info("Starting data export process...")
     
-    # 1. Save all datasets to JSON files first as backup
-    save_to_json(colleges, "colleges.json")
-    save_to_json(courses, "courses.json")
-    save_to_json(admissions, "admissions.json")
-    save_to_json(placements, "placements.json")
-    save_to_json(rankings, "rankings.json")
-    save_to_json(faculty, "faculty.json")
-    save_to_json(scholarships, "scholarships.json")
-    save_to_json(hostels, "hostel.json")
-    save_to_json(reviews, "reviews.json")
-    
-    # 2. Convert lists of dicts to DataFrames
+    # Convert lists of dicts to DataFrames
     dfs = {
         "Colleges": pd.DataFrame(colleges),
         "Courses": pd.DataFrame(courses),
@@ -61,7 +51,7 @@ def export_all_to_excel(
     # Create export directory
     os.makedirs(os.path.dirname(EXPORTS_EXCEL), exist_ok=True)
     
-    # 3. Write using pd.ExcelWriter
+    # Write using pd.ExcelWriter
     try:
         with pd.ExcelWriter(EXPORTS_EXCEL, engine="openpyxl") as writer:
             for sheet_name, df in dfs.items():
@@ -83,9 +73,10 @@ def export_all_to_excel(
                     
         logger.info(f"Excel workbook compiled and saved successfully to: {EXPORTS_EXCEL}")
         
-        # Call college-wise exports
+        # Call college-wise exports — only for newly added colleges
         export_college_wise_excel(
-            colleges, courses, admissions, placements, rankings, faculty, scholarships, hostels, reviews
+            new_colleges_only if new_colleges_only is not None else colleges,
+            courses, admissions, placements, rankings, faculty, scholarships, hostels, reviews
         )
         
     except Exception as e:
@@ -177,7 +168,6 @@ def export_college_wise_excel(
         }
         
         if os.path.exists(filepath):
-            logger.info(f"Skipping existing college Excel: {filepath}")
             continue
 
         try:

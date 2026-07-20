@@ -197,30 +197,38 @@ def run_parsing_and_export():
             except Exception as e:
                 logger.error(f"Error parsing placements for {slug}: {e}")
 
-        # Merge and save after every college
+        # Save JSON incrementally after each college (fast)
+        exporter.save_to_json(existing["colleges"] + new_data["colleges"], "colleges.json")
+        exporter.save_to_json(existing["courses"] + new_data["courses"], "courses.json")
+        exporter.save_to_json(existing["admissions"] + new_data["admissions"], "admissions.json")
+        exporter.save_to_json(existing["placements"] + new_data["placements"], "placements.json")
+        exporter.save_to_json(existing["rankings"] + new_data["rankings"], "rankings.json")
+        exporter.save_to_json(existing["faculty"] + new_data["faculty"], "faculty.json")
+        exporter.save_to_json(existing["scholarships"] + new_data["scholarships"], "scholarships.json")
+        exporter.save_to_json(existing["hostel"] + new_data["hostel"], "hostel.json")
+        exporter.save_to_json(existing["reviews"] + new_data["reviews"], "reviews.json")
+        # Write individual college Excel only (1 college, fast)
+        exporter.export_college_wise_excel(
+            new_data["colleges"][-1:],
+            new_data["courses"], new_data["admissions"], new_data["placements"],
+            new_data["rankings"], new_data["faculty"], new_data["scholarships"],
+            new_data["hostel"], new_data["reviews"]
+        )
+        logger.info(f"Saved college {college_id} ({slug}). Total in JSON: {len(existing['colleges']) + len(new_data['colleges'])}")
+
+    # Write all_colleges.xlsx once after all new colleges are parsed
+    if new_data["colleges"]:
         merged = {
-            "colleges":     existing["colleges"]     + new_data["colleges"],
-            "courses":      existing["courses"]      + new_data["courses"],
-            "admissions":   existing["admissions"]   + new_data["admissions"],
-            "placements":   existing["placements"]   + new_data["placements"],
-            "rankings":     existing["rankings"]     + new_data["rankings"],
-            "faculty":      existing["faculty"]      + new_data["faculty"],
-            "scholarships": existing["scholarships"] + new_data["scholarships"],
-            "hostel":       existing["hostel"]        + new_data["hostel"],
-            "reviews":      existing["reviews"]      + new_data["reviews"],
+            k: existing[k] + new_data[k] for k in existing
         }
         exporter.export_all_to_excel(
-            colleges=merged["colleges"],
-            courses=merged["courses"],
-            admissions=merged["admissions"],
-            placements=merged["placements"],
-            rankings=merged["rankings"],
-            faculty=merged["faculty"],
-            scholarships=merged["scholarships"],
-            hostels=merged["hostel"],
-            reviews=merged["reviews"]
+            colleges=merged["colleges"], courses=merged["courses"],
+            admissions=merged["admissions"], placements=merged["placements"],
+            rankings=merged["rankings"], faculty=merged["faculty"],
+            scholarships=merged["scholarships"], hostels=merged["hostel"],
+            reviews=merged["reviews"], new_colleges_only=[]
         )
-        logger.info(f"Saved after college {college_id} ({slug}). Total colleges in Excel: {len(merged['colleges'])}")
+        logger.info(f"all_colleges.xlsx updated. Total colleges: {len(merged['colleges'])}")
 
     logger.info("Offline parsing and export complete.")
 
