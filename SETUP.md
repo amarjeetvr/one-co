@@ -293,5 +293,32 @@ collegedunia at once per laptop.**
 > `SUBPAGE_CONCURRENCY` (try 2–3) or stay sequential. Then `--stage2-parse` both and
 > confirm the JSON is identical in completeness.
 
+### Getting 403-blocked? (rate-limit — no proxy needed)
+
+Field result: on Indian IPs the **sequential** path worked but **`--concurrent`
+got 403-blocked**. Same browser/headers in both → the block is **rate-based (too
+many requests per IP), not fingerprint-based**. So the fix is *slow down*, not
+stealth or proxies. The code now handles this:
+
+| Lever | What changed |
+| :--- | :--- |
+| **Slower base rate** | `DELAY_BETWEEN_REQUESTS` restored to **2.5s** (was cut to 1.0). This is the primary anti-block knob — raise it further if 403s persist. |
+| **Concurrency off / low** | `--concurrent` stays opt-in; `SUBPAGE_CONCURRENCY` default lowered to **2**, and concurrent requests are **staggered** by `REQUEST_STAGGER_MS`. |
+| **Retry with long backoff** | On `403/429/503` the request now retries up to `MAX_RETRIES` with an exponential backoff starting at `RETRY_BASE_DELAY` (20s), honoring the server's `Retry-After`. Transient rate-limits self-heal instead of leaving the page pending. |
+| **Light stealth (insurance)** | `--disable-blink-features=AutomationControlled` + `navigator.webdriver` masked + `Accept-Language: en-IN`. Cheap hardening only — not the real fix, since the block isn't fingerprint-based. |
+
+**Run the sequential path (the known-good one):**
+```bash
+python main.py --stage1-download --limit 3500        # NOT --concurrent
+```
+
+**Discriminating test if 403s still appear:** re-run the blocked sample
+**sequentially with a bigger delay** — edit `config.DELAY_BETWEEN_REQUESTS = 4`:
+- 403s vanish → confirmed rate-based; keep the slower rate (politeness = throughput,
+  since being blocked is the slowest outcome). Find the fastest delay that stays clean
+  by ramping **down** from a safe value, not up.
+- 403s persist even sequential + slow → then it may be fingerprint/IP-reputation;
+  only then consider a proxy or headful (`HEADLESS = False`).
+
 > Running 6 laptops in parallel already reduces total run time from ~400 h to
 > ~26–32 h; the optimizations above bring each laptop down further.

@@ -26,9 +26,13 @@ from config import (
     HTML_DIR, HEADLESS, NAVIGATION_TIMEOUT, DELAY_BETWEEN_REQUESTS,
     SUBPAGE_MAPPING, BLOCK_RESOURCE_TYPES, HYDRATION_WAIT_MS,
     MAX_SCROLL_STEPS, SCROLL_STEP_WAIT_MS, SUBPAGE_CONCURRENCY,
+    MAX_RETRIES, RETRY_STATUSES, REQUEST_STAGGER_MS, STEALTH, ACCEPT_LANGUAGE,
 )
 from logger import logger
-from downloader import parse_college_url, compute_pending_urls, is_valid_url_for_subpage, is_block_page
+from downloader import (
+    parse_college_url, compute_pending_urls, is_valid_url_for_subpage,
+    is_block_page, backoff_delay, LAUNCH_ARGS, STEALTH_INIT_JS,
+)
 
 
 async def handle_popups(page: Page):
@@ -181,9 +185,22 @@ async def download_subpage(context: BrowserContext, sem: asyncio.Semaphore,
         page = await context.new_page()
         page.set_default_navigation_timeout(NAVIGATION_TIMEOUT)
         try:
-            response = await page.goto(subpage_url, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT)
-            # See downloader.download_subpage for the rationale: a 404 is a
-            # missing page, NOT a block, and must not be reported as one.
+            # Navigate with the same retry/backoff + classification as the sync
+            # path (see downloader.download_subpage for the full rationale).
+            response = None
+            for attempt in range(MAX_RETRIES + 1):
+                response = await page.goto(subpage_url, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT)
+                status = response.status if response is not None else 0
+                if status in RETRY_STATUSES and attempt < MAX_RETRIES:
+                    wait = backoff_delay(attempt, response)
+                    logger.warning(
+                        f"HTTP {status} (rate-limit/block) for {subpage_url} — backing off "
+                        f"{wait:.0f}s then retry {attempt + 1}/{MAX_RETRIES}."
+                    )
+                    await asyncio.sleep(wait)
+                    continue
+                break
+
             if response is not None and response.status >= 400:
                 status = response.status
                 if status in (404, 410):
@@ -199,8 +216,9 @@ async def download_subpage(context: BrowserContext, sem: asyncio.Semaphore,
                         )
                 else:
                     logger.error(
-                        f"Blocked/error HTTP {status} for {subpage_url} — not saving "
-                        f"(page stays pending). Likely a geo-block or rate-limit."
+                        f"Blocked/error HTTP {status} for {subpage_url} after {MAX_RETRIES} "
+                        f"retries — not saving (page stays pending). Likely a rate-limit; "
+                        f"raise DELAY_BETWEEN_REQUESTS if this persists."
                     )
                 return False
 
@@ -237,10 +255,17 @@ async def download_subpage(context: BrowserContext, sem: asyncio.Semaphore,
 
 
 async def download_college(context: BrowserContext, sem: asyncio.Semaphore, info: Dict[str, str]):
-    """Fetch all subpages of one college concurrently (bounded by `sem`)."""
+    """Fetch all subpages of one college concurrently (bounded by `sem`).
+    Each task's start is staggered by REQUEST_STAGGER_MS so the subpages don't
+    all hit the host in the same instant (smooths the burst that triggers
+    rate-limiting)."""
+    async def staggered(i: int, page_type: str, suffix: str):
+        await asyncio.sleep(i * REQUEST_STAGGER_MS / 1000.0)
+        return await download_subpage(context, sem, info, page_type, info["base_url"] + suffix)
+
     tasks = [
-        download_subpage(context, sem, info, page_type, info["base_url"] + suffix)
-        for page_type, suffix in SUBPAGE_MAPPING.items()
+        staggered(i, page_type, suffix)
+        for i, (page_type, suffix) in enumerate(SUBPAGE_MAPPING.items())
     ]
     await asyncio.gather(*tasks, return_exceptions=True)
 
@@ -255,13 +280,17 @@ async def _run(limit: int):
 
     sem = asyncio.Semaphore(SUBPAGE_CONCURRENCY)
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=HEADLESS)
+        browser = await p.chromium.launch(headless=HEADLESS, args=LAUNCH_ARGS)
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
                        "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
             viewport={"width": 1280, "height": 800},
+            locale="en-IN",
+            extra_http_headers={"Accept-Language": ACCEPT_LANGUAGE},
         )
         await context.add_cookies([])
+        if STEALTH:
+            await context.add_init_script(STEALTH_INIT_JS)
 
         if BLOCK_RESOURCE_TYPES:
             async def _route(route):

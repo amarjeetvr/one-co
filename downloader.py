@@ -9,8 +9,36 @@ from config import (
     COLLEGE_URLS_CSV, HTML_DIR, HEADLESS, TIMEOUT, NAVIGATION_TIMEOUT,
     DELAY_BETWEEN_REQUESTS, SUBPAGE_MAPPING, BLOCK_RESOURCE_TYPES,
     HYDRATION_WAIT_MS, MAX_SCROLL_STEPS, SCROLL_STEP_WAIT_MS,
+    MAX_RETRIES, BACKOFF_FACTOR, RETRY_STATUSES, RETRY_BASE_DELAY,
+    STEALTH, ACCEPT_LANGUAGE,
 )
 from logger import logger
+
+# Launch args shared by both downloaders. `--disable-blink-features=
+# AutomationControlled` removes the tell-tale automation flag; it is cheap
+# insurance and does NOT address rate-based blocks (the real cause here).
+LAUNCH_ARGS = ["--disable-blink-features=AutomationControlled"] if STEALTH else []
+
+# JS run before any page script: hide navigator.webdriver so a headless run
+# looks a little less automated. Again, insurance — not the primary fix.
+STEALTH_INIT_JS = "Object.defineProperty(navigator, 'webdriver', {get: () => undefined});"
+
+
+def retry_after_seconds(response) -> float:
+    """Parse a Retry-After header (delta-seconds form) into seconds, else 0."""
+    try:
+        val = response.header_value("retry-after") if response is not None else None
+        return float(val) if val and val.strip().isdigit() else 0.0
+    except Exception:
+        return 0.0
+
+
+def backoff_delay(attempt: int, response=None) -> float:
+    """Wait for retry `attempt` (0-based): the larger of an exponential backoff
+    and the server's Retry-After. Deliberately long — a short retry just hammers
+    the host during its rate-limit cool-down."""
+    expo = RETRY_BASE_DELAY * (BACKOFF_FACTOR ** attempt)
+    return max(expo, retry_after_seconds(response))
 
 def parse_college_url(url: str) -> Dict[str, str]:
     """
@@ -247,18 +275,29 @@ def download_subpage(context: BrowserContext, college_info: Dict[str, str], page
     page.set_default_navigation_timeout(NAVIGATION_TIMEOUT)
     
     try:
-        # Navigate
-        response = page.goto(subpage_url, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT)
+        # Navigate, retrying on rate-limit/block statuses with a LONG backoff.
+        # Classification of the final response:
+        #   * 403 / 429 / 503 = rate-limit / block → wait & retry; if still
+        #     blocked after MAX_RETRIES, leave the page pending for a re-run.
+        #   * 404 / 410 = page genuinely absent. Normal for a missing subpage
+        #     (no /hostel, /cutoff, …); for the base "info" page it means the
+        #     college was removed since discovery.
+        #   * other 4xx/5xx = unexpected error → skip, stays pending.
+        # We return False in every failure case so nothing garbage is saved.
+        response = None
+        for attempt in range(MAX_RETRIES + 1):
+            response = page.goto(subpage_url, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT)
+            status = response.status if response is not None else 0
+            if status in RETRY_STATUSES and attempt < MAX_RETRIES:
+                wait = backoff_delay(attempt, response)
+                logger.warning(
+                    f"HTTP {status} (rate-limit/block) for {subpage_url} — backing off "
+                    f"{wait:.0f}s then retry {attempt + 1}/{MAX_RETRIES}."
+                )
+                time.sleep(wait)
+                continue
+            break
 
-        # Handle error responses BEFORE saving. Distinguish the two very
-        # different causes — a 404 is NOT a block:
-        #   * 404 / 410 = the page genuinely does not exist. For a subpage this
-        #     is normal (many colleges have no /hostel, /cutoff, /scholarship,
-        #     etc.) — skip quietly, no data is lost. For the base "info" page it
-        #     means the college itself is gone (removed since discovery).
-        #   * 403 / 429 / 5xx = geo-block / rate-limit / server error. The page
-        #     stays pending so a later re-run retries it.
-        # In all cases we return False so nothing garbage is saved.
         if response is not None and response.status >= 400:
             status = response.status
             if status in (404, 410):
@@ -274,8 +313,9 @@ def download_subpage(context: BrowserContext, college_info: Dict[str, str], page
                     )
             else:
                 logger.error(
-                    f"Blocked/error HTTP {status} for {subpage_url} — not saving "
-                    f"(page stays pending). Likely a geo-block or rate-limit."
+                    f"Blocked/error HTTP {status} for {subpage_url} after {MAX_RETRIES} "
+                    f"retries — not saving (page stays pending). Likely a rate-limit; "
+                    f"raise DELAY_BETWEEN_REQUESTS if this persists."
                 )
             return False
 
@@ -383,12 +423,16 @@ def run_downloader(limit: int = 0):
     logger.info(f"Downloading {len(pending)} new college(s) this batch.")
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=HEADLESS)
+        browser = p.chromium.launch(headless=HEADLESS, args=LAUNCH_ARGS)
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            viewport={"width": 1280, "height": 800}
+            viewport={"width": 1280, "height": 800},
+            locale="en-IN",
+            extra_http_headers={"Accept-Language": ACCEPT_LANGUAGE},
         )
         context.add_cookies([])
+        if STEALTH:
+            context.add_init_script(STEALTH_INIT_JS)
 
         # Block heavy, parse-irrelevant resources (images/media/fonts). We only
         # ever read the DOM text offline, so this is a big, lossless speed-up.
