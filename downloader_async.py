@@ -242,7 +242,12 @@ async def download_college(context: BrowserContext, sem: asyncio.Semaphore, info
         download_subpage(context, sem, info, page_type, info["base_url"] + suffix)
         for page_type, suffix in SUBPAGE_MAPPING.items()
     ]
-    await asyncio.gather(*tasks, return_exceptions=True)
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    if not any(r is True for r in results):
+        skip_file = os.path.join(HTML_DIR, ".skipped_ids")
+        with open(skip_file, "a") as sf:
+            sf.write(info["id"] + "\n")
+        logger.warning(f"All subpages failed for {info['slug']} (ID: {info['id']}) — added to skip list.")
 
 
 async def _run(limit: int):

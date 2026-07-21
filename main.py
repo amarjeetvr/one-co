@@ -6,7 +6,7 @@ from typing import List, Dict, Tuple, Any
 from config import HTML_DIR, SUBPAGE_MAPPING, COLLEGE_URLS_CSV
 from logger import logger
 from discovery import discover_college_urls
-from downloader import run_downloader, compute_pending_urls
+from downloader import run_downloader
 from downloader_async import run_downloader_concurrent
 import college_parser as parser
 
@@ -235,6 +235,23 @@ def run_parsing_and_export():
 
 
 
+def _count_info_files() -> int:
+    """Returns number of colleges with a saved info HTML file."""
+    info_dir = os.path.join(HTML_DIR, "info")
+    if not os.path.exists(info_dir):
+        return 0
+    return sum(1 for f in os.listdir(info_dir) if f.endswith(".html"))
+
+
+def _count_skipped() -> int:
+    """Returns number of college IDs in the downloader skip list."""
+    skip_file = os.path.join(HTML_DIR, ".skipped_ids")
+    if not os.path.exists(skip_file):
+        return 0
+    with open(skip_file) as f:
+        return sum(1 for line in f if line.strip())
+
+
 def _split_urls(n_parts: int):
     """Split college_urls.csv into N equal part files under urls/parts/."""
     if not os.path.exists(COLLEGE_URLS_CSV):
@@ -314,33 +331,26 @@ def main():
             # last listing page), capped at total_limit.
             discover_college_urls(max_colleges=min(total_processed + batch_size, total_limit))
 
-            # How many colleges are still pending BEFORE this batch — used to
-            # tell "nothing left to do" apart from "batch was blocked".
-            pending_before = len(compute_pending_urls(0))
-
-            before = len(discover_downloaded_colleges())
+            before = _count_info_files()
+            before_skipped = _count_skipped()
             downloader_fn(limit=batch_size)
-            after = len(discover_downloaded_colleges())
+            after = _count_info_files()
+            after_skipped = _count_skipped()
             new_count = after - before
+            skipped_count = after_skipped - before_skipped
 
             if new_count > 0:
-                total_processed += new_count      # NOTE: must advance, or --limit and discovery target never move
+                total_processed += new_count
                 downloaded_any = True
                 logger.info(f"Downloaded {new_count} new colleges this batch (total {total_processed}).")
                 if args.parse_per_batch:
                     logger.info("Incremental parsing and export triggered for batch...")
                     run_parsing_and_export()
+            elif skipped_count > 0:
+                total_processed += skipped_count
+                logger.info(f"Batch skipped {skipped_count} fully-failed college(s) — advancing to next batch (total {total_processed}).")
             else:
-                # No progress this batch. Distinguish the two causes honestly so
-                # a transient block is not misreported as successful completion.
-                if pending_before == 0:
-                    logger.info("No pending colleges remain — all downloaded. Stopping.")
-                else:
-                    logger.warning(
-                        f"Batch made no progress, but {pending_before} college(s) are still "
-                        f"pending — likely a geo-block / rate-limit (HTTP 403/429), or a cluster "
-                        f"of removed (404) base URLs. Stopping early; re-run to resume from here."
-                    )
+                logger.info("No pending colleges remain — all downloaded or skipped. Stopping.")
                 break
 
             current_batch += 1

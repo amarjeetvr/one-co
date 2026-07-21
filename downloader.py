@@ -342,26 +342,30 @@ def compute_pending_urls(limit: int = 0) -> List[str]:
             if row:
                 urls.append(row[0])
 
-    # Build set of already-downloaded college IDs from html/info/
+    # Build set of already-attempted college IDs: html/info/ saves + skip list
+    attempted_ids = set()
     info_dir = os.path.join(HTML_DIR, "info")
-    downloaded_ids = set()
     if os.path.exists(info_dir):
         for fname in os.listdir(info_dir):
             m = re.match(r"^(\d+)_", fname)
             if m:
-                downloaded_ids.add(m.group(1))
+                attempted_ids.add(m.group(1))
+    skip_file = os.path.join(HTML_DIR, ".skipped_ids")
+    if os.path.exists(skip_file):
+        with open(skip_file) as f:
+            for line in f:
+                attempted_ids.add(line.strip())
 
-    # Filter to only pending (not yet downloaded) URLs
     pending = []
     for url in urls:
         info = parse_college_url(url)
-        if info and info["id"] not in downloaded_ids:
+        if info and info["id"] not in attempted_ids:
             pending.append(url)
 
-    logger.info(f"Total in CSV: {len(urls)} | Already downloaded: {len(downloaded_ids)} | Pending: {len(pending)}")
+    logger.info(f"Total in CSV: {len(urls)} | Already attempted: {len(attempted_ids)} | Pending: {len(pending)}")
 
     if not pending:
-        logger.info("All colleges already downloaded. Nothing to do.")
+        logger.info("All colleges already attempted. Nothing to do.")
         return []
 
     # Apply batch limit to pending only
@@ -408,9 +412,16 @@ def run_downloader(limit: int = 0):
 
             logger.info(f"--- Downloading College {idx}/{len(pending)}: {info['slug']} (ID: {info['id']}) ---")
 
+            any_saved = False
             for page_type, path_suffix in SUBPAGE_MAPPING.items():
                 subpage_url = info["base_url"] + path_suffix
-                download_subpage(context, info, page_type, subpage_url)
+                if download_subpage(context, info, page_type, subpage_url):
+                    any_saved = True
+            if not any_saved:
+                skip_file = os.path.join(HTML_DIR, ".skipped_ids")
+                with open(skip_file, "a") as sf:
+                    sf.write(info["id"] + "\n")
+                logger.warning(f"All subpages failed for {info['slug']} (ID: {info['id']}) — added to skip list.")
 
         browser.close()
     logger.info("Downloader task complete.")
