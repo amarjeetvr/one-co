@@ -250,14 +250,33 @@ def download_subpage(context: BrowserContext, college_info: Dict[str, str], page
         # Navigate
         response = page.goto(subpage_url, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT)
 
-        # Reject error responses (403 geo-block, 429 rate-limit, 5xx, etc.)
-        # BEFORE saving so we never persist a garbage page or mark a college as
-        # "downloaded". Returning False leaves it pending for a later retry.
+        # Handle error responses BEFORE saving. Distinguish the two very
+        # different causes — a 404 is NOT a block:
+        #   * 404 / 410 = the page genuinely does not exist. For a subpage this
+        #     is normal (many colleges have no /hostel, /cutoff, /scholarship,
+        #     etc.) — skip quietly, no data is lost. For the base "info" page it
+        #     means the college itself is gone (removed since discovery).
+        #   * 403 / 429 / 5xx = geo-block / rate-limit / server error. The page
+        #     stays pending so a later re-run retries it.
+        # In all cases we return False so nothing garbage is saved.
         if response is not None and response.status >= 400:
-            logger.error(
-                f"Blocked/error HTTP {response.status} for {subpage_url} — not saving "
-                f"(page stays pending). Likely a geo-block or rate-limit."
-            )
+            status = response.status
+            if status in (404, 410):
+                if page_type == "info":
+                    logger.warning(
+                        f"HTTP {status} NOT FOUND for base page {subpage_url} — college "
+                        f"appears removed since discovery; skipping (no data captured)."
+                    )
+                else:
+                    logger.info(
+                        f"HTTP {status}: subpage '{page_type}' does not exist for this "
+                        f"college — skipping (normal, not an error): {subpage_url}"
+                    )
+            else:
+                logger.error(
+                    f"Blocked/error HTTP {status} for {subpage_url} — not saving "
+                    f"(page stays pending). Likely a geo-block or rate-limit."
+                )
             return False
 
         # Wait a bit for JS hydration

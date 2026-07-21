@@ -182,11 +182,26 @@ async def download_subpage(context: BrowserContext, sem: asyncio.Semaphore,
         page.set_default_navigation_timeout(NAVIGATION_TIMEOUT)
         try:
             response = await page.goto(subpage_url, wait_until="domcontentloaded", timeout=NAVIGATION_TIMEOUT)
+            # See downloader.download_subpage for the rationale: a 404 is a
+            # missing page, NOT a block, and must not be reported as one.
             if response is not None and response.status >= 400:
-                logger.error(
-                    f"Blocked/error HTTP {response.status} for {subpage_url} — not saving "
-                    f"(page stays pending). Likely a geo-block or rate-limit."
-                )
+                status = response.status
+                if status in (404, 410):
+                    if page_type == "info":
+                        logger.warning(
+                            f"HTTP {status} NOT FOUND for base page {subpage_url} — college "
+                            f"appears removed since discovery; skipping (no data captured)."
+                        )
+                    else:
+                        logger.info(
+                            f"HTTP {status}: subpage '{page_type}' does not exist for this "
+                            f"college — skipping (normal, not an error): {subpage_url}"
+                        )
+                else:
+                    logger.error(
+                        f"Blocked/error HTTP {status} for {subpage_url} — not saving "
+                        f"(page stays pending). Likely a geo-block or rate-limit."
+                    )
                 return False
 
             await page.wait_for_timeout(HYDRATION_WAIT_MS)
