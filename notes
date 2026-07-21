@@ -20,3 +20,6 @@ divide url part
 python main.py --split 5
 
 copy urls\parts\college_urls_part2.csv urls\college_urls.csv
+
+
+python main.py --limit 3500 --batch-size 100  --concurrent --parse-per-batch
